@@ -46,3 +46,4 @@ next-env.d.ts
 /src/fonts/**/*.woff2
 /src/fonts/**/*.otf
 /src/fonts/**/*.ttf
+!/src/fonts/alexandria/Alexandria[[]wght[]].ttf
