@@ -1,0 +1,122 @@
+/* =========================================================================
+   NaqiJo — نقي الرابية · Design Tokens (single source of truth)
+   -------------------------------------------------------------------------
+   Colors are taken EXACTLY from the official Brand Guidelines (2026, v1.0).
+   Do not invent or approximate brand colors.
+
+   THE 10 / 30 / 60 RULE (governs every screen):
+     60% WHITE  — purity leads; wide white space.
+     30% BLUE   — Naqi Blue frames, titles, structure.
+     10% GOLD   — Laurel Gold is a precious signature ONLY: dividers, icons,
+                  prominent numbers, and the SINGLE primary action per screen.
+     Golden rule: if Naqi Blue or wide white is missing, it is not NaqiJo.
+     Accessibility: white text on blue/navy; navy text on gold; never gold body
+     text; never blue-on-gold.
+
+   TYPOGRAPHY: official Thmanyah family via next/font (see src/fonts/thmanyah.ts).
+   Dark mode is a CINEMATIC deep-navy environment (guideline-approved), not an
+   inversion.
+   ========================================================================= */
+
+:root {
+  /* ---- Raw brand palette (exact) ---- */
+  --naqi-blue: #1b75bb;   /* primary */
+  --blue-deep: #155e96;   /* derived step (hover/press) */
+  --navy: #0e3a5c;        /* deep navy — depth & luxury */
+  --sky: #5fa8db;         /* sky blue */
+  --blue-100: #a9ceea;    /* tint */
+  --dew: #e9f2f9;         /* light blue bg */
+  --gold: #faaf40;        /* Laurel Gold — accent (max 10%) */
+  --gold-deep: #d98e2b;   /* dark gold */
+  --charcoal: #17242e;    /* primary text */
+  --gray: #69798a;        /* secondary text */
+  --cloud: #f4f7fa;       /* soft background */
+  --white: #ffffff;
+
+  /* ---- Semantic tokens (LIGHT) ---- */
+  --bg: var(--white);
+  --bg-subtle: var(--cloud);
+  --bg-blue: var(--dew);
+  --surface: var(--white);
+  --surface-2: var(--cloud);
+
+  --fg: var(--charcoal);
+  --fg-muted: #566470;           /* darker than brand gray for AA readability */
+  --fg-subtle: #8792a0;          /* derived caption gray */
+  --fg-on-dark: var(--white);
+
+  --border: #e4edf4;             /* derived light blue-gray hairline */
+  --border-strong: #d1dfeb;
+
+  --primary: var(--naqi-blue);
+  --primary-fg: var(--white);
+  --primary-hover: var(--blue-deep);
+
+  --accent: var(--gold);         /* gold — signature only */
+  --accent-strong: var(--gold-deep);
+  --accent-fg: var(--navy);      /* navy text on gold (AA) */
+
+  --ring: var(--naqi-blue);
+
+  /* Feedback (functional, sparingly used) */
+  --success: #1f7a5c;
+  --warning: var(--gold-deep);
+  --danger: #b3402f;
+
+  /* Radius — rounded to echo the logo letterforms (8–12px) */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-2xl: 32px;
+  --radius-pill: 999px;
+
+  /* Elevation — soft, low-spread (calm, premium) */
+  --shadow-xs: 0 1px 2px rgba(14, 58, 92, 0.05);
+  --shadow-sm: 0 2px 10px rgba(14, 58, 92, 0.06);
+  --shadow-md: 0 12px 32px rgba(14, 58, 92, 0.08);
+  --shadow-lg: 0 28px 64px rgba(14, 58, 92, 0.12);
+
+  /* Motion — elegant, minimal, water-like */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --dur-fast: 160ms;
+  --dur-base: 260ms;
+  --dur-slow: 460ms;
+}
+
+.dark {
+  /* CINEMATIC deep-navy environment (guideline: navy is an approved dark bg) */
+  --bg: #082138;                 /* derived deep navy base */
+  --bg-subtle: #0b2b47;
+  --bg-blue: #0e3a5c;
+  --surface: #0e3a5c;            /* brand navy as elevated surface */
+  --surface-2: #144a72;
+
+  --fg: #eaf2f9;                 /* dew-white */
+  --fg-muted: #9db6cb;
+  --fg-subtle: #6f8ba4;
+  --fg-on-dark: #eaf2f9;
+
+  --border: #1d4f7b;
+  --border-strong: #2b628f;
+
+  --primary: #eaf2f9;            /* light button on navy (high contrast) */
+  --primary-fg: var(--navy);
+  --primary-hover: var(--white);
+
+  --accent: var(--gold);         /* gold pops on navy */
+  --accent-strong: #f0b95c;
+  --accent-fg: var(--navy);
+
+  --ring: var(--sky);
+
+  --success: #4cc79a;
+  --warning: #e6b45a;
+  --danger: #e8705d;
+
+  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.35);
+  --shadow-sm: 0 2px 10px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 12px 32px rgba(0, 0, 0, 0.45);
+  --shadow-lg: 0 28px 64px rgba(0, 0, 0, 0.55);
+}

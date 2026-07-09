@@ -1,0 +1,67 @@
+{
+  "brand": {
+    "name": "نقي الرابية",
+    "tagline": "حلولٌ هندسية متكاملة للبيت"
+  },
+  "nav": {
+    "home": "الرئيسية",
+    "about": "من نحن",
+    "services": "الحلول",
+    "projects": "المشاريع",
+    "consultation": "الاستشارة الهندسية",
+    "maintenance": "الصيانة",
+    "contact": "تواصل معنا",
+    "faq": "الأسئلة الشائعة",
+    "water": "حلول المياه",
+    "kitchen": "تشطيبات المطابخ",
+    "solar": "الطاقة الشمسية",
+    "protection": "عزل وحماية الأسطح",
+    "privacy": "سياسة الخصوصية",
+    "terms": "الشروط والأحكام",
+    "products": "المنتجات"
+  },
+  "header": {
+    "bookConsultation": "احجز استشارة",
+    "openMenu": "القائمة",
+    "closeMenu": "إغلاق"
+  },
+  "cta": {
+    "bookConsultation": "احجز استشارة مجانية",
+    "requestService": "اطلب الخدمة",
+    "requestMaintenance": "اطلب صيانة",
+    "continueWhatsapp": "المتابعة عبر واتساب",
+    "continueEmail": "المتابعة عبر البريد",
+    "callUs": "اتصل بنا",
+    "viewAll": "عرض الكل",
+    "learnMore": "اعرف المزيد",
+    "readMore": "اقرأ المزيد",
+    "explore": "استكشف الحلول",
+    "backHome": "العودة إلى الرئيسية",
+    "allProjects": "كل المشاريع",
+    "allSolutions": "كل الحلول"
+  },
+  "footer": {
+    "tagline": "الشريك الهندسي الموثوق للبيت العربي — نقاءٌ تشربه، وطاقةٌ توفّرها، وبنيةٌ تدوم.",
+    "solutions": "الحلول",
+    "company": "الشركة",
+    "support": "الدعم",
+    "legal": "قانوني",
+    "contact": "تواصل",
+    "followUs": "تابعنا",
+    "rights": "© 2026 نقي الرابية. جميع الحقوق محفوظة.",
+    "backToTop": "العودة للأعلى",
+    "workingHours": "خدمة على مدار الساعة"
+  },
+  "theme": {
+    "toggle": "تبديل المظهر",
+    "light": "فاتح",
+    "dark": "داكن",
+    "system": "النظام"
+  },
+  "locale": {
+    "label": "اللغة",
+    "ar": "العربية",
+    "en": "English",
+    "switchToEnglish": "English"
+  }
+}

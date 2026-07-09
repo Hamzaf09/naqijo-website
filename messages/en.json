@@ -1,0 +1,67 @@
+{
+  "brand": {
+    "name": "NaqiJo",
+    "tagline": "Integrated home engineering solutions"
+  },
+  "nav": {
+    "home": "Home",
+    "about": "About",
+    "services": "Solutions",
+    "projects": "Projects",
+    "consultation": "Consultation",
+    "maintenance": "Maintenance",
+    "contact": "Contact",
+    "faq": "FAQ",
+    "water": "Water Solutions",
+    "kitchen": "Kitchen Finishing",
+    "solar": "Solar Energy",
+    "protection": "Roof Protection",
+    "privacy": "Privacy Policy",
+    "terms": "Terms & Conditions",
+    "products": "Products"
+  },
+  "header": {
+    "bookConsultation": "Book consultation",
+    "openMenu": "Menu",
+    "closeMenu": "Close"
+  },
+  "cta": {
+    "bookConsultation": "Book a free consultation",
+    "requestService": "Request service",
+    "requestMaintenance": "Request maintenance",
+    "continueWhatsapp": "Continue via WhatsApp",
+    "continueEmail": "Continue via Email",
+    "callUs": "Call us",
+    "viewAll": "View all",
+    "learnMore": "Learn more",
+    "readMore": "Read more",
+    "explore": "Explore solutions",
+    "backHome": "Back to home",
+    "allProjects": "All projects",
+    "allSolutions": "All solutions"
+  },
+  "footer": {
+    "tagline": "The trusted engineering partner for the modern home — water you can drink, energy you can save, infrastructure that lasts.",
+    "solutions": "Solutions",
+    "company": "Company",
+    "support": "Support",
+    "legal": "Legal",
+    "contact": "Contact",
+    "followUs": "Follow us",
+    "rights": "© 2026 NaqiJo. All rights reserved.",
+    "backToTop": "Back to top",
+    "workingHours": "24/7 service"
+  },
+  "theme": {
+    "toggle": "Toggle theme",
+    "light": "Light",
+    "dark": "Dark",
+    "system": "System"
+  },
+  "locale": {
+    "label": "Language",
+    "ar": "العربية",
+    "en": "English",
+    "switchToEnglish": "English"
+  }
+}

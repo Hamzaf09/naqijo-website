@@ -1,0 +1,119 @@
+@import "tailwindcss";
+@import "../styles/tokens.css";
+
+/* Dark mode is driven by a `.dark` class on <html>. */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* Map design tokens -> Tailwind theme so utilities stay token-driven. */
+@theme inline {
+  /* Semantic (theme-aware) */
+  --color-bg: var(--bg);
+  --color-bg-subtle: var(--bg-subtle);
+  --color-bg-blue: var(--bg-blue);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+
+  --color-fg: var(--fg);
+  --color-fg-muted: var(--fg-muted);
+  --color-fg-subtle: var(--fg-subtle);
+  --color-fg-on-dark: var(--fg-on-dark);
+
+  --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
+
+  --color-primary: var(--primary);
+  --color-primary-fg: var(--primary-fg);
+  --color-accent: var(--accent);
+  --color-accent-strong: var(--accent-strong);
+  --color-accent-fg: var(--accent-fg);
+  --color-ring: var(--ring);
+
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-danger: var(--danger);
+
+  /* Raw brand colors (fixed in both themes — for navy sections, gold accents) */
+  --color-naqi-blue: var(--naqi-blue);
+  --color-navy: var(--navy);
+  --color-sky: var(--sky);
+  --color-blue-100: var(--blue-100);
+  --color-dew: var(--dew);
+  --color-cloud: var(--cloud);
+  --color-gold: var(--gold);
+  --color-gold-deep: var(--gold-deep);
+  --color-charcoal: var(--charcoal);
+
+  --font-sans: var(--font-alexandria), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-alexandria), ui-sans-serif, system-ui, sans-serif;
+  --font-text: var(--font-alexandria), ui-sans-serif, system-ui, sans-serif;
+}
+
+@layer base {
+  * {
+    border-color: var(--border);
+  }
+  html {
+    -webkit-text-size-adjust: 100%;
+    text-rendering: optimizeLegibility;
+    scroll-behavior: smooth;
+    scroll-padding-top: 6rem;
+  }
+  body {
+    background-color: var(--bg);
+    color: var(--fg);
+    font-family: var(--font-alexandria), ui-sans-serif, system-ui, sans-serif;
+    font-weight: 400;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  /* Visible, token-driven focus for accessibility (WCAG 2.2). */
+  :focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+  ::selection {
+    background: var(--fg);
+    color: var(--bg);
+  }
+  h1, h2, h3, h4 {
+    text-wrap: balance;
+  }
+  p {
+    text-wrap: pretty;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────
+   Arabic (RTL) typography refinements — unlayered so they win over
+   Tailwind utilities. Arabic is a CONNECTED script:
+   • never letter-space it (positive spacing breaks joins, negative
+     spacing overlaps letters + diacritics),
+   • give large display headings a touch more leading so diacritics
+     never collide — without feeling loose.
+   Latin (LTR) keeps its tighter, monumental tracking.
+   ───────────────────────────────────────────────────────────── */
+[dir="rtl"] * {
+  letter-spacing: normal;
+}
+[dir="rtl"] .font-display {
+  line-height: 1.15;
+}
+[dir="rtl"] h1.font-display {
+  line-height: 1.24;
+}
+[dir="rtl"] h2.font-display {
+  line-height: 1.2;
+}
