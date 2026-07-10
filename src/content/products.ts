@@ -32,9 +32,9 @@ export const productsSection = {
 export const products: ProductItem[] = [
   {
     slug: "jumbo-filter",
-    image: "/images/products/jumbo-filter.png",
-    width: 2938,
-    height: 2463,
+    image: "/images/products/jumbo-filter.webp",
+    width: 1400,
+    height: 1174,
     alt: { ar: "فلتر مركزي جامبو من نقي الرابية", en: "NaqiJo Jumbo central filter" },
     category: { ar: "أنظمة الفلترة المركزية", en: "Central filtration systems" },
     title: { ar: "فلتر مركزي جامبو", en: "Jumbo Central Filter" },
@@ -49,9 +49,9 @@ export const products: ProductItem[] = [
   },
   {
     slug: "softener",
-    image: "/images/products/softener.png",
-    width: 2938,
-    height: 2463,
+    image: "/images/products/softener.webp",
+    width: 1400,
+    height: 1174,
     alt: { ar: "سوفتنر منزلي من نقي الرابية", en: "NaqiJo home water softener" },
     category: { ar: "معالجة عسر المياه", en: "Hard-water treatment" },
     title: { ar: "سوفتنر منزلي", en: "Home Water Softener" },
@@ -66,9 +66,9 @@ export const products: ProductItem[] = [
   },
   {
     slug: "digital-filter-8s",
-    image: "/images/products/digital-filter-8s.png",
-    width: 2938,
-    height: 2463,
+    image: "/images/products/digital-filter-8s.webp",
+    width: 1400,
+    height: 1174,
     alt: { ar: "فلتر رقمي ذكي 8 مراحل من نقي الرابية", en: "NaqiJo smart digital 8-stage filter" },
     category: { ar: "تنقية مياه الشرب", en: "Drinking-water purification" },
     title: { ar: "فلتر رقمي ذكي – 8 مراحل", en: "Smart Digital Filter – 8 Stages" },
