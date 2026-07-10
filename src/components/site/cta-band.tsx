@@ -33,8 +33,8 @@ export async function CtaBand({
 
   return (
     <section className="bg-navy text-white">
-      <div className="mx-auto grid max-w-[1320px] items-stretch gap-0 px-0 lg:grid-cols-2">
-        <div className="flex flex-col justify-center px-5 py-20 sm:px-8 lg:px-16 lg:py-28">
+      <div className="mx-auto grid max-w-[1320px] items-stretch gap-0 px-0 lg:grid-cols-[1fr_1.15fr]">
+        <div className="flex flex-col justify-center px-5 py-16 sm:px-8 lg:px-16 lg:py-28">
           <Eyebrow tone="onDark">{eyebrow}</Eyebrow>
           <h2 className="mt-6 max-w-[16ch] font-display text-[clamp(2.1rem,3.6vw,3.1rem)] font-extrabold leading-[1.08]">
             {title}
@@ -62,14 +62,13 @@ export async function CtaBand({
             </a>
           </div>
         </div>
-        <div className="relative min-h-[280px] lg:min-h-full">
+        <div className="relative min-h-[440px] lg:min-h-[580px]">
           <BrandImage
             image={image}
             locale={locale}
             ratio="auto"
             className="absolute inset-0 h-full w-full rounded-none bg-navy"
-            imgClassName="opacity-90"
-            sizes="(max-width: 1024px) 100vw, 660px"
+            sizes="(max-width: 1024px) 100vw, 760px"
           />
         </div>
       </div>

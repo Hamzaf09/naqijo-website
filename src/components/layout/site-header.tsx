@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useSyncExternalStore } from "react";
+import { createPortal } from "react-dom";
 import { AnimatePresence, motion } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import { useTranslations } from "next-intl";
@@ -17,6 +18,12 @@ export function SiteHeader() {
   const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  // Client-mounted flag (false on server) so the portal only renders client-side.
+  const mounted = useSyncExternalStore(
+    () => () => {},
+    () => true,
+    () => false,
+  );
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 12);
@@ -96,64 +103,70 @@ export function SiteHeader() {
         </div>
       </div>
 
-      <AnimatePresence>
-        {open ? (
-          <motion.div
-            id="mobile-site-menu"
-            role="dialog"
-            aria-modal="true"
-            aria-label={t("header.openMenu")}
-            className="fixed inset-0 z-[60] bg-bg lg:hidden"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.25 }}
-          >
-            <div className="flex h-20 items-center justify-between px-5 sm:px-8">
-              <Logo className="h-11 w-auto" />
-              <button
-                type="button"
-                onClick={() => setOpen(false)}
-                aria-label={t("header.closeMenu")}
-                className="inline-flex size-11 items-center justify-center rounded-[var(--radius-md)] text-fg"
-              >
-                <X className="size-6" aria-hidden />
-              </button>
-            </div>
-            <nav className="flex flex-col gap-1 px-5 pt-6 sm:px-8">
-              {mainNav.map((item, i) => (
+      {mounted
+        ? createPortal(
+            <AnimatePresence>
+              {open ? (
                 <motion.div
-                  key={item.key}
-                  initial={{ opacity: 0, y: 12 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.05 + i * 0.05 }}
+                  key="mobile-menu"
+                  id="mobile-site-menu"
+                  role="dialog"
+                  aria-modal="true"
+                  aria-label={t("header.openMenu")}
+                  className="fixed inset-0 z-[100] flex flex-col bg-navy/95 text-white backdrop-blur-xl lg:hidden"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
                 >
-                  <Link
-                    href={item.href}
+                <div className="flex h-20 shrink-0 items-center justify-between px-5 sm:px-8">
+                  <Logo tone="white" className="h-11 w-auto" />
+                  <button
+                    type="button"
                     onClick={() => setOpen(false)}
-                    className="block border-b border-border py-4 font-display text-2xl font-bold text-fg"
+                    aria-label={t("header.closeMenu")}
+                    className="inline-flex size-11 items-center justify-center rounded-[var(--radius-md)] text-white transition-colors hover:bg-white/10"
                   >
-                    {t(`nav.${item.key}`)}
+                    <X className="size-6" aria-hidden />
+                  </button>
+                </div>
+                <nav className="flex flex-1 flex-col gap-1 overflow-y-auto px-5 pt-4 sm:px-8">
+                  {mainNav.map((item, i) => (
+                    <motion.div
+                      key={item.key}
+                      initial={{ opacity: 0, y: 12 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.05 + i * 0.05 }}
+                    >
+                      <Link
+                        href={item.href}
+                        onClick={() => setOpen(false)}
+                        className="block border-b border-white/10 py-4 font-display text-2xl font-bold text-white"
+                      >
+                        {t(`nav.${item.key}`)}
+                      </Link>
+                    </motion.div>
+                  ))}
+                </nav>
+                <div className="flex shrink-0 items-center justify-between gap-4 px-5 pb-8 pt-6 sm:px-8">
+                  <div className="flex items-center gap-2 [&_button]:text-white [&_svg]:text-white">
+                    <LocaleSwitcher />
+                    <ThemeToggle />
+                  </div>
+                  <Link
+                    href="/contact"
+                    onClick={() => setOpen(false)}
+                    className={cn(buttonVariants({ variant: "gold", size: "md" }))}
+                  >
+                    {t("header.bookConsultation")}
                   </Link>
+                </div>
                 </motion.div>
-              ))}
-            </nav>
-            <div className="flex items-center justify-between px-5 pt-8 sm:px-8">
-              <div className="flex items-center gap-2">
-                <LocaleSwitcher />
-                <ThemeToggle />
-              </div>
-              <Link
-                href="/contact"
-                onClick={() => setOpen(false)}
-                className={cn(buttonVariants({ variant: "primary", size: "md" }))}
-              >
-                {t("header.bookConsultation")}
-              </Link>
-            </div>
-          </motion.div>
-        ) : null}
-      </AnimatePresence>
+              ) : null}
+            </AnimatePresence>,
+            document.body,
+          )
+        : null}
     </header>
   );
 }
