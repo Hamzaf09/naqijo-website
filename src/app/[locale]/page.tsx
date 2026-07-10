@@ -1,7 +1,7 @@
 import { setRequestLocale } from "next-intl/server";
 import { Star, BadgeCheck } from "lucide-react";
 import { Link } from "@/i18n/navigation";
-import type { Locale } from "@/i18n/routing";
+import { requireLocale } from "@/i18n/routing";
 import { Container, Section } from "@/ui/container";
 import { H2, H3, Lead } from "@/ui/typography";
 import { buttonVariants } from "@/ui/button";
@@ -18,9 +18,10 @@ import { cn } from "@/lib/utils";
 export default async function HomePage({
   params,
 }: {
-  params: Promise<{ locale: Locale }>;
+  params: Promise<{ locale: string }>;
 }) {
-  const { locale } = await params;
+  const { locale: requestedLocale } = await params;
+  const locale = requireLocale(requestedLocale);
   setRequestLocale(locale);
   const c = homeContent[locale];
 

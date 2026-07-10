@@ -1,5 +1,5 @@
 import { setRequestLocale, getTranslations } from "next-intl/server";
-import type { Locale } from "@/i18n/routing";
+import { requireLocale } from "@/i18n/routing";
 import { Link } from "@/i18n/navigation";
 import { Container, Section } from "@/ui/container";
 import { H3 } from "@/ui/typography";
@@ -10,8 +10,9 @@ import { Reveal } from "@/components/motion/reveal";
 import { services, serviceSlugs } from "@/content/services";
 import type { Metadata } from "next";
 
-export async function generateMetadata({ params }: { params: Promise<{ locale: Locale }> }): Promise<Metadata> {
-  const { locale } = await params;
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
+  const { locale: requestedLocale } = await params;
+  const locale = requireLocale(requestedLocale);
   const t = await getTranslations({ locale, namespace: "nav" });
   return { title: t("services") };
 }
@@ -27,8 +28,9 @@ const extras = {
   ],
 };
 
-export default async function ServicesPage({ params }: { params: Promise<{ locale: Locale }> }) {
-  const { locale } = await params;
+export default async function ServicesPage({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale: requestedLocale } = await params;
+  const locale = requireLocale(requestedLocale);
   setRequestLocale(locale);
   const list = services[locale];
 

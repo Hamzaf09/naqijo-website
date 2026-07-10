@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import { setRequestLocale } from "next-intl/server";
 import type { Metadata } from "next";
-import { routing, type Locale } from "@/i18n/routing";
+import { requireLocale, routing } from "@/i18n/routing";
 import { Link } from "@/i18n/navigation";
 import { Container, Section } from "@/ui/container";
 import { H2, H3 } from "@/ui/typography";
@@ -20,9 +20,10 @@ export function generateStaticParams() {
 export async function generateMetadata({
   params,
 }: {
-  params: Promise<{ locale: Locale; slug: string }>;
+  params: Promise<{ locale: string; slug: string }>;
 }): Promise<Metadata> {
-  const { locale, slug } = await params;
+  const { locale: requestedLocale, slug } = await params;
+  const locale = requireLocale(requestedLocale);
   const s = services[locale][slug];
   return s ? { title: s.title, description: s.lead } : {};
 }
@@ -30,9 +31,10 @@ export async function generateMetadata({
 export default async function ServiceDetailPage({
   params,
 }: {
-  params: Promise<{ locale: Locale; slug: string }>;
+  params: Promise<{ locale: string; slug: string }>;
 }) {
-  const { locale, slug } = await params;
+  const { locale: requestedLocale, slug } = await params;
+  const locale = requireLocale(requestedLocale);
   setRequestLocale(locale);
   const s = services[locale][slug];
   if (!s) notFound();

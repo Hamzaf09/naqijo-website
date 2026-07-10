@@ -1,6 +1,6 @@
 import { setRequestLocale, getTranslations } from "next-intl/server";
 import type { Metadata } from "next";
-import type { Locale } from "@/i18n/routing";
+import { requireLocale } from "@/i18n/routing";
 import { Link } from "@/i18n/navigation";
 import { Container, Section } from "@/ui/container";
 import { H3 } from "@/ui/typography";
@@ -10,14 +10,16 @@ import { CtaBand } from "@/components/site/cta-band";
 import { Reveal, RevealGroup } from "@/components/motion/reveal";
 import { projects, projectSlugs } from "@/content/projects";
 
-export async function generateMetadata({ params }: { params: Promise<{ locale: Locale }> }): Promise<Metadata> {
-  const { locale } = await params;
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
+  const { locale: requestedLocale } = await params;
+  const locale = requireLocale(requestedLocale);
   const t = await getTranslations({ locale, namespace: "nav" });
   return { title: t("projects") };
 }
 
-export default async function ProjectsPage({ params }: { params: Promise<{ locale: Locale }> }) {
-  const { locale } = await params;
+export default async function ProjectsPage({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale: requestedLocale } = await params;
+  const locale = requireLocale(requestedLocale);
   setRequestLocale(locale);
   const list = projects[locale];
 

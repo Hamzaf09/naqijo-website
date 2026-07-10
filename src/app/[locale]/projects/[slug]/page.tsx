@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import { setRequestLocale } from "next-intl/server";
 import type { Metadata } from "next";
-import { routing, type Locale } from "@/i18n/routing";
+import { requireLocale, routing } from "@/i18n/routing";
 import { Link } from "@/i18n/navigation";
 import { Container, Section } from "@/ui/container";
 import { Display, H2, Lead } from "@/ui/typography";
@@ -15,14 +15,16 @@ export function generateStaticParams() {
   return routing.locales.flatMap((locale) => projectSlugs.map((slug) => ({ locale, slug })));
 }
 
-export async function generateMetadata({ params }: { params: Promise<{ locale: Locale; slug: string }> }): Promise<Metadata> {
-  const { locale, slug } = await params;
+export async function generateMetadata({ params }: { params: Promise<{ locale: string; slug: string }> }): Promise<Metadata> {
+  const { locale: requestedLocale, slug } = await params;
+  const locale = requireLocale(requestedLocale);
   const p = projects[locale][slug];
   return p ? { title: p.title, description: p.summary } : {};
 }
 
-export default async function ProjectDetailPage({ params }: { params: Promise<{ locale: Locale; slug: string }> }) {
-  const { locale, slug } = await params;
+export default async function ProjectDetailPage({ params }: { params: Promise<{ locale: string; slug: string }> }) {
+  const { locale: requestedLocale, slug } = await params;
+  const locale = requireLocale(requestedLocale);
   setRequestLocale(locale);
   const p = projects[locale][slug];
   if (!p) notFound();

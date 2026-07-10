@@ -1,6 +1,6 @@
 import { setRequestLocale, getTranslations } from "next-intl/server";
 import type { Metadata } from "next";
-import type { Locale } from "@/i18n/routing";
+import { requireLocale } from "@/i18n/routing";
 import { Container, Section } from "@/ui/container";
 import { Display, Lead } from "@/ui/typography";
 import { Eyebrow } from "@/components/site/eyebrow";
@@ -8,8 +8,9 @@ import { RequestFlow } from "@/components/site/request-flow";
 import { Reveal } from "@/components/motion/reveal";
 import { siteConfig } from "@/config/site";
 
-export async function generateMetadata({ params }: { params: Promise<{ locale: Locale }> }): Promise<Metadata> {
-  const { locale } = await params;
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
+  const { locale: requestedLocale } = await params;
+  const locale = requireLocale(requestedLocale);
   const t = await getTranslations({ locale, namespace: "nav" });
   return { title: t("contact") };
 }
@@ -103,8 +104,9 @@ const dicts = {
   },
 };
 
-export default async function ContactPage({ params }: { params: Promise<{ locale: Locale }> }) {
-  const { locale } = await params;
+export default async function ContactPage({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale: requestedLocale } = await params;
+  const locale = requireLocale(requestedLocale);
   setRequestLocale(locale);
   const d = dicts[locale];
 

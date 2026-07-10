@@ -1,13 +1,14 @@
 import { setRequestLocale, getTranslations } from "next-intl/server";
 import type { Metadata } from "next";
-import type { Locale } from "@/i18n/routing";
+import { requireLocale } from "@/i18n/routing";
 import { Container, Section } from "@/ui/container";
 import { PageHero } from "@/components/site/page-hero";
 import { CtaBand } from "@/components/site/cta-band";
 import { Reveal } from "@/components/motion/reveal";
 
-export async function generateMetadata({ params }: { params: Promise<{ locale: Locale }> }): Promise<Metadata> {
-  const { locale } = await params;
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
+  const { locale: requestedLocale } = await params;
+  const locale = requireLocale(requestedLocale);
   const t = await getTranslations({ locale, namespace: "nav" });
   return { title: t("faq") };
 }
@@ -45,8 +46,9 @@ const content = {
   },
 };
 
-export default async function FaqPage({ params }: { params: Promise<{ locale: Locale }> }) {
-  const { locale } = await params;
+export default async function FaqPage({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale: requestedLocale } = await params;
+  const locale = requireLocale(requestedLocale);
   setRequestLocale(locale);
   const c = content[locale];
 
