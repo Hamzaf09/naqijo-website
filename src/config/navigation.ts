@@ -12,7 +12,7 @@ export interface NavItem {
 export const mainNav: NavItem[] = [
   { key: "about", href: "/about" },
   { key: "services", href: "/services" },
-  { key: "products", href: "/#products" },
+  { key: "products", href: "/products" },
   { key: "projects", href: "/projects" },
   { key: "consultation", href: "/consultation" },
   { key: "contact", href: "/contact" },

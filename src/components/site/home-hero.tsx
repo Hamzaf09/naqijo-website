@@ -4,7 +4,6 @@ import { useRef } from "react";
 import Image from "next/image";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { Link } from "@/i18n/navigation";
-import { approvedImages } from "@/config/images";
 import { Eyebrow } from "@/components/site/eyebrow";
 import { buttonVariants } from "@/ui/button";
 import type { Locale } from "@/i18n/routing";
@@ -16,7 +15,11 @@ interface HeroContent {
   titleAccent: string;
   subtitle: string;
   primary: string;
+  primaryHref: string;
   secondary: string;
+  secondaryHref: string;
+  /** Hero photograph (CMS media, or the static fallback resolved upstream). */
+  image: { src: string; alt: string };
 }
 
 const ease = [0.16, 1, 0.3, 1] as const;
@@ -26,12 +29,12 @@ const ease = [0.16, 1, 0.3, 1] as const;
  * single navy scrim for legibility. Monumental Thmanyah Black headline, sky-blue
  * accent to guide the eye, one gold action. Gentle scroll zoom + staged reveal.
  */
-export function HomeHero({ locale, content }: { locale: Locale; content: HeroContent }) {
+export function HomeHero({ content }: { locale: Locale; content: HeroContent }) {
   const ref = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
   const scale = useTransform(scrollYProgress, [0, 1], [1, 1.12]);
   const fade = useTransform(scrollYProgress, [0, 0.85], [1, 0]);
-  const img = approvedImages.heroLifestyle;
+  const img = content.image;
 
   return (
     <section
@@ -45,7 +48,7 @@ export function HomeHero({ locale, content }: { locale: Locale; content: HeroCon
           transition={{ duration: 1.4, ease }}
           className="relative h-full w-full"
         >
-          <Image src={img.src} alt={img.alt[locale]} fill priority sizes="100vw" className="object-cover" />
+          <Image src={img.src} alt={img.alt} fill priority sizes="100vw" className="object-cover" />
         </motion.div>
       </motion.div>
 
@@ -91,11 +94,11 @@ export function HomeHero({ locale, content }: { locale: Locale; content: HeroCon
             transition={{ duration: 0.8, ease, delay: 0.72 }}
             className="mt-11 flex flex-wrap gap-4"
           >
-            <Link href="/contact" className={cn(buttonVariants({ variant: "gold", size: "lg" }))}>
+            <Link href={content.primaryHref} className={cn(buttonVariants({ variant: "gold", size: "lg" }))}>
               {content.primary}
             </Link>
             <Link
-              href="/services"
+              href={content.secondaryHref}
               className={cn(
                 buttonVariants({ variant: "outline", size: "lg" }),
                 "border-white/40 text-white hover:border-white hover:bg-white/10",

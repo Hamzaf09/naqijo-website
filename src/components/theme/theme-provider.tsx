@@ -1,22 +1,31 @@
 "use client";
 
 import * as React from "react";
-
-type Theme = "light" | "dark" | "system";
-type Resolved = "light" | "dark";
+import {
+  isTheme,
+  THEME_STORAGE_KEY,
+  type ResolvedTheme,
+  type Theme,
+} from "@/components/theme/theme-utils";
 
 interface ThemeContextValue {
   theme: Theme;
-  resolvedTheme: Resolved;
+  resolvedTheme: ResolvedTheme;
   setTheme: (theme: Theme) => void;
 }
 
 const ThemeContext = React.createContext<ThemeContextValue | null>(null);
 
-const STORAGE_KEY = "theme";
+function getCookieTheme(): Theme | null {
+  if (typeof document === "undefined") {
+    return null;
+  }
 
-function isTheme(value: string | null): value is Theme {
-  return value === "light" || value === "dark" || value === "system";
+  const match = document.cookie
+    .split("; ")
+    .find((cookie) => cookie.startsWith(`${THEME_STORAGE_KEY}=`));
+  const value = match ? decodeURIComponent(match.split("=")[1] ?? "") : null;
+  return isTheme(value) ? value : null;
 }
 
 function getStoredTheme(): Theme {
@@ -24,8 +33,18 @@ function getStoredTheme(): Theme {
     return "system";
   }
 
-  const stored = localStorage.getItem(STORAGE_KEY);
+  const cookieTheme = getCookieTheme();
+  if (cookieTheme) {
+    return cookieTheme;
+  }
+
+  const stored = localStorage.getItem(THEME_STORAGE_KEY);
   return isTheme(stored) ? stored : "system";
+}
+
+function persistTheme(next: Theme) {
+  localStorage.setItem(THEME_STORAGE_KEY, next);
+  document.cookie = `${THEME_STORAGE_KEY}=${encodeURIComponent(next)}; Path=/; Max-Age=31536000; SameSite=Lax`;
 }
 
 function prefersDark(): boolean {
@@ -35,22 +54,22 @@ function prefersDark(): boolean {
   );
 }
 
-function resolve(theme: Theme): Resolved {
+function resolve(theme: Theme): ResolvedTheme {
   return theme === "system" ? (prefersDark() ? "dark" : "light") : theme;
 }
 
 /**
  * Minimal theme provider (replaces next-themes to avoid its client-rendered
- * <script>, which triggers a React 19 dev warning). The no-flash init runs from
- * `themeInitScript` in the server layout; this only manages state + the class.
+ * script element warning in React 19). First paint is handled by the server
+ * layout cookie + CSS media query; this only manages state + class afterwards.
  */
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const [theme, setThemeState] = React.useState<Theme>(getStoredTheme);
-  const [resolvedTheme, setResolvedTheme] = React.useState<Resolved>(() =>
+  const [resolvedTheme, setResolvedTheme] = React.useState<ResolvedTheme>(() =>
     resolve(getStoredTheme()),
   );
 
-  const applyResolvedTheme = React.useCallback((next: Resolved) => {
+  const applyResolvedTheme = React.useCallback((next: ResolvedTheme) => {
     const root = document.documentElement;
     root.classList.toggle("dark", next === "dark");
     root.style.colorScheme = next;
@@ -74,7 +93,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const setTheme = React.useCallback(
     (next: Theme) => {
       const nextResolvedTheme = resolve(next);
-      localStorage.setItem(STORAGE_KEY, next);
+      persistTheme(next);
       setThemeState(next);
       setResolvedTheme(nextResolvedTheme);
       applyResolvedTheme(nextResolvedTheme);
@@ -95,9 +114,3 @@ export function useTheme(): ThemeContextValue {
   if (!ctx) throw new Error("useTheme must be used within <ThemeProvider>");
   return ctx;
 }
-
-/**
- * Runs before paint from the server layout to keep the initial HTML and
- * hydration state aligned without a flash.
- */
-export const themeInitScript = `(function(){try{var e=localStorage.getItem('theme');var m=window.matchMedia('(prefers-color-scheme: dark)').matches;var d=e==='dark'||((!e||e==='system')&&m);var r=document.documentElement;r.classList.toggle('dark',d);r.style.colorScheme=d?'dark':'light';}catch(e){}})();`;

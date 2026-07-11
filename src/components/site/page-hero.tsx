@@ -1,7 +1,7 @@
 import { Container } from "@/ui/container";
 import { Display, Lead } from "@/ui/typography";
 import { Eyebrow } from "@/components/site/eyebrow";
-import { BrandImage } from "@/components/media/brand-image";
+import { BrandImage, type BrandMedia } from "@/components/media/brand-image";
 import { Reveal } from "@/components/motion/reveal";
 import type { ApprovedImageKey } from "@/config/images";
 import type { Locale } from "@/i18n/routing";
@@ -11,11 +11,12 @@ interface PageHeroProps {
   title: string;
   lead?: string;
   image?: ApprovedImageKey;
+  media?: BrandMedia | null;
   locale: Locale;
 }
 
 /** Consistent, calm interior-page hero: eyebrow + large title + optional lead + hero photo. */
-export function PageHero({ eyebrow, title, lead, image, locale }: PageHeroProps) {
+export function PageHero({ eyebrow, title, lead, image, media, locale }: PageHeroProps) {
   return (
     <section className="pt-16 sm:pt-20">
       <Container>
@@ -33,11 +34,12 @@ export function PageHero({ eyebrow, title, lead, image, locale }: PageHeroProps)
           ) : null}
         </div>
       </Container>
-      {image ? (
+      {image || media ? (
         <Reveal delay={0.1} className="mt-14">
           <Container>
             <BrandImage
               image={image}
+              media={media}
               locale={locale}
               ratio="21/9"
               priority

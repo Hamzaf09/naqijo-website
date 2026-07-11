@@ -12,7 +12,9 @@ import { FeaturedProducts } from "@/components/site/featured-products";
 import { SolutionRow } from "@/components/site/solution-row";
 import { CtaBand } from "@/components/site/cta-band";
 import { Reveal, RevealGroup, RevealImage } from "@/components/motion/reveal";
-import { homeContent } from "@/content/home";
+import { getHomepage } from "@/data/homepage";
+import { getFeaturedProducts } from "@/data/products";
+import { getFeaturedProjects } from "@/data/projects";
 import { cn } from "@/lib/utils";
 
 export default async function HomePage({
@@ -23,14 +25,37 @@ export default async function HomePage({
   const { locale: requestedLocale } = await params;
   const locale = requireLocale(requestedLocale);
   setRequestLocale(locale);
-  const c = homeContent[locale];
+
+  // Everything below is CMS-driven: the Homepage global holds the hero and all
+  // editorial copy; featured products/projects come from their collections.
+  const [home, featuredProducts, featuredProjects] = await Promise.all([
+    getHomepage(),
+    getFeaturedProducts(),
+    getFeaturedProjects(1),
+  ]);
+  const featuredProject = featuredProjects[0] ?? null;
 
   return (
     <>
       {/* ---------------- HERO ---------------- */}
-      <HomeHero locale={locale} content={c.hero} />
+      <HomeHero
+        locale={locale}
+        content={{
+          eyebrow: home.hero.eyebrow[locale],
+          titleTop: home.hero.titleTop[locale],
+          titleAccent: home.hero.titleAccent[locale],
+          subtitle: home.hero.subtitle[locale],
+          primary: home.hero.primaryLabel[locale],
+          primaryHref: home.hero.primaryHref,
+          secondary: home.hero.secondaryLabel[locale],
+          secondaryHref: home.hero.secondaryHref,
+          image: home.hero.image
+            ? { src: home.hero.image.src, alt: home.hero.image.alt[locale] }
+            : { src: "", alt: "" },
+        }}
+      />
 
-      {/* ---------------- INTRO STATEMENT ---------------- */}
+      {/* ---------------- ABOUT / INTRO STATEMENT ---------------- */}
       <Section className="relative overflow-hidden">
         {/* subtle engineering blueprint texture (fades out — never competes with text) */}
         <span
@@ -49,12 +74,14 @@ export default async function HomePage({
         <Container className="relative">
           <div className="grid gap-10 lg:grid-cols-12 lg:gap-16">
             <Reveal className="lg:col-span-5">
-              <Eyebrow>{c.intro.eyebrow}</Eyebrow>
-              <H2 className="mt-6 max-w-[14ch]">{c.intro.title}</H2>
+              <Eyebrow>{home.about.eyebrow[locale]}</Eyebrow>
+              <H2 className="mt-6 max-w-[14ch]">{home.about.title[locale]}</H2>
               <span aria-hidden className="mt-8 block h-0.5 w-16 bg-gold" />
             </Reveal>
             <Reveal delay={0.05} className="lg:col-span-7 lg:pt-2">
-              <p className="font-text text-[1.25rem] leading-[2] text-fg">{c.intro.body}</p>
+              <p className="font-text text-[1.25rem] leading-[2] text-fg">
+                {home.about.body[locale]}
+              </p>
             </Reveal>
           </div>
         </Container>
@@ -64,13 +91,13 @@ export default async function HomePage({
       <Section className="bg-bg-subtle">
         <Container>
           <div className="max-w-2xl">
-            <Eyebrow>{c.why.eyebrow}</Eyebrow>
-            <H2 className="mt-6">{c.why.title}</H2>
+            <Eyebrow>{home.why.eyebrow[locale]}</Eyebrow>
+            <H2 className="mt-6">{home.why.title[locale]}</H2>
           </div>
           <RevealGroup className="mt-14 grid gap-px overflow-hidden rounded-[var(--radius-xl)] border border-border bg-border sm:grid-cols-2 lg:grid-cols-4">
-            {c.why.pillars.map((p) => (
+            {home.why.pillars.map((p) => (
               <Reveal
-                key={p.t}
+                key={p.title[locale]}
                 as="div"
                 className="group/cell relative bg-surface p-8 transition-[background-color,box-shadow] duration-300 hover:z-10 hover:bg-bg-blue/40 hover:shadow-[var(--shadow-md)] lg:p-9"
               >
@@ -79,9 +106,11 @@ export default async function HomePage({
                   className="block size-2 rounded-full rounded-tr-none bg-gold transition-transform duration-300 group-hover/cell:scale-150"
                 />
                 <H3 className="mt-6 transition-colors duration-300 group-hover/cell:text-primary">
-                  {p.t}
+                  {p.title[locale]}
                 </H3>
-                <p className="mt-3 text-[1.075rem] leading-relaxed text-fg-muted">{p.d}</p>
+                <p className="mt-3 text-[1.075rem] leading-relaxed text-fg-muted">
+                  {p.description[locale]}
+                </p>
               </Reveal>
             ))}
           </RevealGroup>
@@ -92,21 +121,23 @@ export default async function HomePage({
       <Section>
         <Container>
           <div className="max-w-2xl">
-            <Eyebrow>{c.solutions.eyebrow}</Eyebrow>
-            <H2 className="mt-6">{c.solutions.title}</H2>
+            <Eyebrow>{home.solutions.eyebrow[locale]}</Eyebrow>
+            <H2 className="mt-6">{home.solutions.title[locale]}</H2>
           </div>
           <div className="mt-16 space-y-24 lg:space-y-32">
-            {c.solutions.items.map((s, i) => (
+            {home.solutions.items.map((s, i) => (
               <SolutionRow
-                key={s.href}
-                index={s.index}
-                eyebrow={s.eyebrow}
-                title={s.title}
-                description={s.desc}
-                bullets={s.bullets}
-                image={s.image}
+                key={s.href + i}
+                index={String(i + 1).padStart(2, "0")}
+                eyebrow={s.eyebrow[locale]}
+                title={s.title[locale]}
+                description={s.description[locale]}
+                bullets={s.bullets.map((b) => b[locale])}
+                media={
+                  s.image ? { src: s.image.src, alt: s.image.alt[locale] } : null
+                }
                 href={s.href}
-                ctaLabel={s.cta}
+                ctaLabel={s.ctaLabel[locale]}
                 locale={locale}
                 flip={i % 2 === 1}
               />
@@ -116,7 +147,17 @@ export default async function HomePage({
       </Section>
 
       {/* ---------------- FEATURED PRODUCTS ---------------- */}
-      <FeaturedProducts locale={locale} />
+      <FeaturedProducts
+        products={featuredProducts}
+        copy={{
+          eyebrow: home.featuredProducts.eyebrow[locale],
+          title: home.featuredProducts.title[locale],
+          subtitle: home.featuredProducts.subtitle[locale],
+          cta: home.featuredProducts.exploreLabel[locale],
+          viewAll: home.featuredProducts.viewAllLabel[locale],
+        }}
+        locale={locale}
+      />
 
       {/* ---------------- FEATURED PROJECT ---------------- */}
       <Section>
@@ -124,27 +165,56 @@ export default async function HomePage({
           <Reveal>
             <div className="mb-10 flex flex-wrap items-end justify-between gap-6">
               <div className="max-w-xl">
-                <Eyebrow>{c.featured.eyebrow}</Eyebrow>
-                <H2 className="mt-6">{c.featured.title}</H2>
-                <Lead className="mt-5 max-w-[44ch]">{c.featured.desc}</Lead>
+                <Eyebrow>{home.featuredProject.eyebrow[locale]}</Eyebrow>
+                <H2 className="mt-6">
+                  {featuredProject
+                    ? featuredProject.title[locale]
+                    : home.featuredProject.title[locale]}
+                </H2>
+                <Lead className="mt-5 max-w-[44ch]">
+                  {featuredProject
+                    ? featuredProject.shortDescription[locale]
+                    : home.featuredProject.subtitle[locale]}
+                </Lead>
               </div>
               <Link
                 href="/projects"
                 className={cn(buttonVariants({ variant: "outline", size: "md" }))}
               >
-                {c.featured.cta}
+                {home.featuredProject.ctaLabel[locale]}
               </Link>
             </div>
           </Reveal>
           <RevealImage>
-            <BrandImage
-              image="featuredProject"
-              locale={locale}
-              ratio="21/9"
-              signature
-              sizes="(max-width: 1320px) 100vw, 1320px"
-              className="shadow-[var(--shadow-lg)]"
-            />
+            {featuredProject ? (
+              <Link href={`/projects/${featuredProject.slug}`} className="group block">
+                <BrandImage
+                  media={
+                    featuredProject.heroImage
+                      ? {
+                          src: featuredProject.heroImage.src,
+                          alt: featuredProject.heroImage.alt[locale],
+                        }
+                      : null
+                  }
+                  image={featuredProject.heroImage ? undefined : "featuredProject"}
+                  locale={locale}
+                  ratio="21/9"
+                  signature
+                  sizes="(max-width: 1320px) 100vw, 1320px"
+                  className="shadow-[var(--shadow-lg)] transition-transform duration-500 group-hover:scale-[1.005]"
+                />
+              </Link>
+            ) : (
+              <BrandImage
+                image="featuredProject"
+                locale={locale}
+                ratio="21/9"
+                signature
+                sizes="(max-width: 1320px) 100vw, 1320px"
+                className="shadow-[var(--shadow-lg)]"
+              />
+            )}
           </RevealImage>
         </Container>
       </Section>
@@ -153,17 +223,25 @@ export default async function HomePage({
       <Section>
         <Container>
           <div className="max-w-2xl">
-            <Eyebrow>{c.process.eyebrow}</Eyebrow>
-            <H2 className="mt-6">{c.process.title}</H2>
+            <Eyebrow>{home.process.eyebrow[locale]}</Eyebrow>
+            <H2 className="mt-6">{home.process.title[locale]}</H2>
           </div>
           <RevealGroup className="mt-14 grid gap-x-8 gap-y-12 sm:grid-cols-2 lg:grid-cols-4">
-            {c.process.steps.map((s) => (
-              <Reveal key={s.n} as="div" className="relative border-t border-border pt-7">
+            {home.process.steps.map((s, i) => (
+              <Reveal
+                key={s.title[locale]}
+                as="div"
+                className="relative border-t border-border pt-7"
+              >
                 <span aria-hidden className="absolute inset-x-0 -top-px h-px bg-border-strong" />
                 <span aria-hidden className="absolute -top-px start-0 h-0.5 w-12 bg-gold" />
-                <span className="font-display text-4xl font-extrabold text-gold">{s.n}</span>
-                <H3 className="mt-5">{s.t}</H3>
-                <p className="mt-3 text-[1.075rem] leading-relaxed text-fg-muted">{s.d}</p>
+                <span className="font-display text-4xl font-extrabold text-gold">
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+                <H3 className="mt-5">{s.title[locale]}</H3>
+                <p className="mt-3 text-[1.075rem] leading-relaxed text-fg-muted">
+                  {s.description[locale]}
+                </p>
               </Reveal>
             ))}
           </RevealGroup>
@@ -174,12 +252,13 @@ export default async function HomePage({
       <Section className="bg-bg-subtle">
         <Container>
           <div className="max-w-2xl">
-            <Eyebrow>{c.testimonials.eyebrow}</Eyebrow>
-            <H2 className="mt-6">{c.testimonials.title}</H2>
+            <Eyebrow>{home.testimonials.eyebrow[locale]}</Eyebrow>
+            <H2 className="mt-6">{home.testimonials.title[locale]}</H2>
           </div>
           <RevealGroup className="mt-14 grid gap-6 lg:grid-cols-3">
-            {c.testimonials.items.map((tst) => {
-              const initials = tst.n
+            {home.testimonials.items.map((tst) => {
+              const name = tst.name[locale];
+              const initials = name
                 .split(/\s+/)
                 .filter((w) => /\p{L}/u.test(w))
                 .slice(0, 2)
@@ -187,7 +266,7 @@ export default async function HomePage({
                 .join("");
               return (
                 <Reveal
-                  key={tst.n}
+                  key={name}
                   as="div"
                   className="flex flex-col rounded-[var(--radius-xl)] border border-border bg-surface p-8 shadow-[var(--shadow-xs)] transition-all duration-300 hover:-translate-y-1.5 hover:border-transparent hover:shadow-[var(--shadow-lg)] lg:p-9"
                 >
@@ -197,7 +276,7 @@ export default async function HomePage({
                     ))}
                   </div>
                   <p className="mt-5 flex-1 font-text text-[1.15rem] leading-[1.9] text-fg">
-                    {tst.q}
+                    {tst.quote[locale]}
                   </p>
                   <div className="mt-8 flex items-center gap-3.5 border-t border-border pt-6">
                     <span className="grid size-11 shrink-0 place-items-center rounded-full bg-bg-blue font-semibold text-primary">
@@ -205,10 +284,10 @@ export default async function HomePage({
                     </span>
                     <div className="min-w-0">
                       <p className="flex items-center gap-1.5 font-semibold text-fg">
-                        {tst.n}
+                        {name}
                         <BadgeCheck className="size-4 shrink-0 text-primary" aria-label={locale === "ar" ? "عميل موثّق" : "verified"} />
                       </p>
-                      <p className="text-sm text-fg-muted">{tst.r}</p>
+                      <p className="text-sm text-fg-muted">{tst.role[locale]}</p>
                     </div>
                   </div>
                 </Reveal>
@@ -222,15 +301,17 @@ export default async function HomePage({
       <section className="bg-navy text-white">
         <Container>
           <div className="py-20 lg:py-24">
-            <Eyebrow tone="onDark">{c.stats.eyebrow}</Eyebrow>
+            <Eyebrow tone="onDark">{home.stats.eyebrow[locale]}</Eyebrow>
             <RevealGroup className="mt-12 grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
-              {c.stats.items.map((s) => (
-                <Reveal key={s.l} as="div">
+              {home.stats.items.map((s) => (
+                <Reveal key={s.label[locale]} as="div">
                   <div className="font-display text-[clamp(2.75rem,5.5vw,4.25rem)] font-extrabold leading-none text-white">
-                    {s.v}
+                    {s.value[locale]}
                   </div>
                   <div className="mt-5 h-px w-12 bg-gold" />
-                  <div className="mt-5 text-[1.05rem] font-medium text-white/85">{s.l}</div>
+                  <div className="mt-5 text-[1.05rem] font-medium text-white/85">
+                    {s.label[locale]}
+                  </div>
                 </Reveal>
               ))}
             </RevealGroup>
@@ -238,13 +319,13 @@ export default async function HomePage({
         </Container>
       </section>
 
-      {/* ---------------- CTA ---------------- */}
+      {/* ---------------- CONTACT CTA ---------------- */}
       <CtaBand
-        eyebrow={c.cta.eyebrow}
-        title={c.cta.title}
-        subtitle={c.cta.subtitle}
+        eyebrow={home.cta.eyebrow[locale]}
+        title={home.cta.title[locale]}
+        subtitle={home.cta.subtitle[locale]}
         locale={locale}
-        whatsappText={c.cta.whatsapp}
+        whatsappText={home.cta.whatsappText[locale]}
       />
     </>
   );

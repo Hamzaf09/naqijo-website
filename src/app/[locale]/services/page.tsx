@@ -7,7 +7,7 @@ import { PageHero } from "@/components/site/page-hero";
 import { SolutionRow } from "@/components/site/solution-row";
 import { CtaBand } from "@/components/site/cta-band";
 import { Reveal } from "@/components/motion/reveal";
-import { services, serviceSlugs } from "@/content/services";
+import { getAllServices } from "@/data/services";
 import type { Metadata } from "next";
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
@@ -32,7 +32,7 @@ export default async function ServicesPage({ params }: { params: Promise<{ local
   const { locale: requestedLocale } = await params;
   const locale = requireLocale(requestedLocale);
   setRequestLocale(locale);
-  const list = services[locale];
+  const servicesList = await getAllServices();
 
   return (
     <>
@@ -51,24 +51,25 @@ export default async function ServicesPage({ params }: { params: Promise<{ local
       <Section>
         <Container>
           <div className="space-y-24 lg:space-y-32">
-            {serviceSlugs.map((slug, i) => {
-              const s = list[slug];
-              return (
-                <SolutionRow
-                  key={slug}
-                  index={s.index}
-                  eyebrow={s.eyebrow}
-                  title={s.title}
-                  description={s.lead}
-                  bullets={s.features.slice(0, 3).map((f) => f.t)}
-                  image={s.image}
-                  href={`/services/${slug}`}
-                  ctaLabel={locale === "ar" ? "التفاصيل الكاملة" : "Full details"}
-                  locale={locale}
-                  flip={i % 2 === 1}
-                />
-              );
-            })}
+            {servicesList.map((s, i) => (
+              <SolutionRow
+                key={s.slug}
+                index={String(i + 1).padStart(2, "0")}
+                eyebrow={s.name[locale]}
+                title={s.headline[locale]}
+                description={s.shortDescription[locale]}
+                bullets={s.features.slice(0, 3).map((f) => f.title[locale])}
+                media={
+                  s.heroImage
+                    ? { src: s.heroImage.src, alt: s.heroImage.alt[locale] }
+                    : null
+                }
+                href={`/services/${s.slug}`}
+                ctaLabel={locale === "ar" ? "التفاصيل الكاملة" : "Full details"}
+                locale={locale}
+                flip={i % 2 === 1}
+              />
+            ))}
           </div>
 
           <div className="mt-24 grid gap-6 border-t border-border pt-16 sm:grid-cols-2">

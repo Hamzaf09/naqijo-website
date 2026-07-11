@@ -32,6 +32,7 @@ yarn-error.log*
 
 # env files (can opt-in for committing if needed)
 .env*
+!.env.example
 
 # vercel
 .vercel
@@ -47,3 +48,8 @@ next-env.d.ts
 /src/fonts/**/*.otf
 /src/fonts/**/*.ttf
 !/src/fonts/alexandria/Alexandria[[]wght[]].ttf
+
+# Payload CMS (local dev artifacts)
+naqijo.db
+naqijo.db-*
+/media

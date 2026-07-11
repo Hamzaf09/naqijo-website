@@ -1,9 +1,9 @@
 import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
-import { BrandImage } from "@/components/media/brand-image";
+import { BrandImage, type BrandMedia } from "@/components/media/brand-image";
 import { Eyebrow } from "@/components/site/eyebrow";
 import { buttonVariants } from "@/ui/button";
-import { siteConfig } from "@/config/site";
+import { getSettings } from "@/data/settings";
 import type { ApprovedImageKey } from "@/config/images";
 import type { Locale } from "@/i18n/routing";
 import { cn } from "@/lib/utils";
@@ -14,6 +14,7 @@ interface CtaBandProps {
   subtitle: string;
   locale: Locale;
   image?: ApprovedImageKey;
+  media?: BrandMedia | null;
   whatsappText?: string;
 }
 
@@ -24,10 +25,12 @@ export async function CtaBand({
   subtitle,
   locale,
   image = "brandClosing",
+  media,
   whatsappText,
 }: CtaBandProps) {
   const t = await getTranslations("cta");
-  const wa = `https://wa.me/${siteConfig.whatsapp.replace(/[^\d]/g, "")}${
+  const settings = await getSettings();
+  const wa = `https://wa.me/${settings.whatsapp.replace(/[^\d]/g, "")}${
     whatsappText ? `?text=${encodeURIComponent(whatsappText)}` : ""
   }`;
 
@@ -65,6 +68,7 @@ export async function CtaBand({
         <div className="relative min-h-[440px] lg:min-h-[580px]">
           <BrandImage
             image={image}
+            media={media}
             locale={locale}
             ratio="auto"
             className="absolute inset-0 h-full w-full rounded-none bg-navy"

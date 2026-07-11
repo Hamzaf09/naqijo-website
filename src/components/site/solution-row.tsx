@@ -1,5 +1,5 @@
 import { Link } from "@/i18n/navigation";
-import { BrandImage } from "@/components/media/brand-image";
+import { BrandImage, type BrandMedia } from "@/components/media/brand-image";
 import { Eyebrow } from "@/components/site/eyebrow";
 import { H2, Lead } from "@/ui/typography";
 import { Reveal, RevealImage } from "@/components/motion/reveal";
@@ -13,7 +13,8 @@ interface SolutionRowProps {
   title: string;
   description: string;
   bullets?: string[];
-  image: ApprovedImageKey;
+  image?: ApprovedImageKey;
+  media?: BrandMedia | null;
   href: string;
   ctaLabel: string;
   locale: Locale;
@@ -32,6 +33,7 @@ export function SolutionRow({
   description,
   bullets,
   image,
+  media,
   href,
   ctaLabel,
   locale,
@@ -42,6 +44,7 @@ export function SolutionRow({
       <RevealImage className={cn(flip && "lg:order-2")}>
         <BrandImage
           image={image}
+          media={media}
           locale={locale}
           ratio="4/3"
           signature

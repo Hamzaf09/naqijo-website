@@ -6,7 +6,7 @@ import { Display, Lead } from "@/ui/typography";
 import { Eyebrow } from "@/components/site/eyebrow";
 import { RequestFlow } from "@/components/site/request-flow";
 import { Reveal } from "@/components/motion/reveal";
-import { siteConfig } from "@/config/site";
+import { getSettings } from "@/data/settings";
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const { locale: requestedLocale } = await params;
@@ -109,6 +109,7 @@ export default async function ContactPage({ params }: { params: Promise<{ locale
   const locale = requireLocale(requestedLocale);
   setRequestLocale(locale);
   const d = dicts[locale];
+  const settings = await getSettings();
 
   return (
     <Section className="pt-16 sm:pt-20">
@@ -135,12 +136,12 @@ export default async function ContactPage({ params }: { params: Promise<{ locale
               <dl className="mt-8 space-y-8">
                 <div>
                   <dt className="text-sm text-fg-subtle">{d.addressLabel}</dt>
-                  <dd className="mt-2 leading-relaxed text-fg">{siteConfig.address[locale]}</dd>
+                  <dd className="mt-2 leading-relaxed text-fg">{settings.address[locale]}</dd>
                 </div>
                 <div>
                   <dt className="text-sm text-fg-subtle">{d.phoneLabel}</dt>
                   <dd className="mt-2 space-y-1" dir="ltr">
-                    {siteConfig.phones.map((p) => (
+                    {settings.phones.map((p) => (
                       <div key={p}>
                         <a href={`tel:${p}`} className="text-fg hover:text-primary">
                           {p.replace("+962", "+962 ")}
@@ -152,14 +153,14 @@ export default async function ContactPage({ params }: { params: Promise<{ locale
                 <div>
                   <dt className="text-sm text-fg-subtle">{d.emailLabel}</dt>
                   <dd className="mt-2" dir="ltr">
-                    <a href={`mailto:${siteConfig.email}`} className="text-fg hover:text-primary">
-                      {siteConfig.email}
+                    <a href={`mailto:${settings.email}`} className="text-fg hover:text-primary">
+                      {settings.email}
                     </a>
                   </dd>
                 </div>
                 <div>
                   <dt className="text-sm text-fg-subtle">{d.hoursLabel}</dt>
-                  <dd className="mt-2 text-fg">{siteConfig.hours[locale]}</dd>
+                  <dd className="mt-2 text-fg">{settings.workingHours[locale]}</dd>
                 </div>
               </dl>
             </div>
@@ -167,7 +168,15 @@ export default async function ContactPage({ params }: { params: Promise<{ locale
 
           {/* Flow */}
           <Reveal delay={0.05}>
-            <RequestFlow dict={d.flow} locale={locale} />
+            <RequestFlow
+              dict={d.flow}
+              locale={locale}
+              contact={{
+                whatsapp: settings.whatsapp,
+                email: settings.email,
+                brandName: settings.siteName[locale],
+              }}
+            />
           </Reveal>
         </div>
       </Container>

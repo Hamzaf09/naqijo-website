@@ -5,9 +5,15 @@ import { useForm, useWatch } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { Check, MessageCircle, Mail } from "lucide-react";
-import { siteConfig } from "@/config/site";
 import { Button } from "@/ui/button";
 import { cn } from "@/lib/utils";
+
+/** Contact facts resolved server-side from the CMS Settings global. */
+export interface RequestFlowContact {
+  whatsapp: string;
+  email: string;
+  brandName: string;
+}
 
 type Dict = {
   steps: string[];
@@ -47,7 +53,15 @@ type FormValues = z.infer<typeof schema>;
 const fieldClass =
   "w-full rounded-[var(--radius-md)] border border-border-strong bg-surface px-4 h-12 text-fg placeholder:text-fg-subtle transition focus:border-primary focus:outline-none focus:ring-2 focus:ring-[color-mix(in_srgb,var(--ring)_35%,transparent)]";
 
-export function RequestFlow({ dict, locale }: { dict: Dict; locale: string }) {
+export function RequestFlow({
+  dict,
+  locale,
+  contact,
+}: {
+  dict: Dict;
+  locale: string;
+  contact: RequestFlowContact;
+}) {
   const [step, setStep] = useState(0);
   const {
     register,
@@ -69,7 +83,7 @@ export function RequestFlow({ dict, locale }: { dict: Dict; locale: string }) {
     const propLabel = dict.propTypes.find((p) => p.value === v.propertyType)?.label ?? v.propertyType;
     const L = locale === "ar";
     return [
-      `${L ? "طلب جديد من الموقع" : "New website request"} — ${siteConfig.brand[locale as "ar" | "en"]}`,
+      `${L ? "طلب جديد من الموقع" : "New website request"} — ${contact.brandName}`,
       `${L ? "النوع" : "Type"}: ${intentLabel}`,
       propLabel ? `${L ? "العقار" : "Property"}: ${propLabel}` : "",
       v.city ? `${L ? "المدينة" : "City"}: ${v.city}` : "",
@@ -83,13 +97,13 @@ export function RequestFlow({ dict, locale }: { dict: Dict; locale: string }) {
   };
 
   const goWhatsApp = handleSubmit((v) => {
-    const url = `https://wa.me/${siteConfig.whatsapp.replace(/[^\d]/g, "")}?text=${encodeURIComponent(compose(v))}`;
+    const url = `https://wa.me/${contact.whatsapp.replace(/[^\d]/g, "")}?text=${encodeURIComponent(compose(v))}`;
     window.open(url, "_blank", "noopener,noreferrer");
   });
   const goEmail = handleSubmit((v) => {
     const subject = locale === "ar" ? "طلب استشارة من الموقع" : "Website request";
     window.open(
-      `mailto:${siteConfig.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(compose(v))}`,
+      `mailto:${contact.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(compose(v))}`,
       "_self",
     );
   });

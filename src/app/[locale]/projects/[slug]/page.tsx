@@ -9,31 +9,44 @@ import { Eyebrow } from "@/components/site/eyebrow";
 import { BrandImage } from "@/components/media/brand-image";
 import { CtaBand } from "@/components/site/cta-band";
 import { Reveal } from "@/components/motion/reveal";
-import { projects, projectSlugs } from "@/content/projects";
+import { getProjectBySlug, getProjectSlugs } from "@/data/projects";
 
-export function generateStaticParams() {
-  return routing.locales.flatMap((locale) => projectSlugs.map((slug) => ({ locale, slug })));
+export const dynamicParams = true;
+
+export async function generateStaticParams() {
+  const slugs = await getProjectSlugs();
+  return routing.locales.flatMap((locale) =>
+    slugs.map((slug) => ({ locale, slug })),
+  );
 }
 
-export async function generateMetadata({ params }: { params: Promise<{ locale: string; slug: string }> }): Promise<Metadata> {
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string; slug: string }>;
+}): Promise<Metadata> {
   const { locale: requestedLocale, slug } = await params;
   const locale = requireLocale(requestedLocale);
-  const p = projects[locale][slug];
-  return p ? { title: p.title, description: p.summary } : {};
+  const p = await getProjectBySlug(slug);
+  return p ? { title: p.title[locale], description: p.shortDescription[locale] } : {};
 }
 
-export default async function ProjectDetailPage({ params }: { params: Promise<{ locale: string; slug: string }> }) {
+export default async function ProjectDetailPage({
+  params,
+}: {
+  params: Promise<{ locale: string; slug: string }>;
+}) {
   const { locale: requestedLocale, slug } = await params;
   const locale = requireLocale(requestedLocale);
   setRequestLocale(locale);
-  const p = projects[locale][slug];
+  const p = await getProjectBySlug(slug);
   if (!p) notFound();
 
   const blocks = [
-    { t: locale === "ar" ? "التحدّي" : "The challenge", d: p.challenge },
-    { t: locale === "ar" ? "الحل الهندسي" : "The engineering solution", d: p.solution },
-    { t: locale === "ar" ? "الأثر" : "The outcome", d: p.outcome },
-  ];
+    { t: locale === "ar" ? "التحدّي" : "The challenge", d: p.challenge[locale] },
+    { t: locale === "ar" ? "الحل الهندسي" : "The engineering solution", d: p.solution[locale] },
+    { t: locale === "ar" ? "الأثر" : "The outcome", d: p.outcome[locale] },
+  ].filter((b) => b.d);
 
   return (
     <>
@@ -41,28 +54,40 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
         <Container>
           <div className="max-w-4xl">
             <Reveal>
-              <Eyebrow>{p.category}</Eyebrow>
+              <Eyebrow>{p.category[locale]}</Eyebrow>
             </Reveal>
             <Reveal delay={0.05}>
-              <Display className="mt-7">{p.title}</Display>
+              <Display className="mt-7">{p.title[locale]}</Display>
             </Reveal>
             <Reveal delay={0.1}>
-              <Lead className="mt-8 max-w-[52ch]">{p.summary}</Lead>
+              <Lead className="mt-8 max-w-[52ch]">{p.shortDescription[locale]}</Lead>
             </Reveal>
             <Reveal delay={0.12}>
               <div className="mt-8 flex flex-wrap gap-x-10 gap-y-3 text-sm text-fg-muted">
-                <span>{p.location}</span>
-                <span>{p.year}</span>
-                <span>{p.scope.join(locale === "ar" ? " · " : " · ")}</span>
+                {p.location[locale] ? <span>{p.location[locale]}</span> : null}
+                {p.year ? <span>{p.year}</span> : null}
+                {p.scope.length > 0 ? (
+                  <span>{p.scope.map((s) => s[locale]).join(" · ")}</span>
+                ) : null}
               </div>
             </Reveal>
           </div>
         </Container>
-        <Reveal delay={0.1} className="mt-14">
-          <Container>
-            <BrandImage image={p.image} locale={locale} ratio="21/9" priority signature className="shadow-[var(--shadow-lg)]" sizes="(max-width: 1320px) 100vw, 1320px" />
-          </Container>
-        </Reveal>
+        {p.heroImage ? (
+          <Reveal delay={0.1} className="mt-14">
+            <Container>
+              <BrandImage
+                media={{ src: p.heroImage.src, alt: p.heroImage.alt[locale] }}
+                locale={locale}
+                ratio="21/9"
+                priority
+                signature
+                className="shadow-[var(--shadow-lg)]"
+                sizes="(max-width: 1320px) 100vw, 1320px"
+              />
+            </Container>
+          </Reveal>
+        ) : null}
       </Section>
 
       <Section>
