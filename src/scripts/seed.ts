@@ -6,6 +6,7 @@
  * Run:  set -a; . ./.env; set +a; npx tsx src/scripts/seed.ts
  */
 import path from "path";
+import { randomBytes } from "crypto";
 import { fileURLToPath } from "url";
 import { getPayload } from "payload";
 
@@ -54,19 +55,26 @@ async function seed() {
   const payload = await getPayload({ config });
 
   // ── First admin user ──────────────────────────────────────
+  // No hardcoded credentials: use SEED_ADMIN_PASSWORD, otherwise generate a
+  // strong random one and print it once. Idempotent — skips if a user exists.
   const users = await payload.find({ collection: "users", limit: 1 });
   if (users.totalDocs === 0) {
-    const password = process.env.SEED_ADMIN_PASSWORD || "ChangeMe!2026";
+    const email = process.env.SEED_ADMIN_EMAIL || "admin@naqijo.com";
+    const generated = !process.env.SEED_ADMIN_PASSWORD;
+    const password =
+      process.env.SEED_ADMIN_PASSWORD || `Naqi-${randomBytes(12).toString("base64url")}`;
     await payload.create({
       collection: "users",
-      data: {
-        email: process.env.SEED_ADMIN_EMAIL || "admin@naqijo.com",
-        password,
-        name: "NaqiJo Admin",
-        role: "super-admin",
-      },
+      data: { email, password, name: "NaqiJo Admin", role: "super-admin" },
     });
-    payload.logger.info(`Created admin user (password: ${password})`);
+    if (generated) {
+      payload.logger.warn(`Created admin "${email}" with a GENERATED password: ${password}`);
+      payload.logger.warn("Save it now and change it after first login.");
+    } else {
+      payload.logger.info(`Created admin "${email}" (password from SEED_ADMIN_PASSWORD).`);
+    }
+  } else {
+    payload.logger.info("Admin user already exists, skipping.");
   }
 
   // ── Categories ────────────────────────────────────────────
