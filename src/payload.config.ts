@@ -8,12 +8,19 @@ import { sqliteAdapter } from "@payloadcms/db-sqlite";
 import { s3Storage } from "@payloadcms/storage-s3";
 import sharp from "sharp";
 
+import { importExportPlugin } from "@payloadcms/plugin-import-export";
+import { searchPlugin } from "@payloadcms/plugin-search";
+
 import { Users } from "./collections/Users";
 import { Media } from "./collections/Media";
 import { Categories } from "./collections/Categories";
 import { Products } from "./collections/Products";
 import { Services } from "./collections/Services";
 import { Projects } from "./collections/Projects";
+import { Testimonials } from "./collections/Testimonials";
+import { Faqs } from "./collections/Faqs";
+import { Banners } from "./collections/Banners";
+import { Posts } from "./collections/Posts";
 import { Settings } from "./globals/Settings";
 import { Homepage } from "./globals/Homepage";
 
@@ -59,8 +66,22 @@ export default buildConfig({
     meta: {
       titleSuffix: " — NaqiJo CMS",
     },
+    components: {
+      beforeDashboard: ["/components/admin/BeforeDashboard#BeforeDashboard"],
+    },
   },
-  collections: [Users, Media, Categories, Products, Services, Projects],
+  collections: [
+    Users,
+    Media,
+    Categories,
+    Products,
+    Services,
+    Projects,
+    Testimonials,
+    Faqs,
+    Banners,
+    Posts,
+  ],
   globals: [Settings, Homepage],
   localization: {
     locales: [
@@ -73,7 +94,36 @@ export default buildConfig({
   editor: lexicalEditor(),
   db,
   sharp,
-  plugins: [...storagePlugins],
+  plugins: [
+    ...storagePlugins,
+    // CSV/JSON export + bulk CSV import on the catalog & content collections.
+    importExportPlugin({
+      collections: [
+        { slug: "products" },
+        { slug: "categories" },
+        { slug: "services" },
+        { slug: "projects" },
+        { slug: "testimonials" },
+        { slug: "faqs" },
+        { slug: "posts" },
+      ],
+    }),
+    // Unified search index across all public content (admin "Search Results"
+    // collection + queryable API for a future frontend search).
+    searchPlugin({
+      collections: ["products", "services", "projects", "testimonials", "faqs", "posts"],
+      defaultPriorities: { products: 10, services: 20, projects: 30, posts: 40 },
+      beforeSync: ({ originalDoc, searchDoc }) => ({
+        ...searchDoc,
+        title:
+          originalDoc?.name ||
+          originalDoc?.title ||
+          originalDoc?.customerName ||
+          originalDoc?.question ||
+          searchDoc.title,
+      }),
+    }),
+  ],
   secret: process.env.PAYLOAD_SECRET || "",
   typescript: {
     outputFile: path.resolve(dirname, "payload-types.ts"),

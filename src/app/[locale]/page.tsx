@@ -15,6 +15,7 @@ import { Reveal, RevealGroup, RevealImage } from "@/components/motion/reveal";
 import { getHomepage } from "@/data/homepage";
 import { getFeaturedProducts } from "@/data/products";
 import { getFeaturedProjects } from "@/data/projects";
+import { getFeaturedTestimonials } from "@/data/testimonials";
 import { cn } from "@/lib/utils";
 
 export default async function HomePage({
@@ -28,12 +29,17 @@ export default async function HomePage({
 
   // Everything below is CMS-driven: the Homepage global holds the hero and all
   // editorial copy; featured products/projects come from their collections.
-  const [home, featuredProducts, featuredProjects] = await Promise.all([
-    getHomepage(),
-    getFeaturedProducts(),
-    getFeaturedProjects(1),
-  ]);
+  const [home, featuredProducts, featuredProjects, featuredTestimonials] =
+    await Promise.all([
+      getHomepage(),
+      getFeaturedProducts(),
+      getFeaturedProjects(1),
+      getFeaturedTestimonials(3),
+    ]);
   const featuredProject = featuredProjects[0] ?? null;
+  // Testimonials collection drives the section; global copy is the fallback.
+  const testimonialItems =
+    featuredTestimonials.length > 0 ? featuredTestimonials : home.testimonials.items;
 
   return (
     <>
@@ -256,7 +262,7 @@ export default async function HomePage({
             <H2 className="mt-6">{home.testimonials.title[locale]}</H2>
           </div>
           <RevealGroup className="mt-14 grid gap-6 lg:grid-cols-3">
-            {home.testimonials.items.map((tst) => {
+            {testimonialItems.map((tst) => {
               const name = tst.name[locale];
               const initials = name
                 .split(/\s+/)

@@ -1,5 +1,6 @@
 import type { CollectionConfig } from "payload";
-import { anyone, authenticated } from "../access/authenticated";
+import { anyone } from "../access/authenticated";
+import { canDelete, canWrite } from "../access/roles";
 
 /**
  * Central media library. Uploads are auto-converted to WebP (alpha/transparency
@@ -8,14 +9,18 @@ import { anyone, authenticated } from "../access/authenticated";
  */
 export const Media: CollectionConfig = {
   slug: "media",
-  admin: { group: "Library" },
+  admin: {
+    group: "Library",
+    // Admin list search matches filename, alt text, and caption.
+    listSearchableFields: ["filename", "alt", "caption"],
+  },
   // Enable the media-library folders feature (create/organize into folders).
   folders: true,
   access: {
     read: anyone,
-    create: authenticated,
-    update: authenticated,
-    delete: authenticated,
+    create: canWrite,
+    update: canWrite,
+    delete: canDelete,
   },
   upload: {
     mimeTypes: ["image/*", "application/pdf"],

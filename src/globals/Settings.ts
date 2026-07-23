@@ -1,5 +1,6 @@
 import type { GlobalConfig } from "payload";
-import { anyone, authenticated } from "../access/authenticated";
+import { anyone } from "../access/authenticated";
+import { isAdmin } from "../access/roles";
 
 /**
  * Global site settings — identity, contact facts, social, footer, default SEO
@@ -9,7 +10,7 @@ import { anyone, authenticated } from "../access/authenticated";
 export const Settings: GlobalConfig = {
   slug: "settings",
   admin: { group: "Configuration" },
-  access: { read: anyone, update: authenticated },
+  access: { read: anyone, update: isAdmin },
   fields: [
     {
       type: "tabs",

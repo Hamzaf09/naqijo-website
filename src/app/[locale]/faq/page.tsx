@@ -5,6 +5,7 @@ import { Container, Section } from "@/ui/container";
 import { PageHero } from "@/components/site/page-hero";
 import { CtaBand } from "@/components/site/cta-band";
 import { Reveal } from "@/components/motion/reveal";
+import { getFaqs } from "@/data/faqs";
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const { locale: requestedLocale } = await params;
@@ -52,6 +53,13 @@ export default async function FaqPage({ params }: { params: Promise<{ locale: st
   setRequestLocale(locale);
   const c = content[locale];
 
+  // FAQ manager (CMS collection) drives the list; static copy is the fallback.
+  const cmsFaqs = await getFaqs();
+  const items =
+    cmsFaqs.length > 0
+      ? cmsFaqs.map((f) => ({ q: f.question[locale], a: f.answer[locale] }))
+      : c.items;
+
   return (
     <>
       <PageHero eyebrow={c.eyebrow} title={c.title} lead={c.lead} locale={locale} />
@@ -59,7 +67,7 @@ export default async function FaqPage({ params }: { params: Promise<{ locale: st
       <Section>
         <Container>
           <div className="mx-auto max-w-3xl">
-            {c.items.map((item, i) => (
+            {items.map((item, i) => (
               <Reveal key={item.q} as="div">
                 <details className="group border-b border-border py-6" {...(i === 0 ? { open: true } : {})}>
                   <summary className="flex cursor-pointer list-none items-center justify-between gap-6">

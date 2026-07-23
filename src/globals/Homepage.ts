@@ -1,5 +1,6 @@
 import type { GlobalConfig } from "payload";
-import { anyone, authenticated } from "../access/authenticated";
+import { anyone } from "../access/authenticated";
+import { canWrite } from "../access/roles";
 
 /** Small helper: a localized section header (eyebrow + title [+ subtitle]). */
 const sectionHeader = (withSubtitle = false) => [
@@ -18,7 +19,7 @@ const sectionHeader = (withSubtitle = false) => [
 export const Homepage: GlobalConfig = {
   slug: "homepage",
   admin: { group: "Content" },
-  access: { read: anyone, update: authenticated },
+  access: { read: anyone, update: canWrite },
   fields: [
     {
       type: "tabs",

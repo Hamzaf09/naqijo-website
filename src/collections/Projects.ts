@@ -1,5 +1,7 @@
 import type { CollectionConfig } from "payload";
-import { anyone, authenticated } from "../access/authenticated";
+import { anyone } from "../access/authenticated";
+import { canDelete, canWrite } from "../access/roles";
+import { auditFields, auditStamp } from "../lib/payload/audit";
 import { seoGroup, slugField } from "../lib/payload/fields";
 
 /**
@@ -17,11 +19,12 @@ export const Projects: CollectionConfig = {
   },
   access: {
     read: anyone,
-    create: authenticated,
-    update: authenticated,
-    delete: authenticated,
+    create: canWrite,
+    update: canWrite,
+    delete: canDelete,
   },
   versions: { drafts: { autosave: false }, maxPerDoc: 20 },
+  hooks: { beforeChange: [auditStamp] },
   fields: [
     {
       name: "featured",
@@ -119,5 +122,6 @@ export const Projects: CollectionConfig = {
         { label: "SEO", fields: [seoGroup] },
       ],
     },
+    ...auditFields,
   ],
 };

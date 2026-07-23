@@ -1,5 +1,6 @@
 import type { CollectionConfig } from "payload";
-import { anyone, authenticated } from "../access/authenticated";
+import { anyone } from "../access/authenticated";
+import { canDelete, canWrite } from "../access/roles";
 import { formatSlug } from "../lib/payload/format-slug";
 
 /**
@@ -15,9 +16,9 @@ export const Categories: CollectionConfig = {
   },
   access: {
     read: anyone,
-    create: authenticated,
-    update: authenticated,
-    delete: authenticated,
+    create: canWrite,
+    update: canWrite,
+    delete: canDelete,
   },
   fields: [
     { name: "name", type: "text", localized: true, required: true },
