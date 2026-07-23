@@ -12,6 +12,7 @@ import { Reveal } from "@/components/motion/reveal";
 import { getProjectBySlug, getProjectSlugs } from "@/data/projects";
 
 export const dynamicParams = true;
+export const revalidate = 300;
 
 export async function generateStaticParams() {
   const slugs = await getProjectSlugs();

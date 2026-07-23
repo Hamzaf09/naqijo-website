@@ -24,6 +24,8 @@ const content = {
   },
 } as const;
 
+export const revalidate = 300;
+
 export async function generateMetadata({
   params,
 }: {

@@ -23,6 +23,7 @@ import {
 import { cn } from "@/lib/utils";
 
 export const dynamicParams = true;
+export const revalidate = 300;
 
 export async function generateStaticParams() {
   const slugs = await getProductSlugs();

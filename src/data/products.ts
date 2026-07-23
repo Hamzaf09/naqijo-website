@@ -149,15 +149,20 @@ export async function getProductBySlug(slug: string): Promise<Product | null> {
 }
 
 export async function getProductSlugs(): Promise<string[]> {
-  const payload = await getPayloadClient();
-  const res = await payload.find({
-    collection: "products",
-    where: PUBLISHED,
-    limit: 500,
-    depth: 0,
-    pagination: false,
-  });
-  return (res.docs as unknown as Record<string, unknown>[]).map((d) => String(d.slug));
+  try {
+    const payload = await getPayloadClient();
+    const res = await payload.find({
+      collection: "products",
+      where: PUBLISHED,
+      limit: 500,
+      depth: 0,
+      pagination: false,
+    });
+    return (res.docs as unknown as Record<string, unknown>[]).map((d) => String(d.slug));
+  } catch {
+    // Build-time resilience: fall back to on-demand rendering (dynamicParams).
+    return [];
+  }
 }
 
 /** Homepage-eligible pool (Show on homepage). Falls back to featured products. */

@@ -78,15 +78,19 @@ export async function getProjectBySlug(slug: string): Promise<Project | null> {
 }
 
 export async function getProjectSlugs(): Promise<string[]> {
-  const payload = await getPayloadClient();
-  const res = await payload.find({
-    collection: "projects",
-    where: PUBLISHED,
-    limit: 200,
-    depth: 0,
-    pagination: false,
-  });
-  return (res.docs as unknown as Record<string, unknown>[]).map((d) => String(d.slug));
+  try {
+    const payload = await getPayloadClient();
+    const res = await payload.find({
+      collection: "projects",
+      where: PUBLISHED,
+      limit: 200,
+      depth: 0,
+      pagination: false,
+    });
+    return (res.docs as unknown as Record<string, unknown>[]).map((d) => String(d.slug));
+  } catch {
+    return [];
+  }
 }
 
 /** Featured projects for the homepage (falls back to the most recent). */

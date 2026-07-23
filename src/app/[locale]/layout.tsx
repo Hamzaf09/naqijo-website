@@ -8,7 +8,7 @@ import { SiteHeader } from "@/components/layout/site-header";
 import { SiteFooter } from "@/components/layout/site-footer";
 import { ScrollManager } from "@/components/layout/scroll-manager";
 import { alexandria } from "@/fonts/alexandria";
-import { siteConfig } from "@/config/site";
+import { getServerURL } from "@/lib/env";
 import { getSettings } from "@/data/settings";
 import "../globals.css";
 
@@ -35,7 +35,7 @@ export async function generateMetadata({
   const ogImage = settings.defaultSeo.ogImage?.src;
 
   return {
-    metadataBase: new URL(siteConfig.url),
+    metadataBase: new URL(getServerURL()),
     title: { default: defaultTitle, template: `%s — ${name}` },
     description,
     alternates: {

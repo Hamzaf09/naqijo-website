@@ -76,13 +76,17 @@ export async function getServiceBySlug(slug: string): Promise<Service | null> {
 }
 
 export async function getServiceSlugs(): Promise<string[]> {
-  const payload = await getPayloadClient();
-  const res = await payload.find({
-    collection: "services",
-    where: PUBLISHED,
-    limit: 200,
-    depth: 0,
-    pagination: false,
-  });
-  return (res.docs as unknown as Record<string, unknown>[]).map((d) => String(d.slug));
+  try {
+    const payload = await getPayloadClient();
+    const res = await payload.find({
+      collection: "services",
+      where: PUBLISHED,
+      limit: 200,
+      depth: 0,
+      pagination: false,
+    });
+    return (res.docs as unknown as Record<string, unknown>[]).map((d) => String(d.slug));
+  } catch {
+    return [];
+  }
 }

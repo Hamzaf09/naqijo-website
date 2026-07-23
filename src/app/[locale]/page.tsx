@@ -18,6 +18,9 @@ import { getFeaturedProjects } from "@/data/projects";
 import { getFeaturedTestimonials } from "@/data/testimonials";
 import { cn } from "@/lib/utils";
 
+// ISR: re-render from the CMS at most every 5 minutes.
+export const revalidate = 300;
+
 export default async function HomePage({
   params,
 }: {

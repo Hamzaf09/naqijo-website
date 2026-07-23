@@ -7,6 +7,8 @@ import { CtaBand } from "@/components/site/cta-band";
 import { Reveal } from "@/components/motion/reveal";
 import { getFaqs } from "@/data/faqs";
 
+export const revalidate = 300;
+
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const { locale: requestedLocale } = await params;
   const locale = requireLocale(requestedLocale);

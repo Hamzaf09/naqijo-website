@@ -10,6 +10,8 @@ import { Reveal } from "@/components/motion/reveal";
 import { getAllServices } from "@/data/services";
 import type { Metadata } from "next";
 
+export const revalidate = 300;
+
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const { locale: requestedLocale } = await params;
   const locale = requireLocale(requestedLocale);

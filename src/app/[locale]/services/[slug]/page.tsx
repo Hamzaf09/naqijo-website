@@ -14,6 +14,7 @@ import { Reveal, RevealGroup } from "@/components/motion/reveal";
 import { getServiceBySlug, getServiceSlugs } from "@/data/services";
 
 export const dynamicParams = true;
+export const revalidate = 300;
 
 export async function generateStaticParams() {
   const slugs = await getServiceSlugs();
