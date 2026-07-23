@@ -65,7 +65,7 @@ export async function SiteFooter() {
         <div className="mt-16 grid gap-8 border-t border-white/10 pt-10 sm:grid-cols-2 lg:grid-cols-4">
           <div>
             <h3 className="text-xs font-medium uppercase tracking-[0.18em] text-gold">
-              {t("footer.contact")}
+              {t("footer.address")}
             </h3>
             <p className="mt-4 text-[0.95rem] leading-relaxed text-white/70">
               {settings.address[locale]}
@@ -87,7 +87,7 @@ export async function SiteFooter() {
           </div>
           <div>
             <h3 className="text-xs font-medium uppercase tracking-[0.18em] text-gold">
-              {t("footer.contact")}
+              {t("footer.email")}
             </h3>
             <p className="mt-4 text-[0.95rem] text-white/70" dir="ltr">
               <a href={`mailto:${settings.email}`} className="hover:text-white">

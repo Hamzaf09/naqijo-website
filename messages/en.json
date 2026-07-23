@@ -50,7 +50,9 @@
     "followUs": "Follow us",
     "rights": "© 2026 NaqiJo. All rights reserved.",
     "backToTop": "Back to top",
-    "workingHours": "24/7 service"
+    "workingHours": "Service hours",
+    "address": "Address",
+    "email": "Email"
   },
   "theme": {
     "toggle": "Toggle theme",
