@@ -9,7 +9,16 @@ import { isAdmin, isAdminField, isAdminOrSelf } from "../access/roles";
  */
 export const Users: CollectionConfig = {
   slug: "users",
-  auth: true,
+  auth: {
+    // Brute-force protection: lock the account for 10 minutes after 5 fails.
+    maxLoginAttempts: 5,
+    lockTime: 10 * 60 * 1000,
+    tokenExpiration: 7 * 24 * 60 * 60, // 7 days
+    cookies: {
+      sameSite: "Lax",
+      secure: process.env.NODE_ENV === "production",
+    },
+  },
   admin: {
     useAsTitle: "email",
     defaultColumns: ["name", "email", "role"],
