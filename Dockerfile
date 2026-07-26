@@ -1,8 +1,10 @@
 # syntax=docker/dockerfile:1
 # Production image for the NaqiJo site (Next.js 16 + Payload CMS 3).
 # Debian slim (not alpine) for reliable sharp + Payload native modules.
+# Node 24 (matches the dev/CI runtime) — Payload's HTTP auth route misbehaves
+# under Node 22 in the production server, so pin the tested major.
 
-FROM node:22-bookworm-slim AS base
+FROM node:24-bookworm-slim AS base
 WORKDIR /app
 ENV NEXT_TELEMETRY_DISABLED=1
 
