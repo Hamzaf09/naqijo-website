@@ -35,7 +35,25 @@ const serverURL = getServerURL();
 // in production — it would silently generate unreachable absolute URLs.
 assertPublicServerURL(serverURL);
 
-const databaseURI = process.env.DATABASE_URI || "file:./naqijo.db";
+/**
+ * Runtime queries use DATABASE_URI. On Supabase + Vercel this should be the
+ * TRANSACTION pooler (port 6543) — node-postgres issues unnamed statements, so
+ * it is safe over PgBouncer transaction mode.
+ *
+ * Migrations, however, run DDL + session-level operations that PgBouncer's
+ * transaction mode cannot handle. When migrating we prefer DATABASE_URI_DIRECT
+ * (the SESSION pooler, port 5432, or a direct connection). If it is unset we
+ * fall back to DATABASE_URI, which is correct when a single session-pooler URL
+ * is used for everything.
+ */
+const isMigrating = process.argv.some(
+  (arg) => arg === "migrate" || arg.startsWith("migrate:"),
+);
+const runtimeDatabaseURI = process.env.DATABASE_URI || "file:./naqijo.db";
+const databaseURI =
+  isMigrating && process.env.DATABASE_URI_DIRECT
+    ? process.env.DATABASE_URI_DIRECT
+    : runtimeDatabaseURI;
 const usePostgres = databaseURI.startsWith("postgres");
 
 /**

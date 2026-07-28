@@ -22,11 +22,20 @@ SQLite + local disk in development, chosen automatically from env.
 
 1. Create a project at [supabase.com](https://supabase.com). Pick a region close to
    your host (e.g. `eu-central` if deploying to Vercel `fra1`).
-2. **Database → Connection pooling** → copy the **Transaction pooler** URI
-   (port `6543`). This is your `DATABASE_URI`:
-   ```
-   postgresql://postgres.<ref>:<password>@aws-0-<region>.pooler.supabase.com:6543/postgres
-   ```
+2. **Database → Connection pooling** → copy **two** URIs:
+   - **Transaction pooler** (port `6543`) → `DATABASE_URI` (runtime queries):
+     ```
+     postgresql://postgres.<ref>:<password>@aws-0-<region>.pooler.supabase.com:6543/postgres
+     ```
+   - **Session pooler** (port `5432`) → `DATABASE_URI_DIRECT` (migrations):
+     ```
+     postgresql://postgres.<ref>:<password>@aws-0-<region>.pooler.supabase.com:5432/postgres
+     ```
+   > Why two: PgBouncer's **transaction** mode (6543) is serverless-friendly for
+   > runtime queries but **cannot run `payload migrate`** (DDL + session ops).
+   > `payload migrate` automatically uses `DATABASE_URI_DIRECT` when it is set.
+   > Simplest alternative: use the **session pooler (5432) for `DATABASE_URI`**
+   > and omit `DATABASE_URI_DIRECT` — one URL then serves both.
 
 ## 2. Configure Storage
 
@@ -46,12 +55,18 @@ for production:
 | Variable | Required | Notes |
 | --- | --- | --- |
 | `PAYLOAD_SECRET` | ✅ | `openssl rand -hex 32`. App refuses to boot without it in prod. |
-| `DATABASE_URI` | ✅ | Supabase pooler URI (step 1). |
-| `NEXT_PUBLIC_SERVER_URL` | ✅ | e.g. `https://www.naqijo.com`. |
-| `S3_ENDPOINT` `S3_BUCKET` `S3_REGION` `S3_ACCESS_KEY_ID` `S3_SECRET_ACCESS_KEY` | ✅ | Supabase Storage (step 2). |
+| `DATABASE_URI` | ✅ | Supabase **transaction** pooler, port 6543 (step 1). |
+| `DATABASE_URI_DIRECT` | ⬜* | Supabase **session** pooler, port 5432 — used by `payload migrate`. *Required if `DATABASE_URI` is the transaction pooler; omit if `DATABASE_URI` is already the session pooler. |
+| `NEXT_PUBLIC_SERVER_URL` | ✅ | e.g. `https://www.naqijo.com`. Must be your real public origin — the app refuses to build in production with a localhost/private value. |
+| `S3_ENDPOINT` `S3_BUCKET` `S3_REGION` `S3_ACCESS_KEY_ID` `S3_SECRET_ACCESS_KEY` | ✅ | Supabase Storage (step 2). Serverless disks are ephemeral, so uploads MUST go to S3. |
 | `RESEND_API_KEY` **or** `SMTP_*` | ⬜ | Enables password-reset emails. |
 | `SEED_ADMIN_EMAIL` / `SEED_ADMIN_PASSWORD` | ⬜ | First admin (seed only). |
 | `LOG_LEVEL`, `SENTRY_DSN` | ⬜ | Observability. |
+
+> **Node version:** the app is pinned to **Node 24** (`engines.node` in
+> `package.json` + `.nvmrc`) — Payload's HTTP auth misbehaved under Node 22 in
+> our tests, and Node 24 is Vercel's current default. Confirm Vercel → Settings
+> → Build & Deployment → **Node.js Version = 24.x**.
 
 ## 4. Run migrations
 
