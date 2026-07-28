@@ -11,7 +11,7 @@ import sharp from "sharp";
 import { importExportPlugin } from "@payloadcms/plugin-import-export";
 import { searchPlugin } from "@payloadcms/plugin-search";
 
-import { getServerURL } from "./lib/env";
+import { getServerURL, assertPublicServerURL } from "./lib/env";
 import { buildEmailAdapter } from "./lib/payload/email";
 import { Users } from "./collections/Users";
 import { Media } from "./collections/Media";
@@ -31,6 +31,9 @@ const dirname = path.dirname(filename);
 
 const isProduction = process.env.NODE_ENV === "production";
 const serverURL = getServerURL();
+// Refuse to boot (build, migrate, or serve) with a dev/private public origin
+// in production — it would silently generate unreachable absolute URLs.
+assertPublicServerURL(serverURL);
 
 const databaseURI = process.env.DATABASE_URI || "file:./naqijo.db";
 const usePostgres = databaseURI.startsWith("postgres");

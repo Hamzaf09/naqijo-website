@@ -3,6 +3,12 @@ import type { RemotePattern } from "next/dist/shared/lib/image-config";
 import createNextIntlPlugin from "next-intl/plugin";
 import { withPayload } from "@payloadcms/next/withPayload";
 
+import { assertPublicServerURL } from "./src/lib/env";
+
+// Fail the production build/start immediately if the public origin is a
+// localhost/private address (it gets inlined into absolute asset/email URLs).
+assertPublicServerURL();
+
 const withNextIntl = createNextIntlPlugin("./src/i18n/request.ts");
 
 /**
