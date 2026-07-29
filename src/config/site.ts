@@ -13,15 +13,19 @@ export const siteConfig = {
   },
   email: "info@naqijo.com",
   brandEmail: "brand@naqijo.com",
-  phones: ["+962792300005", "+962792900008"],
-  whatsapp: "+962792300005",
+  // Primary consultation number first (WhatsApp), then the secondary office line.
+  phones: ["+962792900008", "+962792300005"],
+  // The single consultation WhatsApp number used by every CTA on the site.
+  whatsapp: "+962792900008",
+  phonePrimary: "+962792900008",
+  phoneSecondary: "+962792300005",
   address: {
-    ar: "خلدا، شارع وصفي التل، مجمع فهيد جريسات، الطابق الأرضي، عمّان، الأردن",
-    en: "Khalda, Wasfi Al-Tal Street, Fahid Greissat Complex, Ground Floor, Amman, Jordan",
+    ar: "خلدا، شارع وصفي التل، مجمع فهد جريصات، الطابق الأرضي، عمّان، الأردن",
+    en: "Khalda, Wasfi Al Tal Street, Fahed Jarissat Complex, Ground Floor, Amman, Jordan",
   },
   hours: {
-    ar: "خدمة على مدار الساعة، طوال أيام الأسبوع",
-    en: "24/7 service",
+    ar: "متاحون 7 أيام في الأسبوع",
+    en: "Available 7 Days a Week",
   },
   social: {
     facebook: "",

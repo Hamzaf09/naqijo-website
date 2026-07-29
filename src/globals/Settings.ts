@@ -32,7 +32,7 @@ export const Settings: GlobalConfig = {
               labels: { singular: "Phone", plural: "Phones" },
               fields: [{ name: "number", type: "text", required: true }],
             },
-            { name: "whatsapp", type: "text", admin: { description: "e.g. +962792300005" } },
+            { name: "whatsapp", type: "text", admin: { description: "Consultation WhatsApp, e.g. +962792900008" } },
             { name: "email", type: "text" },
             { name: "address", type: "textarea", localized: true },
             { name: "workingHours", type: "text", localized: true },

@@ -20,7 +20,8 @@
     "migrate:status": "payload migrate:status",
     "migrate:down": "payload migrate:down",
     "migrate:fresh": "payload migrate:fresh",
-    "seed": "tsx src/scripts/seed.ts && tsx src/scripts/seed-phase2.ts && tsx src/scripts/seed-phase3.ts && tsx src/scripts/seed-phase4.ts"
+    "seed": "tsx src/scripts/seed.ts && tsx src/scripts/seed-phase2.ts && tsx src/scripts/seed-phase3.ts && tsx src/scripts/seed-phase4.ts",
+    "sync:contact": "tsx src/scripts/sync-contact.ts"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.10.0",

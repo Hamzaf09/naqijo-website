@@ -1526,7 +1526,7 @@ export interface Setting {
       }[]
     | null;
   /**
-   * e.g. +962792300005
+   * Consultation WhatsApp, e.g. +962792900008
    */
   whatsapp?: string | null;
   email?: string | null;
