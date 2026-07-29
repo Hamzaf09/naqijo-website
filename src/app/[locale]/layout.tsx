@@ -6,6 +6,7 @@ import { routing, localeDirection, requireLocale } from "@/i18n/routing";
 import { ThemeProvider } from "@/components/theme/theme-provider";
 import { SiteHeader } from "@/components/layout/site-header";
 import { SiteFooter } from "@/components/layout/site-footer";
+import { FloatingWhatsApp } from "@/components/site/floating-whatsapp";
 import { ScrollManager } from "@/components/layout/scroll-manager";
 import { alexandria } from "@/fonts/alexandria";
 import { getServerURL } from "@/lib/env";
@@ -107,6 +108,7 @@ export default async function LocaleLayout({
             <SiteHeader />
             <main>{children}</main>
             <SiteFooter />
+            <FloatingWhatsApp number={settings.whatsapp} locale={locale} />
           </NextIntlClientProvider>
         </ThemeProvider>
         {gaId ? (
