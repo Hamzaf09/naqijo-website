@@ -23,6 +23,8 @@ const dicts = {
     detailsTitle: "معلومات التواصل",
     addressLabel: "العنوان",
     phoneLabel: "الهاتف",
+    consultationLabel: "رقم الاستشارة",
+    officeLabel: "رقم المكتب",
     emailLabel: "البريد",
     hoursLabel: "أوقات الخدمة",
     flow: {
@@ -57,6 +59,11 @@ const dicts = {
       whatsapp: "المتابعة عبر واتساب",
       email: "المتابعة عبر البريد",
       required: "هذا الحقل مطلوب",
+      invalidEmail: "يرجى إدخال بريد إلكتروني صحيح",
+      successTitle: "تم استلام طلب استشارتك",
+      successBody: "سيتواصل معك أحد مهندسينا في أقرب وقت.",
+      continueWhatsapp: "المتابعة إلى واتساب",
+      returnHome: "العودة إلى الرئيسية",
     },
   },
   en: {
@@ -66,6 +73,8 @@ const dicts = {
     detailsTitle: "Contact details",
     addressLabel: "Address",
     phoneLabel: "Phone",
+    consultationLabel: "Primary consultation",
+    officeLabel: "Secondary office",
     emailLabel: "Email",
     hoursLabel: "Service hours",
     flow: {
@@ -100,6 +109,11 @@ const dicts = {
       whatsapp: "Continue via WhatsApp",
       email: "Continue via Email",
       required: "This field is required",
+      invalidEmail: "Please enter a valid email",
+      successTitle: "Your consultation request has been received",
+      successBody: "One of our engineers will contact you shortly.",
+      continueWhatsapp: "Continue to WhatsApp",
+      returnHome: "Return to Homepage",
     },
   },
 };
@@ -139,17 +153,23 @@ export default async function ContactPage({ params }: { params: Promise<{ locale
                   <dd className="mt-2 leading-relaxed text-fg">{settings.address[locale]}</dd>
                 </div>
                 <div>
-                  <dt className="text-sm text-fg-subtle">{d.phoneLabel}</dt>
-                  <dd className="mt-2 space-y-1" dir="ltr">
-                    {settings.phones.map((p) => (
-                      <div key={p}>
-                        <a href={`tel:${p}`} className="text-fg hover:text-primary">
-                          {p.replace("+962", "+962 ")}
-                        </a>
-                      </div>
-                    ))}
+                  <dt className="text-sm text-fg-subtle">{d.consultationLabel}</dt>
+                  <dd className="mt-2" dir="ltr">
+                    <a href={`tel:${settings.phones[0]}`} className="text-fg hover:text-primary">
+                      {settings.phones[0]?.replace("+962", "+962 ")}
+                    </a>
                   </dd>
                 </div>
+                {settings.phones[1] ? (
+                  <div>
+                    <dt className="text-sm text-fg-subtle">{d.officeLabel}</dt>
+                    <dd className="mt-2" dir="ltr">
+                      <a href={`tel:${settings.phones[1]}`} className="text-fg hover:text-primary">
+                        {settings.phones[1].replace("+962", "+962 ")}
+                      </a>
+                    </dd>
+                  </div>
+                ) : null}
                 <div>
                   <dt className="text-sm text-fg-subtle">{d.emailLabel}</dt>
                   <dd className="mt-2" dir="ltr">

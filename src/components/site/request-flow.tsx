@@ -4,7 +4,18 @@ import { useState } from "react";
 import { useForm, useWatch } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { Check, MessageCircle, Mail } from "lucide-react";
+import {
+  Check,
+  MessageCircle,
+  Mail,
+  Home,
+  Wrench,
+  PackagePlus,
+  Compass,
+  Sparkles,
+  ChevronDown,
+  type LucideIcon,
+} from "lucide-react";
 import { Button } from "@/ui/button";
 import { cn } from "@/lib/utils";
 
@@ -37,6 +48,18 @@ type Dict = {
   whatsapp: string;
   email: string;
   required: string;
+  invalidEmail: string;
+  successTitle: string;
+  successBody: string;
+  continueWhatsapp: string;
+  returnHome: string;
+};
+
+/** Icon per request intent, with a graceful fallback. */
+const intentIcons: Record<string, LucideIcon> = {
+  purchase: PackagePlus,
+  maintenance: Wrench,
+  consultation: Compass,
 };
 
 const schema = z.object({
@@ -63,6 +86,8 @@ export function RequestFlow({
   contact: RequestFlowContact;
 }) {
   const [step, setStep] = useState(0);
+  const [done, setDone] = useState(false);
+  const [waUrl, setWaUrl] = useState<string | null>(null);
   const {
     register,
     handleSubmit,
@@ -96,22 +121,70 @@ export function RequestFlow({
       .join("\n");
   };
 
+  const whatsAppUrl = (v: FormValues) =>
+    `https://wa.me/${contact.whatsapp.replace(/[^\d]/g, "")}?text=${encodeURIComponent(compose(v))}`;
+
+  // Primary: validate, prepare the WhatsApp link, then show the success screen
+  // (no immediate redirect — the visitor continues from there).
   const goWhatsApp = handleSubmit((v) => {
-    const url = `https://wa.me/${contact.whatsapp.replace(/[^\d]/g, "")}?text=${encodeURIComponent(compose(v))}`;
-    window.open(url, "_blank", "noopener,noreferrer");
+    setWaUrl(whatsAppUrl(v));
+    setDone(true);
   });
+
+  // Secondary: open the mail client with the request, then show success.
   const goEmail = handleSubmit((v) => {
     const subject = locale === "ar" ? "طلب استشارة من الموقع" : "Website request";
+    setWaUrl(whatsAppUrl(v));
     window.open(
       `mailto:${contact.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(compose(v))}`,
       "_self",
     );
+    setDone(true);
   });
 
   const next = async () => {
     const fields: (keyof FormValues)[] = step === 0 ? ["intent"] : step === 1 ? [] : ["name", "phone"];
     if (await trigger(fields)) setStep((s) => Math.min(s + 1, 2));
   };
+
+  // ── Success screen ─────────────────────────────────────────
+  if (done) {
+    return (
+      <div className="rounded-[var(--radius-xl)] border border-border bg-surface p-8 text-center shadow-[var(--shadow-md)] sm:p-12">
+        <div className="mx-auto flex size-20 items-center justify-center rounded-full bg-[color-mix(in_srgb,var(--success)_18%,transparent)]">
+          <Check className="size-10 text-success" aria-hidden strokeWidth={2.5} />
+        </div>
+        <h3 className="mt-7 text-2xl font-semibold tracking-tight text-fg">{dict.successTitle}</h3>
+        <p className="mx-auto mt-3 max-w-[42ch] leading-relaxed text-fg-muted">{dict.successBody}</p>
+        <div className="mt-9 flex flex-col justify-center gap-3 sm:flex-row">
+          {waUrl ? (
+            <Button
+              type="button"
+              variant="gold"
+              size="lg"
+              className="w-full sm:w-auto"
+              onClick={() => window.open(waUrl, "_blank", "noopener,noreferrer")}
+            >
+              <MessageCircle className="size-5" aria-hidden />
+              {dict.continueWhatsapp}
+            </Button>
+          ) : null}
+          <Button
+            type="button"
+            variant="outline"
+            size="lg"
+            className="w-full sm:w-auto"
+            onClick={() => {
+              window.location.href = `/${locale}`;
+            }}
+          >
+            <Home className="size-5" aria-hidden />
+            {dict.returnHome}
+          </Button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="rounded-[var(--radius-xl)] border border-border bg-surface p-6 shadow-[var(--shadow-md)] sm:p-9">
@@ -142,26 +215,50 @@ export function RequestFlow({
       {/* Step 1 — intent */}
       {step === 0 ? (
         <div>
-          <p className="mb-4 text-sm font-medium text-fg">{dict.intentLabel}</p>
-          <div className="grid gap-3 sm:grid-cols-3">
-            {dict.intents.map((it) => (
-              <button
-                key={it.value}
-                type="button"
-                onClick={() => setValue("intent", it.value, { shouldValidate: true })}
-                aria-pressed={intent === it.value}
-                className={cn(
-                  "rounded-[var(--radius-lg)] border p-5 text-start transition-all",
-                  intent === it.value
-                    ? "border-primary bg-bg-blue shadow-[var(--shadow-sm)]"
-                    : "border-border hover:border-border-strong",
-                )}
-              >
-                <span aria-hidden className="block size-2 rounded-full rounded-tr-none bg-gold" />
-                <span className="mt-4 block font-medium text-fg">{it.t}</span>
-                <span className="mt-1 block text-sm text-fg-muted">{it.d}</span>
-              </button>
-            ))}
+          <p className="mb-5 text-sm font-medium text-fg">{dict.intentLabel}</p>
+          <div className="grid gap-4 sm:grid-cols-3">
+            {dict.intents.map((it) => {
+              const Icon = intentIcons[it.value] ?? Sparkles;
+              const selected = intent === it.value;
+              return (
+                <button
+                  key={it.value}
+                  type="button"
+                  onClick={() => setValue("intent", it.value, { shouldValidate: true })}
+                  aria-pressed={selected}
+                  className={cn(
+                    "group relative flex flex-col rounded-[var(--radius-lg)] border p-5 text-start outline-none transition-all duration-200",
+                    "hover:-translate-y-0.5 hover:shadow-[var(--shadow-sm)] focus-visible:ring-2 focus-visible:ring-[color-mix(in_srgb,var(--ring)_40%,transparent)]",
+                    selected
+                      ? "border-primary bg-bg-blue shadow-[var(--shadow-sm)] ring-2 ring-[color-mix(in_srgb,var(--primary)_22%,transparent)]"
+                      : "border-border hover:border-border-strong",
+                  )}
+                >
+                  {/* Selected check badge */}
+                  <span
+                    aria-hidden
+                    className={cn(
+                      "absolute end-3 top-3 flex size-6 items-center justify-center rounded-full bg-primary text-primary-fg transition-all duration-200",
+                      selected ? "scale-100 opacity-100" : "scale-50 opacity-0",
+                    )}
+                  >
+                    <Check className="size-3.5" strokeWidth={3} />
+                  </span>
+                  <span
+                    className={cn(
+                      "flex size-11 items-center justify-center rounded-[var(--radius-md)] transition-colors",
+                      selected
+                        ? "bg-[color-mix(in_srgb,var(--primary)_15%,transparent)] text-primary"
+                        : "bg-bg-subtle text-fg-muted group-hover:text-primary",
+                    )}
+                  >
+                    <Icon className="size-5" aria-hidden />
+                  </span>
+                  <span className="mt-4 block font-semibold text-fg">{it.t}</span>
+                  <span className="mt-1.5 block text-sm leading-relaxed text-fg-muted">{it.d}</span>
+                </button>
+              );
+            })}
           </div>
           {errors.intent ? <p className="mt-3 text-sm text-danger">{dict.required}</p> : null}
         </div>
@@ -169,15 +266,24 @@ export function RequestFlow({
 
       {/* Step 2 — property */}
       {step === 1 ? (
-        <div className="grid gap-5 sm:grid-cols-2">
+        <div className="grid gap-6 sm:grid-cols-2">
           <label className="block">
             <span className="mb-2 block text-sm font-medium text-fg">{dict.propTypeLabel}</span>
-            <select className={fieldClass} {...register("propertyType")}>
-              <option value="">—</option>
-              {dict.propTypes.map((p) => (
-                <option key={p.value} value={p.value}>{p.label}</option>
-              ))}
-            </select>
+            <div className="relative">
+              <select
+                className={cn(fieldClass, "cursor-pointer appearance-none pe-11")}
+                {...register("propertyType")}
+              >
+                <option value="">—</option>
+                {dict.propTypes.map((p) => (
+                  <option key={p.value} value={p.value}>{p.label}</option>
+                ))}
+              </select>
+              <ChevronDown
+                aria-hidden
+                className="pointer-events-none absolute end-4 top-1/2 size-4 -translate-y-1/2 text-fg-subtle"
+              />
+            </div>
           </label>
           <label className="block">
             <span className="mb-2 block text-sm font-medium text-fg">{dict.cityLabel}</span>
@@ -185,14 +291,19 @@ export function RequestFlow({
           </label>
           <label className="block sm:col-span-2">
             <span className="mb-2 block text-sm font-medium text-fg">{dict.notesLabel}</span>
-            <textarea rows={4} className={cn(fieldClass, "h-auto py-3")} placeholder={dict.notesPlaceholder} {...register("notes")} />
+            <textarea
+              rows={6}
+              className={cn(fieldClass, "h-auto min-h-36 resize-y py-3 leading-relaxed")}
+              placeholder={dict.notesPlaceholder}
+              {...register("notes")}
+            />
           </label>
         </div>
       ) : null}
 
       {/* Step 3 — personal + finish */}
       {step === 2 ? (
-        <div className="grid gap-5 sm:grid-cols-2">
+        <div className="grid gap-6 sm:grid-cols-2">
           <label className="block">
             <span className="mb-2 block text-sm font-medium text-fg">{dict.nameLabel}</span>
             <input className={fieldClass} autoComplete="name" placeholder={dict.namePlaceholder} {...register("name")} />
@@ -200,7 +311,7 @@ export function RequestFlow({
           </label>
           <label className="block">
             <span className="mb-2 block text-sm font-medium text-fg">{dict.phoneLabel}</span>
-            <input className={fieldClass} type="tel" inputMode="tel" autoComplete="tel" dir="ltr" placeholder="+962 7" {...register("phone")} />
+            <input className={fieldClass} type="tel" inputMode="tel" autoComplete="tel" dir="ltr" placeholder="+962 79 000 0000" {...register("phone")} />
             {errors.phone ? <p className="mt-2 text-sm text-danger">{dict.required}</p> : null}
           </label>
           <label className="block sm:col-span-2">
@@ -208,17 +319,18 @@ export function RequestFlow({
               {dict.emailLabel} <span className="text-fg-subtle">{dict.emailOptional}</span>
             </span>
             <input className={fieldClass} type="email" autoComplete="email" dir="ltr" placeholder="name@email.com" {...register("email")} />
+            {errors.email ? <p className="mt-2 text-sm text-danger">{dict.invalidEmail}</p> : null}
           </label>
 
-          <div className="sm:col-span-2">
-            <p className="mb-1 font-medium text-fg">{dict.finishTitle}</p>
-            <p className="mb-5 text-sm text-fg-muted">{dict.finishHint}</p>
-            <div className="flex flex-wrap gap-3">
-              <Button type="button" variant="gold" size="lg" onClick={goWhatsApp}>
+          <div className="mt-1 rounded-[var(--radius-lg)] border border-border bg-[color-mix(in_srgb,var(--bg-subtle)_55%,transparent)] p-5 sm:col-span-2">
+            <p className="font-semibold text-fg">{dict.finishTitle}</p>
+            <p className="mb-5 mt-1 text-sm text-fg-muted">{dict.finishHint}</p>
+            <div className="flex flex-col gap-3 sm:flex-row">
+              <Button type="button" variant="gold" size="lg" className="w-full sm:flex-1" onClick={goWhatsApp}>
                 <MessageCircle className="size-5" aria-hidden />
                 {dict.whatsapp}
               </Button>
-              <Button type="button" variant="outline" size="lg" onClick={goEmail}>
+              <Button type="button" variant="outline" size="lg" className="w-full sm:w-auto" onClick={goEmail}>
                 <Mail className="size-5" aria-hidden />
                 {dict.email}
               </Button>
@@ -234,17 +346,21 @@ export function RequestFlow({
             type="button"
             onClick={() => setStep((s) => Math.max(s - 1, 0))}
             disabled={step === 0}
-            className="text-sm font-medium text-fg-muted disabled:opacity-0"
+            className="text-sm font-medium text-fg-muted transition-colors hover:text-fg disabled:opacity-0"
           >
             {dict.back}
           </button>
-          <Button type="button" onClick={next}>
+          <Button type="button" size="lg" onClick={next}>
             {dict.next}
           </Button>
         </div>
       ) : (
         <div className="mt-8">
-          <button type="button" onClick={() => setStep(1)} className="text-sm font-medium text-fg-muted">
+          <button
+            type="button"
+            onClick={() => setStep(1)}
+            className="text-sm font-medium text-fg-muted transition-colors hover:text-fg"
+          >
             {dict.back}
           </button>
         </div>
