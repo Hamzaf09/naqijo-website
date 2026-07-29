@@ -65,7 +65,7 @@ async function seed() {
       process.env.SEED_ADMIN_PASSWORD || `Naqi-${randomBytes(12).toString("base64url")}`;
     await payload.create({
       collection: "users",
-      data: { email, password, name: "NaqiJo Admin", role: "super-admin" },
+      data: { email, password, name: "Hamza Faqeeh", role: "super-admin" },
     });
     if (generated) {
       payload.logger.warn(`Created admin "${email}" with a GENERATED password: ${password}`);
