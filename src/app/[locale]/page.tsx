@@ -11,6 +11,7 @@ import { HomeHero } from "@/components/site/home-hero";
 import { FeaturedProducts } from "@/components/site/featured-products";
 import { SolutionRow } from "@/components/site/solution-row";
 import { CtaBand } from "@/components/site/cta-band";
+import { FounderSection } from "@/components/site/founder-section";
 import { Reveal, RevealGroup, RevealImage } from "@/components/motion/reveal";
 import { getHomepage } from "@/data/homepage";
 import { getFeaturedProducts } from "@/data/products";
@@ -336,6 +337,9 @@ export default async function HomePage({
         locale={locale}
         whatsappText={home.cta.whatsappText[locale]}
       />
+
+      {/* ---------------- FOUNDER (directly above footer) ---------------- */}
+      <FounderSection locale={locale} />
     </>
   );
 }

@@ -41,6 +41,18 @@ export const siteConfig = {
     operations: 513,
     warrantyYearsMax: 5,
   },
+  // Founder — name/title exactly as provided; photo is a local brand asset.
+  founder: {
+    name: {
+      en: "Eng. Mohammad Hakam Al-Juhani",
+      ar: "م. محمد حكم الجهني",
+    },
+    title: {
+      en: "Founder of Naqi Al Rabieh",
+      ar: "مؤسس نقي الرابية",
+    },
+    photo: "/brand/founder.webp",
+  },
 } as const;
 
 export type SiteConfig = typeof siteConfig;
