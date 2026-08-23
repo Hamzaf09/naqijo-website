@@ -45,7 +45,7 @@ export const siteConfig = {
   founder: {
     name: {
       en: "Eng. Mohammad Hakam Al-Juhani",
-      ar: "م. محمد حكم الجهني",
+      ar: "م. محمد حاكم الجهني",
     },
     title: {
       en: "Founder of Naqi Al Rabieh",
