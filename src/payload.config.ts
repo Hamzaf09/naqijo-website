@@ -55,7 +55,10 @@ const runtimeDatabaseURI = process.env.DATABASE_URI || "file:./naqijo.db";
 // fallback is a local-dev convenience only; a serverless runtime has no
 // persistent SQLite file, so falling back there makes every request throw a
 // 500. Fail fast at boot with a clear message instead of silently 500-ing.
-if (isProduction && !runtimeDatabaseURI.startsWith("postgres")) {
+// Only guard the RUNTIME (serving), not `next build` — a build against SQLite
+// is a legitimate local workflow, and Vercel's build already has Postgres set.
+const isNextBuild = process.env.NEXT_PHASE === "phase-production-build";
+if (isProduction && !isNextBuild && !runtimeDatabaseURI.startsWith("postgres")) {
   throw new Error(
     "DATABASE_URI is missing or not a Postgres URL in production. Set it (in the " +
       "runtime environment, not only at build) to the Supabase transaction pooler, " +
