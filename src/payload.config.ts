@@ -50,6 +50,19 @@ const isMigrating = process.argv.some(
   (arg) => arg === "migrate" || arg.startsWith("migrate:"),
 );
 const runtimeDatabaseURI = process.env.DATABASE_URI || "file:./naqijo.db";
+
+// In production, DATABASE_URI MUST be a real (Postgres) connection. The SQLite
+// fallback is a local-dev convenience only; a serverless runtime has no
+// persistent SQLite file, so falling back there makes every request throw a
+// 500. Fail fast at boot with a clear message instead of silently 500-ing.
+if (isProduction && !runtimeDatabaseURI.startsWith("postgres")) {
+  throw new Error(
+    "DATABASE_URI is missing or not a Postgres URL in production. Set it (in the " +
+      "runtime environment, not only at build) to the Supabase transaction pooler, " +
+      "e.g. postgresql://postgres.<ref>:<pw>@aws-0-<region>.pooler.supabase.com:6543/postgres",
+  );
+}
+
 const databaseURI =
   isMigrating && process.env.DATABASE_URI_DIRECT
     ? process.env.DATABASE_URI_DIRECT
