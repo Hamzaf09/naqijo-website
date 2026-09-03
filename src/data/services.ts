@@ -1,6 +1,16 @@
-import { getPayloadClient } from "@/lib/payload/client";
-import { L, mapMedia, type MediaImage } from "@/lib/payload/map";
 import type { LocalizedString, LocalizedRichText } from "@/data/product-types";
+import type { MediaImage } from "@/lib/payload/map";
+import { toRichText } from "@/lib/rich-text";
+import { services as staticServices } from "@/content/services";
+import { approvedImages, type ApprovedImageKey } from "@/config/images";
+
+/**
+ * Service data access — sourced ENTIRELY from the static content in
+ * `src/content/services.ts` (committed to the repo). No Payload / Supabase /
+ * database query is involved, so the service detail pages render even when the
+ * database is unavailable (this is what previously caused the /services/* 500s).
+ * Signatures are unchanged, so the listing, detail and sitemap pages work as-is.
+ */
 
 export interface ServiceFeature {
   title: LocalizedString;
@@ -21,72 +31,49 @@ export interface Service {
   process: LocalizedString[];
 }
 
-const PUBLISHED = { _status: { equals: "published" } } as const;
+/** Fixed display order (matches the previous CMS `order`). */
+const SLUG_ORDER = ["water", "kitchen", "solar", "protection"] as const;
 
-/* eslint-disable @typescript-eslint/no-explicit-any */
-function mapService(doc: any): Service {
+function resolveImage(key: ApprovedImageKey): MediaImage {
+  const img = approvedImages[key];
+  return { src: img.src, width: img.width, height: img.height, alt: img.alt };
+}
+
+/** Zip the locale-first static content into a field-localized Service. */
+function buildService(slug: string): Service | null {
+  const ar = staticServices.ar[slug];
+  const en = staticServices.en[slug];
+  if (!ar || !en) return null;
+
   return {
-    slug: String(doc.slug),
-    order: typeof doc.order === "number" ? doc.order : 0,
-    icon: typeof doc.icon === "string" ? doc.icon : null,
-    name: L(doc.name),
-    headline: L(doc.headline),
-    shortDescription: L(doc.shortDescription),
-    fullDescription:
-      doc.fullDescription && typeof doc.fullDescription === "object"
-        ? { ar: doc.fullDescription.ar, en: doc.fullDescription.en }
-        : null,
-    heroImage: mapMedia(doc.heroImage),
-    gallery: Array.isArray(doc.gallery)
-      ? doc.gallery.map(mapMedia).filter((x: MediaImage | null): x is MediaImage => x !== null)
-      : [],
-    features: Array.isArray(doc.features)
-      ? doc.features.map((f: any) => ({ title: L(f.title), description: L(f.description) }))
-      : [],
-    process: Array.isArray(doc.process)
-      ? doc.process.map((p: any) => L(p.step)).filter((s: LocalizedString) => s.ar || s.en)
-      : [],
+    slug,
+    order: parseInt(ar.index, 10) || 0,
+    icon: null,
+    name: { ar: ar.eyebrow, en: en.eyebrow },
+    headline: { ar: ar.title, en: en.title },
+    shortDescription: { ar: ar.lead, en: en.lead },
+    fullDescription: {
+      ar: toRichText(ar.overview, "rtl"),
+      en: toRichText(en.overview, "ltr"),
+    },
+    heroImage: resolveImage(ar.image),
+    gallery: [],
+    features: ar.features.map((f, i) => ({
+      title: { ar: f.t, en: en.features[i]?.t ?? f.t },
+      description: { ar: f.d, en: en.features[i]?.d ?? f.d },
+    })),
+    process: ar.process.map((p, i) => ({ ar: p, en: en.process[i] ?? p })),
   };
 }
-/* eslint-enable @typescript-eslint/no-explicit-any */
 
 export async function getAllServices(): Promise<Service[]> {
-  const payload = await getPayloadClient();
-  const res = await payload.find({
-    collection: "services",
-    locale: "all",
-    where: PUBLISHED,
-    sort: "order",
-    limit: 100,
-    depth: 2,
-  });
-  return res.docs.map(mapService);
+  return SLUG_ORDER.map(buildService).filter((s): s is Service => s !== null);
 }
 
 export async function getServiceBySlug(slug: string): Promise<Service | null> {
-  const payload = await getPayloadClient();
-  const res = await payload.find({
-    collection: "services",
-    locale: "all",
-    where: { and: [{ slug: { equals: slug } }, PUBLISHED] },
-    limit: 1,
-    depth: 2,
-  });
-  return res.docs[0] ? mapService(res.docs[0]) : null;
+  return buildService(slug);
 }
 
 export async function getServiceSlugs(): Promise<string[]> {
-  try {
-    const payload = await getPayloadClient();
-    const res = await payload.find({
-      collection: "services",
-      where: PUBLISHED,
-      limit: 200,
-      depth: 0,
-      pagination: false,
-    });
-    return (res.docs as unknown as Record<string, unknown>[]).map((d) => String(d.slug));
-  } catch {
-    return [];
-  }
+  return [...SLUG_ORDER];
 }

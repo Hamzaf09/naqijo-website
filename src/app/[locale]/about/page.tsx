@@ -23,6 +23,16 @@ const content = {
     storyLabel: "قصتنا",
     story:
       "بدأت الشركة من قناعة بسيطة — أن الماء النقي ليس رفاهية بل حقٌّ لكل بيت أردني — ثم توسّعت هذه القناعة لتشمل البيت كله: بنيته التحتية، وطاقته، وأنظمته، وراحة من يسكنه. اليوم تقدّم نقي الرابية حلولاً متكاملة تجمع بين هندسة المياه والطاقة المستدامة والبنية التحتية السكنية، بمعايير هندسية دقيقة وخدمة إنسانية قريبة.",
+    companyLabel: "نبذة عن الشركة",
+    companyTitle: "نبذة عن شركة نقي الرابية",
+    companyParagraphs: [
+      "تأسست نقي الرابية للمياه والطاقة عام 2005، وانطلقت برؤية واضحة تتمثل في تقديم حلول متكاملة بمعايير مهنية عالية في قطاع المياه ومعالجتها.",
+      "تمتد أعمال الشركة وفروعها في الأردن، المملكة العربية السعودية، قطر ودولة الإمارات العربية المتحدة، وتعتمد في آلية عملها على دراسة احتياج العميل، تقديم الحل المناسب، التنفيذ من خلال فرق متخصصة، ثم المتابعة وخدمات ما بعد البيع.",
+      "كما تمتلك الشركة نشاطاً في قطاع تعبئة المياه، بما يشمل عبوات 330 مل و200 مل، بالإضافة إلى مياه وعبوات الضيافة المخصصة للشركات والمناسبات وقطاع الأعمال.",
+    ],
+    companyVisionLabel: "رؤيتنا",
+    companyVision:
+      "بناء اسم موثوق في قطاع المياه من خلال الجودة، الالتزام، التطوير المستمر، وعلاقة طويلة الأمد مع عملائنا.",
     mvv: [
       { t: "رسالتنا", d: "تقديم حلول سكنية وتجارية متكاملة ترتقي بجودة الحياة، عبر مياه نقية وتقنيات مستدامة وتميّز هندسي وخدمات مهنية موثوقة." },
       { t: "رؤيتنا", d: "أن نكون العلامة الأولى في الأردن والمنطقة في الحلول المتكاملة للمياه والطاقة والبنية السكنية، وأن يقترن اسم «نقي» بالثقة كما يقترن الماء بالحياة." },
@@ -42,6 +52,16 @@ const content = {
     storyLabel: "Our story",
     story:
       "The company began from a simple conviction — that pure water is not a luxury but a right for every Jordanian home — and that conviction grew to embrace the whole home: its infrastructure, its energy, its systems, and the comfort of those who live in it. Today NaqiJo delivers integrated solutions combining water engineering, sustainable energy, and residential infrastructure — with exacting engineering standards and close, human service.",
+    companyLabel: "About the company",
+    companyTitle: "About Naqi Al-Rabia",
+    companyParagraphs: [
+      "Naqi Al-Rabia for Water & Energy was founded in 2005 with a clear vision: to deliver integrated solutions to the highest professional standards across the water and water-treatment sector.",
+      "The company operates through branches across Jordan, the Kingdom of Saudi Arabia, Qatar and the United Arab Emirates. Its way of working is built on studying each client's need, proposing the right solution, delivering it through specialized teams, and following up with dedicated after-sales service.",
+      "The company is also active in water bottling — including 330 ml and 200 ml bottles — alongside dedicated hospitality water and packaging for companies, events and the corporate sector.",
+    ],
+    companyVisionLabel: "Our vision",
+    companyVision:
+      "To build a trusted name in the water sector through quality, commitment, continuous development, and long-term relationships with our clients.",
     mvv: [
       { t: "Our mission", d: "To deliver integrated residential and commercial solutions that elevate quality of life — through pure water, sustainable technology, engineering excellence, and trustworthy professional service." },
       { t: "Our vision", d: "To be the leading brand in Jordan and the region for integrated water, energy, and residential solutions — so the name “Naqi” is tied to trust as water is tied to life." },
@@ -75,6 +95,32 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
             <Reveal delay={0.05} className="lg:col-span-8">
               <p className="font-text text-[1.2rem] leading-[1.9] text-fg">{c.story}</p>
             </Reveal>
+          </div>
+        </Container>
+      </Section>
+
+      <Section>
+        <Container>
+          <div className="grid gap-10 lg:grid-cols-12 lg:gap-16">
+            <Reveal className="lg:col-span-4">
+              <Eyebrow>{c.companyLabel}</Eyebrow>
+              <H2 className="mt-6">{c.companyTitle}</H2>
+            </Reveal>
+            <div className="lg:col-span-8">
+              <Reveal delay={0.05}>
+                <div className="space-y-5 font-text text-[1.15rem] leading-[1.9] text-fg-muted">
+                  {c.companyParagraphs.map((p, i) => (
+                    <p key={i}>{p}</p>
+                  ))}
+                </div>
+              </Reveal>
+              <Reveal className="mt-10">
+                <div className="rounded-[var(--radius-xl)] border border-border bg-surface p-8">
+                  <Eyebrow>{c.companyVisionLabel}</Eyebrow>
+                  <p className="mt-4 leading-relaxed text-fg">{c.companyVision}</p>
+                </div>
+              </Reveal>
+            </div>
           </div>
         </Container>
       </Section>
