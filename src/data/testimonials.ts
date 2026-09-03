@@ -33,24 +33,29 @@ function mapTestimonial(doc: any): Testimonial {
 
 /** Featured + published testimonials for the homepage (falls back to all published). */
 export async function getFeaturedTestimonials(limit = 3): Promise<Testimonial[]> {
-  const payload = await getPayloadClient();
-  const res = await payload.find({
-    collection: "testimonials",
-    locale: "all",
-    where: { and: [{ featured: { equals: true } }, PUBLISHED] },
-    sort: "order",
-    limit,
-    depth: 1,
-  });
-  if (res.docs.length > 0) return res.docs.map(mapTestimonial);
+  try {
+    const payload = await getPayloadClient();
+    const res = await payload.find({
+      collection: "testimonials",
+      locale: "all",
+      where: { and: [{ featured: { equals: true } }, PUBLISHED] },
+      sort: "order",
+      limit,
+      depth: 1,
+    });
+    if (res.docs.length > 0) return res.docs.map(mapTestimonial);
 
-  const fallback = await payload.find({
-    collection: "testimonials",
-    locale: "all",
-    where: PUBLISHED,
-    sort: "order",
-    limit,
-    depth: 1,
-  });
-  return fallback.docs.map(mapTestimonial);
+    const fallback = await payload.find({
+      collection: "testimonials",
+      locale: "all",
+      where: PUBLISHED,
+      sort: "order",
+      limit,
+      depth: 1,
+    });
+    return fallback.docs.map(mapTestimonial);
+  } catch {
+    // DB unavailable (e.g. during a build) — the section simply renders empty.
+    return [];
+  }
 }

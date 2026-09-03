@@ -36,12 +36,13 @@ export interface SiteSettings {
  * so the frontend always renders even before the global is populated.
  */
 export async function getSettings(): Promise<SiteSettings> {
-  const payload = await getPayloadClient();
   /* eslint-disable @typescript-eslint/no-explicit-any */
   let doc: any = {};
   try {
+    const payload = await getPayloadClient();
     doc = await payload.findGlobal({ slug: "settings", locale: "all", depth: 1 });
   } catch {
+    // DB unavailable (e.g. during a build) — fall back to siteConfig defaults.
     doc = {};
   }
   const phones =

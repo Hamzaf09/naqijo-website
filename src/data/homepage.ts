@@ -176,12 +176,13 @@ function fromStatic(): HomepageData {
  * field, so a partially-filled global still renders a complete page.
  */
 export async function getHomepage(): Promise<HomepageData> {
-  const payload = await getPayloadClient();
   /* eslint-disable @typescript-eslint/no-explicit-any */
   let doc: any = null;
   try {
+    const payload = await getPayloadClient();
     doc = await payload.findGlobal({ slug: "homepage", locale: "all", depth: 2 });
   } catch {
+    // DB unavailable (e.g. during a build) — fall back to static homepage content.
     doc = null;
   }
   const s = fromStatic();
