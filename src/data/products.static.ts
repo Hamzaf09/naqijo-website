@@ -393,6 +393,47 @@ export const products: Product[] = [
       { label: { ar: "التركيب", en: "Placement" }, value: { ar: "محمول/أرضي", en: "Freestanding" } },
     ],
   },
+  {
+    slug: "ro-bn01",
+    categoryKey: "drinking-water",
+    availability: "available",
+    name: {
+      ar: "منقّي تناضح عكسي مع تعقيم UV — RO-BN01",
+      en: "RO-BN01 Reverse Osmosis Purifier with UV",
+    },
+    shortDescription: {
+      ar: "منظومة تناضح عكسي بدون خزّان مع تعقيم بالأشعّة فوق البنفسجية (UV) ولوحة تحكّم لمسية ذكية، لمياه شربٍ نقية ومعقّمة.",
+      en: "A tankless reverse-osmosis system with UV sterilization and a smart touch panel, for pure, sterilized drinking water.",
+    },
+    fullDescription: {
+      ar: "يجمع RO-BN01 بين التناضح العكسي والتعقيم بالأشعّة فوق البنفسجية (UV) في هيكلٍ أنيق مدمج بدون خزّان. يزيل غشاء التناضح العكسي الأملاح والشوائب الدقيقة، بينما تقضي مرحلة الـ UV على الجراثيم لمياهٍ نقية ومعقّمة. تعرض لوحة التحكّم اللمسية حالة الطاقة والفلاتر والخزان والـ UV مع مؤشّر لعمر الحشوات، إضافةً إلى زرَّي الغسيل (Flush) وإعادة الضبط (Reset). يأتي النظام بطقم تركيب كامل يشمل صنبوراً مخصّصاً وأنابيب ومثبّتات. حاصل على شهادتَي CE وISO 9001.",
+      en: "The RO-BN01 combines reverse osmosis with UV sterilization in a sleek, compact tankless body. The RO membrane rejects dissolved salts and fine contaminants while the UV stage inactivates microorganisms for pure, sterilized water. Its touch panel shows power, filter, tank and UV status with a filter-life indicator, plus Flush and Reset controls. The system ships with a complete installation kit — a dedicated faucet, tubing and fittings. Certified to CE and ISO 9001.",
+    },
+    image: {
+      src: "/images/products/ro-bn01.webp",
+      width: 1086,
+      height: 1448,
+      alt: {
+        ar: "منقّي مياه RO-BN01 بالتناضح العكسي مع UV من نقي الرابية",
+        en: "Naqi Al-Rabia RO-BN01 reverse osmosis purifier with UV",
+      },
+    },
+    gallery: [],
+    features: [
+      { ar: "تناضح عكسي مع تعقيم UV", en: "Reverse osmosis with UV sterilization" },
+      { ar: "تصميم مدمج بدون خزّان", en: "Compact tankless design" },
+      { ar: "لوحة تحكّم لمسية ذكية بمؤشّرات", en: "Smart touch panel with status indicators" },
+      { ar: "طقم تركيب كامل مع صنبور مخصّص", en: "Complete install kit with a dedicated faucet" },
+    ],
+    specs: [
+      { label: { ar: "الطراز", en: "Model" }, value: { ar: "RO-BN01", en: "RO-BN01" } },
+      { label: { ar: "التقنية", en: "Technology" }, value: { ar: "تناضح عكسي + UV", en: "Reverse osmosis + UV" } },
+      { label: { ar: "غشاء التناضح", en: "RO membrane" }, value: { ar: "75 جالون/يوم", en: "75 GPD" } },
+      { label: { ar: "التصميم", en: "Design" }, value: { ar: "بدون خزّان (مدمج)", en: "Tankless (compact)" } },
+      { label: { ar: "التحكّم", en: "Controls" }, value: { ar: "لوحة لمسية ومؤشّرات", en: "Touch panel + indicators" } },
+      { label: { ar: "الشهادات", en: "Certifications" }, value: { ar: "CE و ISO 9001", en: "CE, ISO 9001" } },
+    ],
+  },
 ];
 
 /* ----------------------------- Query helpers ----------------------------- */
