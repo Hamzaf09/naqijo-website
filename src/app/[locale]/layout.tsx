@@ -37,8 +37,22 @@ export async function generateMetadata({
   const description = settings.defaultSeo.metaDescription[locale] || t("tagline");
   const ogImage = settings.defaultSeo.ogImage?.src;
 
+  // Optional search-engine site verification — rendered only when the env var
+  // is set, so it is safe/no-op locally and in a DB-less build. Set
+  // GOOGLE_SITE_VERIFICATION (and/or BING_SITE_VERIFICATION) in the host env.
+  const googleVerification = process.env.GOOGLE_SITE_VERIFICATION;
+  const bingVerification = process.env.BING_SITE_VERIFICATION;
+  const verification =
+    googleVerification || bingVerification
+      ? {
+          ...(googleVerification ? { google: googleVerification } : {}),
+          ...(bingVerification ? { other: { "msvalidate.01": bingVerification } } : {}),
+        }
+      : undefined;
+
   return {
     metadataBase: new URL(getServerURL()),
+    ...(verification ? { verification } : {}),
     title: { default: defaultTitle, template: `%s — ${name}` },
     description,
     alternates: {

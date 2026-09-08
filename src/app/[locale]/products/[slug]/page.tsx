@@ -8,6 +8,7 @@ import { requireLocale, routing } from "@/i18n/routing";
 import { pageMetadata, absoluteUrl } from "@/lib/seo";
 import { JsonLd } from "@/components/seo/json-ld";
 import { productSchema, breadcrumbSchema } from "@/lib/schema";
+import { RelatedGuides, guidesForCategory } from "@/components/site/related-guides";
 import { Link } from "@/i18n/navigation";
 import { Container, Section } from "@/ui/container";
 import { Display, H2 } from "@/ui/typography";
@@ -295,6 +296,10 @@ export default async function ProductDetailPage({
                   </ul>
                 </div>
               ) : null}
+
+              <div className="mt-12">
+                <RelatedGuides slugs={guidesForCategory[product.categoryKey] ?? []} locale={locale} />
+              </div>
             </div>
 
             {product.specs.length > 0 ? (

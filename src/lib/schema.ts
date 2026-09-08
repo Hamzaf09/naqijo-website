@@ -25,6 +25,22 @@ const descriptions: Record<Locale, string> = {
 // Verified from the company description (operations & branches).
 const AREA_SERVED = ["Jordan", "Saudi Arabia", "Qatar", "United Arab Emirates"];
 
+/**
+ * All verified brand variants, so search/AI treat NaqiJo = Naqi Al Rabia =
+ * نقي الرابية as ONE entity. Returns the variants EXCLUDING the node's own
+ * primary `name` (to avoid listing a name as its own alternate).
+ */
+function alternateNames(primary: string): string[] {
+  const all = [
+    names.ar, // نقي الرابية للمياه والطاقة
+    names.en, // Naqi Al Rabia Water & Energy
+    siteConfig.brand.ar, // نقي الرابية
+    siteConfig.brand.en, // NaqiJo
+    "Naqi Al Rabia",
+  ];
+  return [...new Set(all)].filter((n) => n !== primary);
+}
+
 const SAME_AS = (Object.values(siteConfig.social) as string[]).filter(
   (u) => typeof u === "string" && u.length > 0,
 );
@@ -46,12 +62,11 @@ function postalAddress(locale: Locale) {
 }
 
 function organizationNode(locale: Locale) {
-  const other: Locale = locale === "ar" ? "en" : "ar";
   return {
     "@type": "Organization",
     "@id": ORG_ID,
     name: names[locale],
-    alternateName: [names[other], "NaqiJo"],
+    alternateName: alternateNames(names[locale]),
     url: absoluteUrl(`/${locale}`),
     logo: absoluteUrl("/icon-512.png"),
     image: absoluteUrl("/icon-512.png"),
@@ -76,6 +91,7 @@ function localBusinessNode(locale: Locale) {
     "@type": "LocalBusiness",
     "@id": LOCALBUSINESS_ID,
     name: names[locale],
+    alternateName: alternateNames(names[locale]),
     url: absoluteUrl(`/${locale}`),
     logo: absoluteUrl("/icon-512.png"),
     image: absoluteUrl("/icon-512.png"),

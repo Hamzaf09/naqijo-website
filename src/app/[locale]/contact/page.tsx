@@ -1,4 +1,5 @@
 import { setRequestLocale } from "next-intl/server";
+import { Link } from "@/i18n/navigation";
 import { pageMetadata } from "@/lib/seo";
 import type { Metadata } from "next";
 import { requireLocale } from "@/i18n/routing";
@@ -195,6 +196,11 @@ export default async function ContactPage({ params }: { params: Promise<{ locale
                   <dd className="mt-2 text-fg">{settings.workingHours[locale]}</dd>
                 </div>
               </dl>
+              <p className="mt-8 text-[1.02rem] text-fg-muted">
+                <Link href="/water-filters-amman" className="font-medium text-primary hover:text-[var(--primary-hover)]">
+                  {locale === "ar" ? "فلاتر ومعالجة المياه في عمّان ←" : "Water filters & treatment in Amman →"}
+                </Link>
+              </p>
             </div>
           </Reveal>
 

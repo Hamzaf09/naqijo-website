@@ -14,6 +14,8 @@ import { CtaBand } from "@/components/site/cta-band";
 import { Reveal, RevealGroup } from "@/components/motion/reveal";
 import { getProductsByCategory } from "@/data/products";
 import { getCategoryContent, categoryContent } from "@/content/product-categories";
+import { termForCategory } from "@/content/terminology";
+import { AlsoKnownAs } from "@/components/site/also-known-as";
 import { getCategoryLabel } from "@/data/products.static";
 import { approvedImages } from "@/config/images";
 
@@ -66,6 +68,7 @@ export default async function ProductCategoryPage({
   const products = await getProductsByCategory(category);
   const label = getCategoryLabel(category)?.[locale] ?? content.title[locale];
   const guides = categoryGuides[category] ?? [];
+  const akaTerms = termForCategory(category)?.aka[locale] ?? [];
 
   const home = locale === "ar" ? "الرئيسية" : "Home";
   const productsLabel = locale === "ar" ? "المنتجات" : "Products";
@@ -113,6 +116,8 @@ export default async function ProductCategoryPage({
                   {p[locale]}
                 </p>
               ))}
+
+              <AlsoKnownAs terms={akaTerms} locale={locale} />
 
               <div className="mt-8 flex flex-wrap gap-x-6 gap-y-2 text-[1.02rem]">
                 <Link href="/services/water" className="font-medium text-primary hover:text-[var(--primary-hover)]">
