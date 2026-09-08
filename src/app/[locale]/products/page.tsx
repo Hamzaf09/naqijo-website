@@ -1,6 +1,7 @@
 import { setRequestLocale } from "next-intl/server";
 import type { Metadata } from "next";
 import { requireLocale } from "@/i18n/routing";
+import { Link } from "@/i18n/navigation";
 import { Container, Section } from "@/ui/container";
 import { PageHero } from "@/components/site/page-hero";
 import { CtaBand } from "@/components/site/cta-band";
@@ -85,6 +86,34 @@ export default async function ProductsPage({
             categories={categories}
             locale={locale}
           />
+
+          {/* Crawlable category links → indexable category landing pages. */}
+          <nav
+            aria-label={locale === "ar" ? "تصفّح حسب الفئة" : "Browse by category"}
+            className="mt-16 border-t border-border pt-10"
+          >
+            <h2 className="text-xs font-medium uppercase tracking-[0.16em] text-primary">
+              {locale === "ar" ? "تصفّح حسب الفئة" : "Browse by category"}
+            </h2>
+            <ul className="mt-6 flex flex-wrap gap-3">
+              {categories.map((cat) => (
+                <li key={cat.key}>
+                  <Link
+                    href={`/products/category/${cat.key}`}
+                    className="inline-flex rounded-full border border-border bg-surface px-4 py-2 text-[0.98rem] text-fg transition-colors hover:border-primary hover:text-primary"
+                  >
+                    {cat.label[locale]}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+            <Link
+              href="/guides"
+              className="mt-6 inline-flex font-medium text-primary hover:text-[var(--primary-hover)]"
+            >
+              {locale === "ar" ? "أدلة اختيار فلاتر المياه ←" : "Water-filter buying guides →"}
+            </Link>
+          </nav>
         </Container>
       </Section>
 

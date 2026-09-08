@@ -28,6 +28,7 @@ export const footerNav: Record<string, NavItem[]> = {
   company: [
     { key: "about", href: "/about" },
     { key: "projects", href: "/projects" },
+    { key: "guides", href: "/guides" },
     { key: "consultation", href: "/consultation" },
     { key: "faq", href: "/faq" },
   ],

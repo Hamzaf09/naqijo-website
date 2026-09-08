@@ -3,6 +3,7 @@ import type { Product, ProductCategory } from "./product-types";
 import {
   getAllProducts as staticGetAll,
   getProductBySlug as staticGetBySlug,
+  getProductsByCategory as staticGetByCategory,
   getFeaturedProducts as staticGetFeatured,
   getRelatedProducts as staticGetRelated,
   productSlugs as staticSlugs,
@@ -60,6 +61,10 @@ export async function getAllProducts(): Promise<Product[]> {
 export async function getProductBySlug(slug: string): Promise<Product | null> {
   const p = staticGetBySlug(slug);
   return p ? toProduct(p) : null;
+}
+
+export async function getProductsByCategory(categoryKey: string): Promise<Product[]> {
+  return staticGetByCategory(categoryKey).map(toProduct);
 }
 
 export async function getProductSlugs(): Promise<string[]> {

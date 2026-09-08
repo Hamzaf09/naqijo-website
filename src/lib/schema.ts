@@ -170,6 +170,34 @@ export function serviceSchema(opts: {
   };
 }
 
+export function articleSchema(opts: {
+  headline: string;
+  description: string;
+  url: string;
+  locale: Locale;
+  datePublished: string;
+  dateModified?: string;
+  image?: string;
+}) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: opts.headline,
+    description: opts.description,
+    url: opts.url,
+    inLanguage: opts.locale,
+    datePublished: opts.datePublished,
+    dateModified: opts.dateModified ?? opts.datePublished,
+    ...(opts.image
+      ? { image: opts.image.startsWith("http") ? opts.image : absoluteUrl(opts.image) }
+      : {}),
+    // Authored and published by the company itself — no fabricated author identity.
+    author: { "@id": ORG_ID, name: names[opts.locale] },
+    publisher: { "@id": ORG_ID },
+    isPartOf: { "@id": WEBSITE_ID },
+  };
+}
+
 export function faqPageSchema(faqs: { question: string; answer: string }[]) {
   return {
     "@context": "https://schema.org",
