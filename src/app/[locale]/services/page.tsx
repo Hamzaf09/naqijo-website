@@ -1,5 +1,8 @@
-import { setRequestLocale, getTranslations } from "next-intl/server";
+import { setRequestLocale } from "next-intl/server";
 import { requireLocale } from "@/i18n/routing";
+import { pageMetadata } from "@/lib/seo";
+import { JsonLd } from "@/components/seo/json-ld";
+import { breadcrumbSchema } from "@/lib/schema";
 import { Link } from "@/i18n/navigation";
 import { Container, Section } from "@/ui/container";
 import { H3 } from "@/ui/typography";
@@ -15,8 +18,19 @@ export const revalidate = 300;
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const { locale: requestedLocale } = await params;
   const locale = requireLocale(requestedLocale);
-  const t = await getTranslations({ locale, namespace: "nav" });
-  return { title: t("services") };
+  const meta = {
+    ar: {
+      title: "حلول تنقية ومعالجة المياه",
+      description:
+        "خدمات تنقية ومعالجة المياه، الطاقة الشمسية، تشطيبات المطابخ، وعزل الأسطح وحمايتها — بمعايير هندسية من نقي الرابية.",
+    },
+    en: {
+      title: "Water Purification & Treatment Solutions",
+      description:
+        "Water purification and treatment, solar energy, kitchen finishing, and roof protection — engineered by Naqi Al Rabia.",
+    },
+  }[locale];
+  return pageMetadata({ locale, path: "/services", title: meta.title, description: meta.description });
 }
 
 const extras = {
@@ -36,8 +50,17 @@ export default async function ServicesPage({ params }: { params: Promise<{ local
   setRequestLocale(locale);
   const servicesList = await getAllServices();
 
+  const breadcrumbLd = breadcrumbSchema(
+    [
+      { name: locale === "ar" ? "الرئيسية" : "Home", path: "/" },
+      { name: locale === "ar" ? "الحلول" : "Services", path: "/services" },
+    ],
+    locale,
+  );
+
   return (
     <>
+      <JsonLd data={breadcrumbLd} />
       <PageHero
         eyebrow={locale === "ar" ? "حلولنا" : "Our solutions"}
         title={locale === "ar" ? "حلولٌ هندسية متكاملة، لا خدماتٌ متفرّقة." : "Integrated engineering solutions — not scattered services."}

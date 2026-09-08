@@ -1,6 +1,9 @@
-import { setRequestLocale, getTranslations } from "next-intl/server";
+import { setRequestLocale } from "next-intl/server";
 import type { Metadata } from "next";
 import { requireLocale } from "@/i18n/routing";
+import { pageMetadata } from "@/lib/seo";
+import { JsonLd } from "@/components/seo/json-ld";
+import { breadcrumbSchema } from "@/lib/schema";
 import { Link } from "@/i18n/navigation";
 import { Container, Section } from "@/ui/container";
 import { H3 } from "@/ui/typography";
@@ -15,8 +18,19 @@ export const revalidate = 300;
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const { locale: requestedLocale } = await params;
   const locale = requireLocale(requestedLocale);
-  const t = await getTranslations({ locale, namespace: "nav" });
-  return { title: t("projects") };
+  const meta = {
+    ar: {
+      title: "مشاريعنا في المياه والطاقة",
+      description:
+        "مشاريع نفّذتها نقي الرابية في تنقية المياه والطاقة الشمسية والبنية السكنية عبر الأردن والمنطقة.",
+    },
+    en: {
+      title: "Our Water & Energy Projects",
+      description:
+        "Selected water purification, solar energy and residential-infrastructure projects delivered by Naqi Al Rabia across Jordan and the region.",
+    },
+  }[locale];
+  return pageMetadata({ locale, path: "/projects", title: meta.title, description: meta.description });
 }
 
 export default async function ProjectsPage({ params }: { params: Promise<{ locale: string }> }) {
@@ -25,8 +39,17 @@ export default async function ProjectsPage({ params }: { params: Promise<{ local
   setRequestLocale(locale);
   const projectsList = await getAllProjects();
 
+  const breadcrumbLd = breadcrumbSchema(
+    [
+      { name: locale === "ar" ? "الرئيسية" : "Home", path: "/" },
+      { name: locale === "ar" ? "المشاريع" : "Projects", path: "/projects" },
+    ],
+    locale,
+  );
+
   return (
     <>
+      <JsonLd data={breadcrumbLd} />
       <PageHero
         eyebrow={locale === "ar" ? "المشاريع" : "Projects"}
         title={locale === "ar" ? "بيوتٌ ومنشآت، هندسناها بنقاء." : "Homes and spaces, engineered with purity."}

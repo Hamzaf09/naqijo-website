@@ -5,6 +5,9 @@ import Image from "next/image";
 import { RichText } from "@payloadcms/richtext-lexical/react";
 import type { SerializedEditorState } from "lexical";
 import { requireLocale, routing } from "@/i18n/routing";
+import { pageMetadata, absoluteUrl } from "@/lib/seo";
+import { JsonLd } from "@/components/seo/json-ld";
+import { productSchema, breadcrumbSchema } from "@/lib/schema";
 import { Link } from "@/i18n/navigation";
 import { Container, Section } from "@/ui/container";
 import { Display, H2 } from "@/ui/typography";
@@ -44,7 +47,15 @@ export async function generateMetadata({
   const title = product.seoTitle?.[locale] || product.name[locale];
   const description =
     product.seoDescription?.[locale] || product.shortDescription[locale];
-  return { title, description };
+  return pageMetadata({
+    locale,
+    path: `/products/${slug}`,
+    title,
+    description,
+    ...(product.image.src
+      ? { image: { url: product.image.src, alt: product.image.alt[locale] } }
+      : {}),
+  });
 }
 
 const t = {
@@ -104,8 +115,27 @@ export default async function ProductDetailPage({
     c.whatsappText(product.name[locale]),
   )}`;
 
+  const productUrl = absoluteUrl(`/${locale}/products/${slug}`);
+  const productLd = productSchema({
+    name: product.name[locale],
+    description: product.shortDescription[locale],
+    image: product.image.src || "/icon-512.png",
+    ...(category ? { category: category[locale] } : {}),
+    sku: product.slug,
+    url: productUrl,
+  });
+  const breadcrumbLd = breadcrumbSchema(
+    [
+      { name: c.breadcrumbHome, path: "/" },
+      { name: c.breadcrumbProducts, path: "/products" },
+      { name: product.name[locale], path: `/products/${slug}` },
+    ],
+    locale,
+  );
+
   return (
     <>
+      <JsonLd data={[productLd, breadcrumbLd]} />
       {/* ---------------- HERO ---------------- */}
       <section className="pt-10 sm:pt-14">
         <Container>

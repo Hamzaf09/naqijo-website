@@ -1,13 +1,18 @@
 import { setRequestLocale, getTranslations } from "next-intl/server";
 import type { Metadata } from "next";
 import { requireLocale } from "@/i18n/routing";
+import { pageMetadata } from "@/lib/seo";
 import { LegalPage } from "@/components/site/legal-page";
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const { locale: requestedLocale } = await params;
   const locale = requireLocale(requestedLocale);
   const t = await getTranslations({ locale, namespace: "nav" });
-  return { title: t("privacy") };
+  const description =
+    locale === "ar"
+      ? "سياسة الخصوصية لموقع نقي الرابية للمياه والطاقة."
+      : "Privacy policy for the Naqi Al Rabia Water & Energy website.";
+  return pageMetadata({ locale, path: "/privacy", title: t("privacy"), description });
 }
 
 const content = {

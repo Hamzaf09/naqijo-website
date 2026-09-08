@@ -6,6 +6,9 @@ import { PageHero } from "@/components/site/page-hero";
 import { CtaBand } from "@/components/site/cta-band";
 import { ProductsCatalog } from "@/components/site/products-catalog";
 import { getAllProducts, getProductCategories } from "@/data/products";
+import { pageMetadata } from "@/lib/seo";
+import { JsonLd } from "@/components/seo/json-ld";
+import { breadcrumbSchema } from "@/lib/schema";
 
 const content = {
   ar: {
@@ -33,8 +36,19 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale: requestedLocale } = await params;
   const locale = requireLocale(requestedLocale);
-  const c = content[locale];
-  return { title: c.eyebrow, description: c.lead };
+  const meta = {
+    ar: {
+      title: "فلاتر المياه وأنظمة التنقية",
+      description:
+        "تصفّح فلاتر المياه وأنظمة التناضح العكسي والتنقية المركزية ومعالجة عسر المياه من نقي الرابية، للمنازل والأعمال في الأردن.",
+    },
+    en: {
+      title: "Water Filters & Purification Systems",
+      description:
+        "Browse Naqi Al Rabia water filters, reverse-osmosis, central purification and water-softening systems for homes and businesses in Jordan.",
+    },
+  }[locale];
+  return pageMetadata({ locale, path: "/products", title: meta.title, description: meta.description });
 }
 
 export default async function ProductsPage({
@@ -51,8 +65,17 @@ export default async function ProductsPage({
     getProductCategories(),
   ]);
 
+  const breadcrumbLd = breadcrumbSchema(
+    [
+      { name: locale === "ar" ? "الرئيسية" : "Home", path: "/" },
+      { name: locale === "ar" ? "المنتجات" : "Products", path: "/products" },
+    ],
+    locale,
+  );
+
   return (
     <>
+      <JsonLd data={breadcrumbLd} />
       <PageHero eyebrow={c.eyebrow} title={c.title} lead={c.lead} locale={locale} />
 
       <Section>

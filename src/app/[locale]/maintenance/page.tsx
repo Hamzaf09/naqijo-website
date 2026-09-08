@@ -1,6 +1,7 @@
 import { setRequestLocale, getTranslations } from "next-intl/server";
 import type { Metadata } from "next";
 import { requireLocale } from "@/i18n/routing";
+import { pageMetadata } from "@/lib/seo";
 import { Container, Section } from "@/ui/container";
 import { H2, H3 } from "@/ui/typography";
 import { PageHero } from "@/components/site/page-hero";
@@ -12,7 +13,11 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   const { locale: requestedLocale } = await params;
   const locale = requireLocale(requestedLocale);
   const t = await getTranslations({ locale, namespace: "nav" });
-  return { title: t("maintenance") };
+  const description =
+    locale === "ar"
+      ? "خدمات صيانة وتركيب واستبدال حشوات فلاتر المياه وعقود الصيانة الدورية من نقي الرابية في الأردن."
+      : "Water filter maintenance, installation, cartridge replacement and scheduled service contracts from Naqi Al Rabia in Jordan.";
+  return pageMetadata({ locale, path: "/maintenance", title: t("maintenance"), description });
 }
 
 const content = {

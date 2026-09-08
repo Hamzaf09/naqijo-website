@@ -1,6 +1,7 @@
 import { setRequestLocale, getTranslations } from "next-intl/server";
 import type { Metadata } from "next";
 import { requireLocale } from "@/i18n/routing";
+import { pageMetadata } from "@/lib/seo";
 import { Container, Section } from "@/ui/container";
 import { H2, H3 } from "@/ui/typography";
 import { PageHero } from "@/components/site/page-hero";
@@ -12,7 +13,11 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   const { locale: requestedLocale } = await params;
   const locale = requireLocale(requestedLocale);
   const t = await getTranslations({ locale, namespace: "nav" });
-  return { title: t("consultation") };
+  const description =
+    locale === "ar"
+      ? "احجز استشارة مجانية مع مهندسي نقي الرابية لاختيار حل تنقية المياه المناسب لمنزلك أو عملك في الأردن."
+      : "Book a free consultation with Naqi Al Rabia engineers to choose the right water solution for your home or business in Jordan.";
+  return pageMetadata({ locale, path: "/consultation", title: t("consultation"), description });
 }
 
 const content = {

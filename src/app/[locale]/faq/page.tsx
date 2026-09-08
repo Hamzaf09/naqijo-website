@@ -1,4 +1,4 @@
-import { setRequestLocale, getTranslations } from "next-intl/server";
+import { setRequestLocale } from "next-intl/server";
 import type { Metadata } from "next";
 import { requireLocale } from "@/i18n/routing";
 import { Container, Section } from "@/ui/container";
@@ -6,14 +6,28 @@ import { PageHero } from "@/components/site/page-hero";
 import { CtaBand } from "@/components/site/cta-band";
 import { Reveal } from "@/components/motion/reveal";
 import { getFaqs } from "@/data/faqs";
+import { pageMetadata } from "@/lib/seo";
+import { JsonLd } from "@/components/seo/json-ld";
+import { faqPageSchema } from "@/lib/schema";
 
 export const revalidate = 300;
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const { locale: requestedLocale } = await params;
   const locale = requireLocale(requestedLocale);
-  const t = await getTranslations({ locale, namespace: "nav" });
-  return { title: t("faq") };
+  const meta = {
+    ar: {
+      title: "أسئلة شائعة حول فلاتر ومعالجة المياه",
+      description:
+        "إجابات عن أكثر الأسئلة شيوعاً حول فلاتر المياه وتنقيتها وصيانتها والضمانات وخدمات نقي الرابية في الأردن.",
+    },
+    en: {
+      title: "Water Filtration & Treatment FAQs",
+      description:
+        "Answers to common questions about water filters, purification, maintenance, warranties and Naqi Al Rabia services in Jordan.",
+    },
+  }[locale];
+  return pageMetadata({ locale, path: "/faq", title: meta.title, description: meta.description });
 }
 
 const content = {
@@ -64,6 +78,7 @@ export default async function FaqPage({ params }: { params: Promise<{ locale: st
 
   return (
     <>
+      <JsonLd data={faqPageSchema(items.map((i) => ({ question: i.q, answer: i.a })))} />
       <PageHero eyebrow={c.eyebrow} title={c.title} lead={c.lead} locale={locale} />
 
       <Section>

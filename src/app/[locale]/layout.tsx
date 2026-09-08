@@ -7,6 +7,8 @@ import { ThemeProvider } from "@/components/theme/theme-provider";
 import { SiteHeader } from "@/components/layout/site-header";
 import { SiteFooter } from "@/components/layout/site-footer";
 import { FloatingWhatsApp } from "@/components/site/floating-whatsapp";
+import { JsonLd } from "@/components/seo/json-ld";
+import { siteGraph } from "@/lib/schema";
 import { ScrollManager } from "@/components/layout/scroll-manager";
 import { alexandria } from "@/fonts/alexandria";
 import { getServerURL } from "@/lib/env";
@@ -91,6 +93,7 @@ export default async function LocaleLayout({
         <script src="/theme-init.js" async blocking="render" />
       </head>
       <body>
+        <JsonLd data={siteGraph(locale)} />
         {gtmId ? (
           <noscript>
             <iframe

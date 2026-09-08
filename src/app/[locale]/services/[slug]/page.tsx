@@ -4,6 +4,9 @@ import type { Metadata } from "next";
 import { RichText } from "@payloadcms/richtext-lexical/react";
 import type { SerializedEditorState } from "lexical";
 import { requireLocale, routing } from "@/i18n/routing";
+import { pageMetadata, absoluteUrl } from "@/lib/seo";
+import { JsonLd } from "@/components/seo/json-ld";
+import { serviceSchema, breadcrumbSchema } from "@/lib/schema";
 import { Link } from "@/i18n/navigation";
 import { Container, Section } from "@/ui/container";
 import { H2, H3 } from "@/ui/typography";
@@ -31,9 +34,16 @@ export async function generateMetadata({
   const { locale: requestedLocale, slug } = await params;
   const locale = requireLocale(requestedLocale);
   const s = await getServiceBySlug(slug);
-  return s
-    ? { title: s.headline[locale], description: s.shortDescription[locale] }
-    : {};
+  if (!s) return {};
+  return pageMetadata({
+    locale,
+    path: `/services/${slug}`,
+    title: s.headline[locale],
+    description: s.shortDescription[locale],
+    ...(s.heroImage?.src
+      ? { image: { url: s.heroImage.src, alt: s.heroImage.alt[locale] } }
+      : {}),
+  });
 }
 
 export default async function ServiceDetailPage({
@@ -51,8 +61,25 @@ export default async function ServiceDetailPage({
     | SerializedEditorState
     | undefined;
 
+  const serviceUrl = absoluteUrl(`/${locale}/services/${slug}`);
+  const serviceLd = serviceSchema({
+    name: s.name[locale],
+    description: s.shortDescription[locale],
+    url: serviceUrl,
+    ...(s.heroImage?.src ? { image: s.heroImage.src } : {}),
+  });
+  const breadcrumbLd = breadcrumbSchema(
+    [
+      { name: locale === "ar" ? "الرئيسية" : "Home", path: "/" },
+      { name: locale === "ar" ? "الحلول" : "Services", path: "/services" },
+      { name: s.name[locale], path: `/services/${slug}` },
+    ],
+    locale,
+  );
+
   return (
     <>
+      <JsonLd data={[serviceLd, breadcrumbLd]} />
       <PageHero
         eyebrow={s.name[locale]}
         title={s.headline[locale]}

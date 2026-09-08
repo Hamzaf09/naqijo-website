@@ -1,6 +1,7 @@
-import { setRequestLocale, getTranslations } from "next-intl/server";
+import { setRequestLocale } from "next-intl/server";
 import type { Metadata } from "next";
 import { requireLocale } from "@/i18n/routing";
+import { pageMetadata } from "@/lib/seo";
 import { Container, Section } from "@/ui/container";
 import { H2, H3 } from "@/ui/typography";
 import { PageHero } from "@/components/site/page-hero";
@@ -11,8 +12,19 @@ import { Reveal, RevealGroup } from "@/components/motion/reveal";
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const { locale: requestedLocale } = await params;
   const locale = requireLocale(requestedLocale);
-  const t = await getTranslations({ locale, namespace: "nav" });
-  return { title: t("about") };
+  const meta = {
+    ar: {
+      title: "عن الشركة — خبرة في حلول المياه منذ 2005",
+      description:
+        "نقي الرابية للمياه والطاقة، تأسست عام 2005، شركة متخصصة في فلترة وتنقية ومعالجة المياه وحلول المياه والطاقة في الأردن والمنطقة.",
+    },
+    en: {
+      title: "About — Water Solutions Expertise Since 2005",
+      description:
+        "Naqi Al Rabia Water & Energy, founded in 2005, specializes in water filtration, purification and treatment, and integrated water and energy solutions across Jordan and the region.",
+    },
+  }[locale];
+  return pageMetadata({ locale, path: "/about", title: meta.title, description: meta.description });
 }
 
 const content = {

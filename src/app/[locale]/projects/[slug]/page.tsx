@@ -2,6 +2,9 @@ import { notFound } from "next/navigation";
 import { setRequestLocale } from "next-intl/server";
 import type { Metadata } from "next";
 import { requireLocale, routing } from "@/i18n/routing";
+import { pageMetadata } from "@/lib/seo";
+import { JsonLd } from "@/components/seo/json-ld";
+import { breadcrumbSchema } from "@/lib/schema";
 import { Link } from "@/i18n/navigation";
 import { Container, Section } from "@/ui/container";
 import { Display, H2, Lead } from "@/ui/typography";
@@ -29,7 +32,16 @@ export async function generateMetadata({
   const { locale: requestedLocale, slug } = await params;
   const locale = requireLocale(requestedLocale);
   const p = await getProjectBySlug(slug);
-  return p ? { title: p.title[locale], description: p.shortDescription[locale] } : {};
+  if (!p) return {};
+  return pageMetadata({
+    locale,
+    path: `/projects/${slug}`,
+    title: p.title[locale],
+    description: p.shortDescription[locale],
+    ...(p.heroImage?.src
+      ? { image: { url: p.heroImage.src, alt: p.heroImage.alt[locale] } }
+      : {}),
+  });
 }
 
 export default async function ProjectDetailPage({
@@ -49,8 +61,18 @@ export default async function ProjectDetailPage({
     { t: locale === "ar" ? "الأثر" : "The outcome", d: p.outcome[locale] },
   ].filter((b) => b.d);
 
+  const breadcrumbLd = breadcrumbSchema(
+    [
+      { name: locale === "ar" ? "الرئيسية" : "Home", path: "/" },
+      { name: locale === "ar" ? "المشاريع" : "Projects", path: "/projects" },
+      { name: p.title[locale], path: `/projects/${slug}` },
+    ],
+    locale,
+  );
+
   return (
     <>
+      <JsonLd data={breadcrumbLd} />
       <Section className="pt-16 sm:pt-20">
         <Container>
           <div className="max-w-4xl">

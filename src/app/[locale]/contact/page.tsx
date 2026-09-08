@@ -1,4 +1,5 @@
-import { setRequestLocale, getTranslations } from "next-intl/server";
+import { setRequestLocale } from "next-intl/server";
+import { pageMetadata } from "@/lib/seo";
 import type { Metadata } from "next";
 import { requireLocale } from "@/i18n/routing";
 import { Container, Section } from "@/ui/container";
@@ -11,8 +12,19 @@ import { getSettings } from "@/data/settings";
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const { locale: requestedLocale } = await params;
   const locale = requireLocale(requestedLocale);
-  const t = await getTranslations({ locale, namespace: "nav" });
-  return { title: t("contact") };
+  const meta = {
+    ar: {
+      title: "تواصل معنا — استشارة مجانية",
+      description:
+        "تواصل مع نقي الرابية للمياه والطاقة أو احجز استشارة مجانية لحلول فلترة وتنقية المياه في عمّان والأردن. هاتف: +962 79 290 0008.",
+    },
+    en: {
+      title: "Contact Us — Free Consultation",
+      description:
+        "Contact Naqi Al Rabia Water & Energy or book a free consultation for water filtration and purification solutions in Amman and Jordan. Phone: +962 79 290 0008.",
+    },
+  }[locale];
+  return pageMetadata({ locale, path: "/contact", title: meta.title, description: meta.description });
 }
 
 const dicts = {

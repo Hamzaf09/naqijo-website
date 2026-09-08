@@ -31,19 +31,27 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     getProjectSlugs().catch(() => [] as string[]),
   ]);
 
+  // Every canonical URL points at its ar/en language alternates (hreflang) so
+  // search engines cluster the two locales instead of treating them as dupes.
+  const paths = [
+    ...staticRoutes,
+    ...productSlugs.map((s) => `/products/${s}`),
+    ...serviceSlugs.map((s) => `/services/${s}`),
+    ...projectSlugs.map((s) => `/projects/${s}`),
+  ];
+
   const urls: MetadataRoute.Sitemap = [];
-  for (const locale of routing.locales) {
-    for (const route of staticRoutes) {
-      urls.push({ url: `${base}/${locale}${route}`, lastModified: now });
-    }
-    for (const slug of productSlugs) {
-      urls.push({ url: `${base}/${locale}/products/${slug}`, lastModified: now });
-    }
-    for (const slug of serviceSlugs) {
-      urls.push({ url: `${base}/${locale}/services/${slug}`, lastModified: now });
-    }
-    for (const slug of projectSlugs) {
-      urls.push({ url: `${base}/${locale}/projects/${slug}`, lastModified: now });
+  for (const path of paths) {
+    const languages = {
+      ar: `${base}/ar${path}`,
+      en: `${base}/en${path}`,
+    };
+    for (const locale of routing.locales) {
+      urls.push({
+        url: `${base}/${locale}${path}`,
+        lastModified: now,
+        alternates: { languages },
+      });
     }
   }
   return urls;
