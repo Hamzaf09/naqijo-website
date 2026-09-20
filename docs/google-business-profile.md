@@ -69,7 +69,7 @@ Keep it factual and conservative. No "#1 / best / leading" claims.
 |---|---|
 | Website | https://www.naqijo.com |
 | Phone (primary / WhatsApp) | +962 79 290 0008 |
-| Phone (secondary / office) | +962 79 230 0005 |
+| Phone (secondary / office) | +962 79 320 0007 |
 | Email | info@naqijo.com |
 | Address | Khalda, Wasfi Al Tal Street, Fahed Jarissat Complex, Ground Floor, Amman, Jordan |
 | Address (AR) | خلدا، شارع وصفي التل، مجمع فهد جريصات، الطابق الأرضي، عمّان، الأردن |

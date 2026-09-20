@@ -13,7 +13,7 @@ ranking is promised. Each item is one of:
 |---|---|---|
 | Business name | READY | Canonical in `siteConfig` + schema `name`/`alternateName`; see `docs/local-nap-standard.md`. |
 | Address | READY | `siteConfig.address` + `schema.ts postalAddress()`; on contact & Amman pages. |
-| Phone | READY | `+962 79 290 0008` / `+962 79 230 0005`, international format. |
+| Phone | READY | `+962 79 290 0008` / `+962 79 320 0007`, international format. |
 | Website | READY | `https://www.naqijo.com` (`metadataBase`, canonicals, schema). |
 | GBP URL | NEEDS EXTERNAL ACTION | Owner must claim/verify the profile. |
 | Maps URL | NEEDS EXTERNAL ACTION | Architecture READY: set `NEXT_PUBLIC_GOOGLE_MAPS_URL` → renders CTA + schema `hasMap`. |

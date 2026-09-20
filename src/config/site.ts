@@ -14,11 +14,11 @@ export const siteConfig = {
   email: "info@naqijo.com",
   brandEmail: "brand@naqijo.com",
   // Primary consultation number first (WhatsApp), then the secondary office line.
-  phones: ["+962792900008", "+962792300005"],
+  phones: ["+962792900008", "+962793200007"],
   // The single consultation WhatsApp number used by every CTA on the site.
   whatsapp: "+962792900008",
   phonePrimary: "+962792900008",
-  phoneSecondary: "+962792300005",
+  phoneSecondary: "+962793200007",
   address: {
     ar: "خلدا، شارع وصفي التل، مجمع فهد جريصات، الطابق الأرضي، عمّان، الأردن",
     en: "Khalda, Wasfi Al Tal Street, Fahed Jarissat Complex, Ground Floor, Amman, Jordan",

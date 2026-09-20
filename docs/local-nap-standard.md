@@ -19,7 +19,7 @@ local trust. All values below are taken directly from `src/config/site.ts` and
 | Locality | Amman (عمّان) |
 | Country | Jordan (JO) |
 | Phone — primary / WhatsApp | +962 79 290 0008 (stored `+962792900008`) |
-| Phone — secondary / office | +962 79 230 0005 (stored `+962792300005`) |
+| Phone — secondary / office | +962 79 320 0007 (stored `+962793200007`) |
 | Email | info@naqijo.com |
 | Website | https://www.naqijo.com |
 | Founded | 2005 |
