@@ -30,9 +30,10 @@ export function generateStaticParams() {
 
 /** Contextual guide links per category (created in the guides section). */
 const categoryGuides: Record<string, string[]> = {
-  "drinking-water": ["choosing-a-water-filter", "reverse-osmosis-vs-filtration"],
+  "drinking-water": ["choosing-a-water-filter", "reverse-osmosis-vs-filtration", "seven-stage-water-filters"],
   "water-softening": ["hard-water-and-water-softeners"],
-  "central-filtration": ["choosing-a-water-filter"],
+  "central-filtration": ["central-vs-drinking-water-filter", "choosing-a-water-filter"],
+  "filter-cartridges": ["water-filter-maintenance-signs"],
 };
 
 export async function generateMetadata({
@@ -196,5 +197,17 @@ const guideTitles: Record<string, Record<string, string>> = {
   "hard-water-and-water-softeners": {
     ar: "عسر المياه وأجهزة التليين (سوفتنر)",
     en: "Hard water and water softeners",
+  },
+  "seven-stage-water-filters": {
+    ar: "فلتر 7 مراحل: كم مرحلة تحتاج؟",
+    en: "7-stage filters: how many stages?",
+  },
+  "central-vs-drinking-water-filter": {
+    ar: "الفلتر المركزي أم فلتر الشرب؟",
+    en: "Central vs drinking-water filter",
+  },
+  "water-filter-maintenance-signs": {
+    ar: "متى يحتاج فلترك إلى صيانة؟",
+    en: "When your filter needs maintenance",
   },
 };

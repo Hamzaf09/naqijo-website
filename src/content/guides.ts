@@ -317,6 +317,270 @@ export const guides: Guide[] = [
       { href: "/maintenance", label: { ar: "الصيانة الوقائية", en: "Preventive maintenance" } },
     ],
   },
+  {
+    slug: "seven-stage-water-filters",
+    image: "underSinkSystem",
+    datePublished: AUTHORED,
+    dateModified: AUTHORED,
+    title: {
+      ar: "فلتر المياه ذو 7 مراحل: كم مرحلة تحتاج فعلاً؟",
+      en: "7-Stage Water Filters: How Many Stages Do You Really Need?",
+    },
+    description: {
+      ar: "ماذا تعني «المراحل» في فلتر المياه، والفرق بين فلتر 5 و7 مراحل، ودور الغشاء (ممبرين) — وكيف تختار العدد المناسب لمنزلك دون مبالغة.",
+      en: "What «stages» mean in a water filter, the difference between 5-stage and 7-stage («فلتر 7 مراحل»), the membrane's role, and how to choose the right count for your home without overpaying.",
+    },
+    sections: [
+      {
+        heading: { ar: "ماذا تعني «المراحل» في فلتر المياه؟", en: "What do «stages» mean in a water filter?" },
+        body: [
+          {
+            ar: "«المراحل» هي عدد خطوات المعالجة التي يمرّ بها الماء داخل النظام قبل أن تشربه. كل مرحلة تؤدّي وظيفة مختلفة، مثل حجز الشوائب الكبيرة أولاً ثم التنقية الأدق. عبارة «فلتر 7 مراحل» أو «فلتر سبع مراحل» شائعة في السوق للإشارة إلى الأنظمة متعددة المراحل.",
+            en: "«Stages» are the number of treatment steps water passes through before you drink it. Each stage does a different job — capturing larger particles first, then finer purification. The market phrase «فلتر 7 مراحل» (seven-stage filter) refers to these multi-stage systems.",
+          },
+        ],
+      },
+      {
+        heading: { ar: "ماذا تفعل المراحل المختلفة؟", en: "What do the different stages do?" },
+        body: [
+          {
+            ar: "تختلف تركيبة المراحل بين الأنظمة، لكنها عموماً تبدأ بمراحل ترشيبٍ أولية لحجز الرواسب، ثم مراحل كربونية لتحسين الطعم والرائحة. في أنظمة التناضح العكسي (RO) تأتي مرحلة الغشاء (ممبرين)، وقد تتبعها مراحل إضافية مثل الكربون النهائي، أو مرحلة تعقيمٍ بالأشعة فوق البنفسجية (UV) في بعض الطُرز.",
+            en: "Stage make-up varies between systems, but generally starts with pre-filtration stages that capture sediment, followed by carbon stages that improve taste and odor. In reverse-osmosis (RO) systems the membrane («ممبرين») stage follows, and some models add further stages such as a post-carbon stage or a UV sterilization stage.",
+          },
+        ],
+      },
+      {
+        heading: { ar: "هل «الأكثر مراحلَ» أفضل دائماً؟", en: "Are more stages always better?" },
+        body: [
+          {
+            ar: "ليس بالضرورة. عدد المراحل الأعلى لا يعني تلقائياً جودةً أعلى؛ فالمهم هو ملاءمة المراحل لجودة مياهك واحتياجك. مرحلةٌ إضافية بلا سببٍ واضح قد تزيد التكلفة والصيانة دون فائدة ملموسة. لذلك نبدأ بفحص جودة المياه ثم نوصي بالعدد المناسب.",
+            en: "Not necessarily. A higher stage count doesn't automatically mean higher quality; what matters is that the stages match your water quality and needs. An extra stage with no clear purpose can add cost and maintenance without a tangible benefit. That's why we assess your water quality first, then recommend the right count.",
+          },
+        ],
+      },
+      {
+        heading: { ar: "دور الغشاء (ممبرين)", en: "The role of the membrane" },
+        body: [
+          {
+            ar: "في أنظمة التناضح العكسي، الغشاء (Membrane / «ممبرين») هو المرحلة المميّزة التي تفصل نظام RO عن الفلترة البسيطة. مثل بقية المراحل، يحتاج الغشاء إلى استبدالٍ في وقته للحفاظ على أداء النظام.",
+            en: "In reverse-osmosis systems, the membrane («ممبرين») is the distinguishing stage that separates an RO system from simple filtration. Like the other stages, the membrane needs timely replacement to keep the system performing.",
+          },
+        ],
+      },
+      {
+        heading: { ar: "ما الذي يناسب منزلك؟", en: "What suits your home?" },
+        body: [
+          {
+            ar: "العدد الأنسب من المراحل يعتمد على جودة مياهك وعدد أفراد المنزل واستهلاككم، لا على الرقم الأكبر. تتوفر أنظمة بتصاميم مختلفة، بخزانٍ أو بدون خزان (Tankless / «تانك ليس»). الأفضل أن تبدأ بفحصٍ ثم قرار.",
+            en: "The right number of stages depends on your water quality, household size and usage — not on the biggest number. Systems come in different designs, with a tank or tankless («تانك ليس»). It's best to start with an assessment, then decide.",
+          },
+        ],
+      },
+    ],
+    faqs: [
+      {
+        q: { ar: "هل فلتر 7 مراحل ضروري للمنزل؟", en: "Is a 7-stage filter necessary for a home?" },
+        a: {
+          ar: "ليس بالضرورة. المناسب يعتمد على جودة مياهك واحتياجك، وقد يكفي عددٌ أقل من المراحل أو يلزم أكثر. الفحص هو ما يحدّد ذلك.",
+          en: "Not necessarily. The right choice depends on your water quality and needs — fewer stages may be enough, or more may be warranted. An assessment is what decides.",
+        },
+      },
+      {
+        q: { ar: "ما الفرق بين فلتر 5 مراحل و7 مراحل؟", en: "What's the difference between a 5-stage and a 7-stage filter?" },
+        a: {
+          ar: "الفرق هو عدد خطوات المعالجة الإضافية. المراحل الإضافية قد تضيف وظائف مثل كربونٍ نهائي أو تعقيم، لكن قيمتها تعتمد على حالتك، لا على الرقم وحده.",
+          en: "The difference is the number of extra treatment steps. Additional stages may add functions such as a post-carbon or sterilization step, but their value depends on your situation, not the number alone.",
+        },
+      },
+    ],
+    related: [
+      { href: "/products/category/drinking-water", label: { ar: "أنظمة مياه الشرب", en: "Drinking-water systems" } },
+      { href: "/guides/choosing-a-water-filter", label: { ar: "كيف تختار فلتر مياه", en: "How to choose a water filter" } },
+      { href: "/guides/reverse-osmosis-vs-filtration", label: { ar: "التناضح العكسي RO مقابل الأنظمة الأخرى", en: "RO vs other systems" } },
+      { href: "/consultation", label: { ar: "استشارة هندسية مجانية", en: "Free engineering consultation" } },
+    ],
+  },
+  {
+    slug: "central-vs-drinking-water-filter",
+    image: "wholeHouseSystem",
+    datePublished: AUTHORED,
+    dateModified: AUTHORED,
+    title: {
+      ar: "الفلتر المركزي أم فلتر مياه الشرب؟ وهل تحتاج فلترة مركزية للمنزل؟",
+      en: "Central Filtration vs a Drinking-Water Filter: Do You Need a Whole-Home System?",
+    },
+    description: {
+      ar: "الفرق بين الفلتر المركزي («سنترال فلتر») وفلتر مياه الشرب، وما الذي يعالجه كلٌّ منهما، ومتى تحتاج فلترة مركزية للمنزل ومتى يكفي فلتر الشرب.",
+      en: "The difference between central filtration («سنترال فلتر») and a drinking-water filter, what each addresses, and when you need a whole-home system versus when a drinking-water filter is enough.",
+    },
+    sections: [
+      {
+        heading: { ar: "الفرق الأساسي", en: "The core difference" },
+        body: [
+          {
+            ar: "الفلتر المركزي، أو «سنترال فلتر» (Central Filter)، يعالج المياه عند نقطة دخولها إلى المنزل فيخدم كل الصنابير والطوابق. أما فلتر مياه الشرب فيعالج نقطة استخدامٍ واحدة، عادةً صنبور المطبخ. باختصار: الأول للمنزل كله، والثاني لمياه الشرب تحديداً.",
+            en: "Central filtration — a «سنترال فلتر» — treats water at the point it enters the home, serving every tap and floor. A drinking-water filter treats a single point of use, usually the kitchen tap. In short: the first is for the whole home, the second is specifically for drinking water.",
+          },
+        ],
+      },
+      {
+        heading: { ar: "ماذا يعالج كلٌّ منهما؟", en: "What does each one address?" },
+        body: [
+          {
+            ar: "تهدف الفلترة المركزية عادةً إلى تحسين المياه العامة في المنزل وحماية الأنابيب والأجهزة من الرواسب، وغالباً ما تُدمج مع معالجة عسر المياه. أما فلتر الشرب (ومنه أنظمة التناضح العكسي RO) فيركّز على إنتاج مياه شربٍ معالجة في المطبخ.",
+            en: "Central filtration typically aims to improve the home's general water and protect pipes and appliances from sediment, and is often paired with water softening. A drinking-water filter (including reverse-osmosis / RO systems) focuses on producing treated drinking water at the kitchen.",
+          },
+        ],
+      },
+      {
+        heading: { ar: "متى تحتاج فلترة مركزية؟", en: "When do you need central filtration?" },
+        body: [
+          {
+            ar: "إن كانت مشكلتك تشمل المنزل كله — كالرواسب على الصنابير أو الكلس في السخانات أو أثر المياه على الغسيل والاستحمام — فقد تكون الفلترة المركزية هي الأساس المناسب.",
+            en: "If your issue spans the whole home — sediment on taps, limescale in heaters, or the effect of water on laundry and bathing — central filtration may be the right foundation.",
+          },
+        ],
+      },
+      {
+        heading: { ar: "متى يكفي فلتر الشرب؟", en: "When is a drinking-water filter enough?" },
+        body: [
+          {
+            ar: "إن كان همّك الأساسي هو جودة مياه الشرب في المطبخ فقط، فقد يكفي نظام شربٍ مخصّص دون الحاجة إلى فلترة مركزية. القرار يعتمد على مشكلتك ونتيجة فحص المياه.",
+            en: "If your main concern is only kitchen drinking-water quality, a dedicated drinking-water system may be enough without central filtration. The decision depends on your problem and the water-test result.",
+          },
+        ],
+      },
+      {
+        heading: { ar: "الجمع بين الاثنين", en: "Combining both" },
+        body: [
+          {
+            ar: "كثيرٌ من المنازل يجمع بين فلترة مركزية للحماية العامة ونظام شربٍ مخصّص في المطبخ، للحصول على منظومةٍ متكاملة. نصمّم التركيبة المناسبة بعد الفحص.",
+            en: "Many homes combine central filtration for general protection with a dedicated drinking-water system at the kitchen, for a complete setup. We design the right combination after an assessment.",
+          },
+        ],
+      },
+    ],
+    faqs: [
+      {
+        q: { ar: "هل يمكنني تركيب الاثنين معاً؟", en: "Can I install both together?" },
+        a: {
+          ar: "نعم، من الشائع الجمع بين فلترة مركزية للمنزل ونظام شربٍ في المطبخ، بحسب احتياج البيت ونتيجة الفحص.",
+          en: "Yes — it's common to combine central filtration for the home with a kitchen drinking-water system, depending on the home's needs and the assessment.",
+        },
+      },
+      {
+        q: { ar: "هل يجعل الفلتر المركزي مياه الصنبور صالحةً للشرب؟", en: "Does a central filter make tap water drinkable?" },
+        a: {
+          ar: "الفلترة المركزية تحسّن المياه العامة في المنزل، لكن مياه الشرب عادةً ما تُعالَج عبر نظامٍ مخصّص في المطبخ. نوضّح لك الأنسب بعد فحص مياهك.",
+          en: "Central filtration improves the home's general water, but drinking water is usually treated through a dedicated kitchen system. We explain what's best after assessing your water.",
+        },
+      },
+    ],
+    related: [
+      { href: "/products/category/central-filtration", label: { ar: "الفلترة المركزية", en: "Central filtration" } },
+      { href: "/products/category/drinking-water", label: { ar: "أنظمة مياه الشرب", en: "Drinking-water systems" } },
+      { href: "/guides/choosing-a-water-filter", label: { ar: "كيف تختار فلتر مياه", en: "How to choose a water filter" } },
+      { href: "/consultation", label: { ar: "استشارة هندسية مجانية", en: "Free engineering consultation" } },
+    ],
+  },
+  {
+    slug: "water-filter-maintenance-signs",
+    image: "premiumInstallation",
+    datePublished: AUTHORED,
+    dateModified: AUTHORED,
+    title: {
+      ar: "كيف تعرف أن فلتر المياه يحتاج صيانة؟ (تغيير الشمعات والممبرين)",
+      en: "How to Know Your Water Filter Needs Maintenance (Cartridge & Membrane Replacement)",
+    },
+    description: {
+      ar: "علاماتٌ عملية على حاجة فلتر المياه للصيانة، ودور شمعات الفلتر («الكارتردج») والغشاء («ممبرين»)، وما الذي يحدّد موعد الاستبدال — دون جداول ثابتة.",
+      en: "Practical signs your water filter needs servicing, the role of cartridges («الكارتردج») and the membrane («ممبرين»), and what determines replacement timing — without fixed schedules.",
+    },
+    sections: [
+      {
+        heading: { ar: "لماذا الصيانة مهمة؟", en: "Why maintenance matters" },
+        body: [
+          {
+            ar: "أي نظام تنقية يعتمد على أجزاءٍ قابلة للاستبدال تؤدّي عملها مع مرور الوقت. الصيانة في وقتها تحافظ على جودة المياه وأداء الجهاز، وتؤجيلها لفترةٍ طويلة قد يقلّل الأداء.",
+            en: "Every purification system relies on replaceable parts that do their job over time. Timely maintenance preserves water quality and system performance; delaying it for too long can reduce performance.",
+          },
+        ],
+      },
+      {
+        heading: { ar: "علاماتٌ شائعة على حاجة الفلتر للصيانة", en: "Common signs your filter needs service" },
+        body: [
+          {
+            ar: "قد تلاحظ بعض المؤشرات التي ترتبط عادةً بحاجة النظام إلى صيانةٍ أو استبدال:",
+            en: "You may notice indicators that are commonly associated with a system needing service or replacement:",
+          },
+        ],
+        bullets: [
+          { ar: "تغيّر في طعم الماء أو رائحته", en: "A change in the water's taste or smell" },
+          { ar: "انخفاض ملحوظ في تدفّق الماء", en: "A noticeable drop in water flow" },
+          { ar: "مرور وقتٍ طويل منذ آخر استبدالٍ للشمعات", en: "A long time since the cartridges were last replaced" },
+          { ar: "أصواتٌ أو تسريباتٌ غير معتادة من النظام", en: "Unusual sounds or leaks from the system" },
+        ],
+      },
+      {
+        heading: { ar: "شمعات الفلتر (الكارتردج)", en: "Filter cartridges" },
+        body: [
+          {
+            ar: "شمعات الفلتر، أو «الكارتردج» (Cartridge)، هي الأجزاء التي تقوم بالترشيح وتُستبدل دورياً. اختيار الشمعة الصحيحة يعتمد على نوع نظامك وعدد مراحله.",
+            en: "Filter cartridges — «كارتردج» — are the elements that do the filtering and are replaced periodically. Choosing the right cartridge depends on your system type and stage count.",
+          },
+        ],
+      },
+      {
+        heading: { ar: "غشاء التناضح العكسي (ممبرين)", en: "The reverse-osmosis membrane" },
+        body: [
+          {
+            ar: "في أنظمة التناضح العكسي (RO)، يحتاج الغشاء (Membrane / «ممبرين») إلى استبدالٍ في وقته أيضاً، وهو جزءٌ أساسي في أداء النظام. عادةً ما يختلف موعد استبدال الغشاء عن مواعيد الشمعات.",
+            en: "In reverse-osmosis (RO) systems, the membrane («ممبرين») also needs timely replacement and is central to performance. Its replacement timing usually differs from that of the cartridges.",
+          },
+        ],
+      },
+      {
+        heading: { ar: "ما الذي يحدّد موعد الاستبدال؟", en: "What determines replacement timing?" },
+        body: [
+          {
+            ar: "تعتمد فترات الاستبدال على الاستخدام وجودة المياه ونوع النظام وعدد مراحله، لذلك لا يوجد جدولٌ واحد يناسب جميع المنازل. نوضّح لك الجدول المناسب لنظامك ضمن الصيانة الدورية.",
+            en: "Replacement intervals depend on usage, water quality, and the system type and its stages, so there's no single schedule that fits every home. We explain the right schedule for your system as part of scheduled maintenance.",
+          },
+        ],
+      },
+      {
+        heading: { ar: "عقود الصيانة الدورية", en: "Scheduled maintenance contracts" },
+        body: [
+          {
+            ar: "لتجنّب نسيان المواعيد، نوفّر عقود صيانة دورية وزياراتٍ مجدولة تشمل فحص النظام واستبدال الأجزاء في وقتها.",
+            en: "To avoid missing service dates, we offer scheduled maintenance contracts and planned visits that include checking the system and replacing parts on time.",
+          },
+        ],
+      },
+    ],
+    faqs: [
+      {
+        q: { ar: "كل كم يجب تغيير شمعات الفلتر؟", en: "How often should filter cartridges be changed?" },
+        a: {
+          ar: "تعتمد الفترة على الاستخدام وجودة المياه ونوع النظام، فلا يوجد جدولٌ ثابت يناسب الجميع. نحدّد لك الجدول المناسب لنظامك ضمن الصيانة.",
+          en: "It depends on usage, water quality, and the system type, so there's no single schedule that fits everyone. We set the right schedule for your system as part of maintenance.",
+        },
+      },
+      {
+        q: { ar: "كيف أعرف أن الغشاء (ممبرين) يحتاج إلى استبدال؟", en: "How do I know the membrane needs replacing?" },
+        a: {
+          ar: "غالباً ما ترتبط الحاجة إلى استبدال الغشاء بتغيّر أداء النظام مع الوقت. فحص النظام ضمن الصيانة هو أدقّ طريقة لتحديد ذلك.",
+          en: "The need to replace the membrane is usually linked to a change in the system's performance over time. Checking the system during maintenance is the most accurate way to determine it.",
+        },
+      },
+    ],
+    related: [
+      { href: "/maintenance", label: { ar: "الصيانة الوقائية", en: "Preventive maintenance" } },
+      { href: "/products/category/filter-cartridges", label: { ar: "شمعات الفلاتر وقطع الغيار", en: "Filter cartridges & parts" } },
+      { href: "/products/category/drinking-water", label: { ar: "أنظمة مياه الشرب", en: "Drinking-water systems" } },
+      { href: "/consultation", label: { ar: "استشارة هندسية مجانية", en: "Free engineering consultation" } },
+    ],
+  },
 ];
 
 export function getAllGuides(): Guide[] {

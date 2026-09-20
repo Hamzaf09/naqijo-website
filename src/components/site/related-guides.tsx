@@ -48,7 +48,12 @@ export async function RelatedGuides({
 
 /** Product category → relevant guide slugs (shared by product & category pages). */
 export const guidesForCategory: Record<string, string[]> = {
-  "drinking-water": ["choosing-a-water-filter", "reverse-osmosis-vs-filtration"],
+  "drinking-water": [
+    "choosing-a-water-filter",
+    "reverse-osmosis-vs-filtration",
+    "seven-stage-water-filters",
+  ],
   "water-softening": ["hard-water-and-water-softeners"],
-  "central-filtration": ["choosing-a-water-filter"],
+  "central-filtration": ["central-vs-drinking-water-filter", "choosing-a-water-filter"],
+  "filter-cartridges": ["water-filter-maintenance-signs"],
 };

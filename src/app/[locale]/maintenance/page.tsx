@@ -1,6 +1,7 @@
 import { setRequestLocale, getTranslations } from "next-intl/server";
 import type { Metadata } from "next";
 import { requireLocale } from "@/i18n/routing";
+import { Link } from "@/i18n/navigation";
 import { pageMetadata } from "@/lib/seo";
 import { Container, Section } from "@/ui/container";
 import { H2, H3 } from "@/ui/typography";
@@ -73,6 +74,14 @@ export default async function MaintenancePage({ params }: { params: Promise<{ lo
             </Reveal>
             <Reveal delay={0.05} className="lg:col-span-8">
               <p className="font-text text-[1.2rem] leading-[1.9] text-fg">{c.overview}</p>
+              <Link
+                href="/guides/water-filter-maintenance-signs"
+                className="mt-6 inline-flex font-medium text-primary hover:text-[var(--primary-hover)]"
+              >
+                {locale === "ar"
+                  ? "كيف تعرف أن فلترك يحتاج صيانة؟ ←"
+                  : "How to know your filter needs maintenance →"}
+              </Link>
             </Reveal>
           </div>
         </Container>

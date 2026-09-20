@@ -123,9 +123,31 @@ export default async function ProjectDetailPage({
               </Reveal>
             ))}
             <div className="border-t border-border pt-10">
-              <Link href="/projects" className="font-medium text-primary hover:text-[var(--primary-hover)]">
-                {locale === "ar" ? "→ كل المشاريع" : "→ All projects"}
-              </Link>
+              <p className="text-xs font-medium uppercase tracking-[0.16em] text-primary">
+                {locale === "ar" ? "حلولٌ ذات صلة" : "Related solutions"}
+              </p>
+              <ul className="mt-5 flex flex-wrap gap-x-6 gap-y-3 text-[1.02rem]">
+                <li>
+                  <Link href="/services/water" className="font-medium text-primary hover:text-[var(--primary-hover)]">
+                    {locale === "ar" ? "حلول المياه ←" : "Water solutions →"}
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/products" className="font-medium text-primary hover:text-[var(--primary-hover)]">
+                    {locale === "ar" ? "المنتجات ←" : "Products →"}
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/consultation" className="font-medium text-primary hover:text-[var(--primary-hover)]">
+                    {locale === "ar" ? "استشارة مجانية ←" : "Free consultation →"}
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/projects" className="text-fg-muted hover:text-fg">
+                    {locale === "ar" ? "كل المشاريع ←" : "All projects →"}
+                  </Link>
+                </li>
+              </ul>
             </div>
           </div>
         </Container>

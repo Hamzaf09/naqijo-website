@@ -148,6 +148,36 @@ Keep posts factual; do not announce promotions or claims that are not real.
 
 ---
 
+## 11. Google Q&A strategy (owner-seeded, honest)
+
+GBP has a public **Questions & Answers** section anyone can post to. Seed it with
+the real questions customers actually ask (mirroring the website FAQ), answer
+them factually as the business, and monitor for new public questions. Do **not**
+stuff keywords or post fake praise.
+
+Seed questions (post as the owner, then answer):
+
+- **AR:** ما الخدمات التي تقدّمونها؟ — نقدّم فلترة وتنقية ومعالجة المياه: أنظمة
+  التناضح العكسي (RO)، الفلترة المركزية، معالجة عسر المياه (سوفتنر)، برادات
+  المياه، الشمعات والمضخات، إضافةً إلى الصيانة والاستشارة. التفاصيل على naqijo.com.
+- **EN:** What services do you offer? — Water filtration, purification and
+  treatment: reverse osmosis (RO), central filtration, water softening,
+  dispensers, cartridges and pumps, plus maintenance and consultation. See naqijo.com.
+- **AR:** هل الاستشارة والفحص مجاني؟ — نعم، نقدّم فحص جودة مياه واستشارة هندسية
+  مجانية قبل التوصية بأي حل.
+- **EN:** Is the consultation free? — Yes, we offer a free water-quality
+  assessment and engineering consultation before recommending any solution.
+- **AR:** أين موقعكم؟ — مقرّنا في خلدا، عمّان، ونخدم عمّان ومحيطها. للتواصل: +962 79 290 0008.
+- **EN:** Where are you located? — We're in Khalda, Amman, serving Amman and its
+  surroundings. Contact: +962 79 290 0008.
+- **AR:** هل تقدّمون حلولاً للمطاعم والفنادق والشركات؟ — نعم، لدينا حلول معالجة
+  مياه للبيئات التجارية. التفاصيل على naqijo.com/commercial-water-treatment.
+- **EN:** Do you serve restaurants, hotels and businesses? — Yes, we provide
+  commercial water-treatment solutions. See naqijo.com/commercial-water-treatment.
+
+Keep answers short, factual, and consistent with the website. Never post fixed
+maintenance intervals or claims not supported by the site.
+
 ### After setup — feed results back into the site
 Once the GBP is live, capture the **Google review link** and the **map URL**;
 the map URL can populate the CMS `Settings.mapUrl` field used by the site. Keep
