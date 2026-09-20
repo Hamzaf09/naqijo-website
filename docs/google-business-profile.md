@@ -175,10 +175,76 @@ Seed questions (post as the owner, then answer):
 - **EN:** Do you serve restaurants, hotels and businesses? — Yes, we provide
   commercial water-treatment solutions. See naqijo.com/commercial-water-treatment.
 
+More local-intent seed questions (answers all supported by the website):
+
+- **AR:** هل توفّرون فلاتر مياه في عمّان؟ — نعم، نخدم عمّان ومحيطها بفلاتر وأنظمة
+  تنقية ومعالجة المياه. التفاصيل: naqijo.com/water-filters-amman.
+- **EN:** Do you provide water filters in Amman? — Yes, we serve Amman and its
+  surroundings with filters and water purification/treatment. See
+  naqijo.com/water-filters-amman.
+- **AR:** هل توفّرون أنظمة تناضح عكسي RO؟ — نعم، نوفّر أنظمة RO لمياه الشرب. naqijo.com/products/category/drinking-water
+- **EN:** Do you offer reverse-osmosis (RO) systems? — Yes, we offer RO drinking-water systems.
+- **AR:** هل توفّرون أجهزة معالجة عسر المياه (سوفتنر)؟ — نعم. naqijo.com/products/category/water-softening
+- **EN:** Do you offer water softeners? — Yes, we do.
+- **AR:** هل توفّرون شمعات بديلة (كارتردج)؟ — نعم، شمعات وقطع غيار. naqijo.com/products/category/filter-cartridges
+- **EN:** Do you provide replacement cartridges? — Yes, cartridges and parts.
+- **AR:** هل تقدّمون خدمة الصيانة؟ — نعم، عقود صيانة دورية واستبدال في مواعيده.
+- **EN:** Do you provide maintenance? — Yes, scheduled maintenance and timely replacements.
+- **AR:** هل تخدمون المنازل والشركات؟ — نعم، حلولٌ للمنازل والبيئات التجارية.
+- **EN:** Do you serve homes and businesses? — Yes, both residential and commercial.
+- **AR:** كيف أتواصل معكم؟ — عبر الهاتف/واتساب +962 79 290 0008 أو naqijo.com/contact.
+- **EN:** How do I contact you? — By phone/WhatsApp +962 79 290 0008 or naqijo.com/contact.
+
 Keep answers short, factual, and consistent with the website. Never post fixed
 maintenance intervals or claims not supported by the site.
 
+## 12. Website ↔ GBP consistency
+
+The profile and the website must agree on every fact:
+
+- **NAP** matches `docs/local-nap-standard.md` exactly (name, address, phone).
+- **Website field** in GBP is exactly `https://www.naqijo.com`.
+- **Categories/services/products** mirror the site's real offerings (Sections 2–7).
+- **Description** matches the tone/facts of the About page.
+- Once the GBP is live, set the site env vars so the two point at the same place:
+  `NEXT_PUBLIC_GOOGLE_MAPS_URL`, `NEXT_PUBLIC_GOOGLE_PLACE_ID`,
+  `NEXT_PUBLIC_GOOGLE_REVIEW_URL` (the site renders Maps/Review CTAs + schema
+  `hasMap` only when these exist — no fake links before then).
+
+## 13. Spam & duplicate-profile precautions
+
+- **One** profile per real location. Never create a second/duplicate listing.
+- Business name = the **real name only** — never "…Water Filters Amman" or other
+  keyword-stuffing (violates Google guidelines; risks suspension).
+- No fake service areas, no branches that don't exist, no fake reviews.
+- If a duplicate/unauthorized listing is found, use Google's "suggest an edit" /
+  duplicate-removal flow — don't create yet another one.
+
+## 14. NAP consistency
+
+Single source of truth: `docs/local-nap-standard.md`. Every listing (Section 5),
+citation (`docs/local-citations-roadmap.md`), and the website must match it
+byte-for-byte. Change it in one place → propagate everywhere + the repo together.
+
+## 15. Profile maintenance cadence
+
+- **Weekly (first month):** respond to reviews and Q&A, publish 2–3 Posts
+  (`docs/google-posts-playbook.md`), add any new real photos.
+- **Monthly (ongoing):** verify NAP/hours still correct, add fresh install/
+  maintenance photos, keep Posts rotating, check for duplicate listings.
+- **On any change** (phone/address/hours): update GBP, all citations, and the
+  repo the same day.
+
+### Companion playbooks
+- Reviews: `docs/google-reviews-playbook.md`
+- Posts: `docs/google-posts-playbook.md`
+- Photos: `docs/google-business-profile-photo-guide.md`
+- Citations / Bing / Apple: `docs/local-citations-roadmap.md`
+- Search Console: `docs/google-search-console-local-seo.md`
+- Readiness scorecard: `docs/google-local-readiness.md`
+
 ### After setup — feed results back into the site
-Once the GBP is live, capture the **Google review link** and the **map URL**;
-the map URL can populate the CMS `Settings.mapUrl` field used by the site. Keep
-the NAP identical to Section 5 everywhere (see `docs/entity-presence-strategy.md`).
+Once the GBP is live, capture the **Google review link**, **map URL** and
+**Place ID**; set them via the `NEXT_PUBLIC_GOOGLE_*` env vars (and the map URL
+can also populate the CMS `Settings.mapUrl` field). Keep the NAP identical to
+Section 5 everywhere (see `docs/local-nap-standard.md`).

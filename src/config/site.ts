@@ -56,3 +56,27 @@ export const siteConfig = {
 } as const;
 
 export type SiteConfig = typeof siteConfig;
+
+/**
+ * Optional Google local-presence values. These are intentionally NOT hard-coded:
+ * they must come from the real, verified Google Business Profile, which requires
+ * profile ownership we do not have here. They are read from environment
+ * variables so the owner can set them once (e.g. in Vercel) without a code
+ * change, and every consumer treats an empty value as "not configured" — so no
+ * placeholder or fake Google link is ever rendered.
+ *
+ *   NEXT_PUBLIC_GOOGLE_MAPS_URL     – the business's Google Maps place URL
+ *   NEXT_PUBLIC_GOOGLE_PLACE_ID     – the Google Place ID
+ *   NEXT_PUBLIC_GOOGLE_REVIEW_URL   – the "write a review" short link
+ *
+ * Until these are set, Maps/Directions/Review CTAs and schema `hasMap` stay off.
+ */
+export const googleConfig: {
+  mapsUrl: string;
+  placeId: string;
+  reviewUrl: string;
+} = {
+  mapsUrl: process.env.NEXT_PUBLIC_GOOGLE_MAPS_URL ?? "",
+  placeId: process.env.NEXT_PUBLIC_GOOGLE_PLACE_ID ?? "",
+  reviewUrl: process.env.NEXT_PUBLIC_GOOGLE_REVIEW_URL ?? "",
+};

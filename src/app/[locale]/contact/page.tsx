@@ -1,5 +1,6 @@
 import { setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
+import { GoogleLocalLinks } from "@/components/site/google-local-links";
 import { pageMetadata } from "@/lib/seo";
 import type { Metadata } from "next";
 import { requireLocale } from "@/i18n/routing";
@@ -196,11 +197,25 @@ export default async function ContactPage({ params }: { params: Promise<{ locale
                   <dd className="mt-2 text-fg">{settings.workingHours[locale]}</dd>
                 </div>
               </dl>
-              <p className="mt-8 text-[1.02rem] text-fg-muted">
-                <Link href="/water-filters-amman" className="font-medium text-primary hover:text-[var(--primary-hover)]">
-                  {locale === "ar" ? "فلاتر ومعالجة المياه في عمّان ←" : "Water filters & treatment in Amman →"}
-                </Link>
-              </p>
+              <ul className="mt-8 flex flex-col gap-2 text-[1.02rem]">
+                <li>
+                  <Link href="/water-filters-amman" className="font-medium text-primary hover:text-[var(--primary-hover)]">
+                    {locale === "ar" ? "فلاتر ومعالجة المياه في عمّان ←" : "Water filters & treatment in Amman →"}
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/consultation" className="font-medium text-primary hover:text-[var(--primary-hover)]">
+                    {locale === "ar" ? "احجز استشارة هندسية مجانية ←" : "Book a free engineering consultation →"}
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/services/water" className="font-medium text-primary hover:text-[var(--primary-hover)]">
+                    {locale === "ar" ? "تصفّح حلول المياه ←" : "Explore our water solutions →"}
+                  </Link>
+                </li>
+              </ul>
+              {/* Renders only if a verified Google Maps/review link is configured. */}
+              <GoogleLocalLinks locale={locale} className="mt-6" />
             </div>
           </Reveal>
 

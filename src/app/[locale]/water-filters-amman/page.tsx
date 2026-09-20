@@ -9,6 +9,7 @@ import { Container, Section } from "@/ui/container";
 import { H2, H3 } from "@/ui/typography";
 import { PageHero } from "@/components/site/page-hero";
 import { Breadcrumbs } from "@/components/site/breadcrumbs";
+import { GoogleLocalLinks } from "@/components/site/google-local-links";
 import { Eyebrow } from "@/components/site/eyebrow";
 import { CtaBand } from "@/components/site/cta-band";
 import { Reveal, RevealGroup } from "@/components/motion/reveal";
@@ -183,6 +184,8 @@ export default async function WaterFiltersAmmanPage({
                     </dd>
                   </div>
                 </dl>
+                {/* Renders only if a verified Google Maps/review link is configured. */}
+                <GoogleLocalLinks locale={locale} className="mt-6" />
               </Reveal>
             </div>
           </div>

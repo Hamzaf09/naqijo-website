@@ -1,4 +1,4 @@
-import { siteConfig } from "@/config/site";
+import { siteConfig, googleConfig } from "@/config/site";
 import { absoluteUrl } from "@/lib/seo";
 import type { Locale } from "@/i18n/routing";
 
@@ -100,6 +100,10 @@ function localBusinessNode(locale: Locale) {
     email: siteConfig.email,
     address: postalAddress(locale),
     areaServed: AREA_SERVED,
+    // Only emitted when a real, verified Google Maps URL is configured — never a
+    // fabricated map link. Same for sameAs (empty until official profiles exist).
+    ...(googleConfig.mapsUrl ? { hasMap: googleConfig.mapsUrl } : {}),
+    ...(SAME_AS.length ? { sameAs: SAME_AS } : {}),
     parentOrganization: { "@id": ORG_ID },
   };
 }
