@@ -40,14 +40,14 @@ export async function generateMetadata({
   const settings = await getSettings();
   const fallback = {
     ar: {
-      title: "نقي الرابية للمياه والطاقة — فلترة وتنقية المياه في الأردن منذ 2005",
+      title: "نقي الرابية للمياه والطاقة — حلول المياه والطاقة للمنازل والأعمال",
       description:
-        "نقي الرابية للمياه والطاقة في عمّان منذ 2005: فلاتر مياه الشرب والتناضح العكسي، الفلترة المركزية، معالجة عسر المياه والصيانة الدورية. احجز استشارة مجانية.",
+        "نقي الرابية للمياه والطاقة: فلترة وتنقية ومعالجة المياه، وأنظمة الطاقة الشمسية، والصيانة الدورية للمنازل والأعمال في عمّان والأردن.",
     },
     en: {
-      title: "NaqiJo — Water Filtration & Treatment in Jordan Since 2005",
+      title: "Naqi Al Rabia Water & Energy — Water & Energy Solutions in Jordan",
       description:
-        "Naqi Al Rabia Water & Energy, Amman, since 2005: RO drinking-water filters, whole-home filtration, water softeners and scheduled maintenance. Free consultation.",
+        "Naqi Al Rabia Water & Energy: water filtration and treatment, solar energy systems and scheduled maintenance for homes and businesses in Amman and Jordan.",
     },
   }[locale];
   const ogImage = settings.defaultSeo.ogImage?.src;
