@@ -1,4 +1,5 @@
 import { setRequestLocale } from "next-intl/server";
+import type { Metadata } from "next";
 import { Star, BadgeCheck } from "lucide-react";
 import { Link } from "@/i18n/navigation";
 import { requireLocale } from "@/i18n/routing";
@@ -17,10 +18,49 @@ import { getHomepage } from "@/data/homepage";
 import { getFeaturedProducts } from "@/data/products";
 import { getFeaturedProjects } from "@/data/projects";
 import { getFeaturedTestimonials } from "@/data/testimonials";
+import { getSettings } from "@/data/settings";
+import { pageMetadata } from "@/lib/seo";
 import { cn } from "@/lib/utils";
 
 // ISR: re-render from the CMS at most every 5 minutes.
 export const revalidate = 300;
+
+/**
+ * Home metadata. Without this the home page inherited the layout default
+ * (brand + tagline only, no og:image/og:url). CMS Settings → default SEO still
+ * wins when filled in; the fallbacks use only facts stated elsewhere on the site.
+ */
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale: requestedLocale } = await params;
+  const locale = requireLocale(requestedLocale);
+  const settings = await getSettings();
+  const fallback = {
+    ar: {
+      title: "نقي الرابية للمياه والطاقة — فلترة وتنقية المياه في الأردن منذ 2005",
+      description:
+        "نقي الرابية للمياه والطاقة في عمّان منذ 2005: فلاتر مياه الشرب والتناضح العكسي، الفلترة المركزية، معالجة عسر المياه والصيانة الدورية. احجز استشارة مجانية.",
+    },
+    en: {
+      title: "NaqiJo — Water Filtration & Treatment in Jordan Since 2005",
+      description:
+        "Naqi Al Rabia Water & Energy, Amman, since 2005: RO drinking-water filters, whole-home filtration, water softeners and scheduled maintenance. Free consultation.",
+    },
+  }[locale];
+  const ogImage = settings.defaultSeo.ogImage?.src;
+
+  return pageMetadata({
+    locale,
+    path: "/",
+    title: settings.defaultSeo.metaTitle[locale] || fallback.title,
+    description: settings.defaultSeo.metaDescription[locale] || fallback.description,
+    ...(ogImage ? { image: ogImage } : {}),
+    absoluteTitle: true,
+  });
+}
 
 export default async function HomePage({
   params,

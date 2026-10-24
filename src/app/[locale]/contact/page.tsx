@@ -10,6 +10,7 @@ import { Eyebrow } from "@/components/site/eyebrow";
 import { RequestFlow } from "@/components/site/request-flow";
 import { Reveal } from "@/components/motion/reveal";
 import { getSettings } from "@/data/settings";
+import { formatPhone } from "@/lib/utils";
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const { locale: requestedLocale } = await params;
@@ -170,7 +171,7 @@ export default async function ContactPage({ params }: { params: Promise<{ locale
                   <dt className="text-sm text-fg-subtle">{d.consultationLabel}</dt>
                   <dd className="mt-2" dir="ltr">
                     <a href={`tel:${settings.phones[0]}`} className="text-fg hover:text-primary">
-                      {settings.phones[0]?.replace("+962", "+962 ")}
+                      {settings.phones[0] ? formatPhone(settings.phones[0]) : null}
                     </a>
                   </dd>
                 </div>
@@ -179,7 +180,7 @@ export default async function ContactPage({ params }: { params: Promise<{ locale
                     <dt className="text-sm text-fg-subtle">{d.officeLabel}</dt>
                     <dd className="mt-2" dir="ltr">
                       <a href={`tel:${settings.phones[1]}`} className="text-fg hover:text-primary">
-                        {settings.phones[1].replace("+962", "+962 ")}
+                        {formatPhone(settings.phones[1])}
                       </a>
                     </dd>
                   </div>

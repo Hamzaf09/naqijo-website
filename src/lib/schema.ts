@@ -165,7 +165,6 @@ export function productSchema(opts: {
     ...(opts.category ? { category: opts.category } : {}),
     sku: opts.sku,
     url: opts.url,
-    manufacturer: { "@id": ORG_ID },
   };
 }
 
