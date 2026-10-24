@@ -1,0 +1,7 @@
+User-Agent: *
+Allow: /
+Disallow: /admin
+Disallow: /api
+
+Host: https://www.naqijo.com
+Sitemap: https://www.naqijo.com/sitemap.xml

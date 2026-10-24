@@ -1,24 +1,50 @@
 # Google Search Console action plan
 
-**Access:** none. No Search Console connector or authenticated session was available. Nothing below is observed GSC data.
+## Access status (2026-10-24)
 
-## What the site side shows (local build)
-All 92 sitemap URLs, including all 52 historical URLs, are crawlable and eligible for indexing (200, self-canonical, no noindex, not blocked by robots.txt, in sitemap, reciprocal hreflang). That proves *technical eligibility only*. It does not prove Google discovered, crawled or indexed them. "92 discovered" in the sitemap report means Google read 92 URLs from the file, not that 92 are indexed.
+**Search Console was not accessed.** This session had no browser, no Google connector, and no Google credentials (`gcloud auth list` → no accounts). The Search Console API endpoint was reachable but answered `401` without OAuth. Signing in would have required pasting a one-time authorization code into the chat, which this audit does not do. **Nothing here is Google account data.** The previously reported "~92 discovered pages" is historical and was not re-checked.
 
-## The label "غير متوفرة" — not diagnosable from the site
-Possible origins (cannot choose between them without the screen): a "Last crawled" cell showing *N/A/unavailable* for URLs Google has not crawled yet; a URL Inspection "data unavailable" state; a Page Indexing row for URLs Google only knows from the sitemap. Each is *not* by itself a defect, and none can be inferred from the label alone.
+## What the live site proves, and what it does not
 
-## Owner checklist (property `naqijo.com`, Domain)
-1. **Sitemaps** → confirm `https://www.naqijo.com/sitemap.xml` status "Success", note last read date and "Discovered pages". (After deploying this branch the sitemap drops `lastmod` for non-guide URLs; Google re-reads automatically.)
-2. **Pages (Page indexing)** → send: total Indexed / Not indexed counts and the *reason table* (exact reasons: e.g. "Discovered – currently not indexed", "Crawled – currently not indexed", "Alternate page with proper canonical", "Page with redirect", "Excluded by noindex", "Blocked by robots.txt", "Soft 404", "Server error 5xx").
-3. Open the row/screen that shows "غير متوفرة" and send a screenshot including the report name and column header.
-4. **URL Inspection** (Inspect first, in order): `/ar`, `/ar/products`, `/ar/products/ro-bn01`, `/ar/water-filters-amman`, `/ar/contact`, `/ar/guides/central-vs-drinking-water-filter`, `/ar/services/solar`, `/ar/projects/apartment-abdoun`, then `/en/` equivalents. Record: "Indexing allowed", "User-declared vs Google-selected canonical", "Last crawl", "Page fetch".
-5. Use **Request indexing** only on a handful of priority pages after inspection says "URL is not on Google" and the live test passes. Do not mass-submit.
-6. **Security & Manual actions** → confirm "No issues".
-7. **Settings → Crawl stats** → send host status and response-time trend (also checks apex vs www).
-8. If `GOOGLE_SITE_VERIFICATION` is needed (URL-prefix property), set it in the host env; DNS-verified Domain property needs nothing.
+| Question | Answer | Basis |
+|---|---|---|
+| Are the 92 sitemap URLs crawlable and eligible for indexing? | **Yes** — 200, self-canonical, no noindex/X-Robots-Tag, not blocked by robots.txt, reciprocal hreflang, valid HTML/JSON-LD | LIVE crawl 2026-10-24T09:24Z |
+| Do the 52 historical "غير متوفرة" URLs have a technical defect? | **No.** All exist, return 200 and are in the sitemap | LIVE |
+| Has Google discovered / crawled / indexed them? | **Unknown** | needs GSC |
+| What does "غير متوفرة" mean? | **Unknown — not diagnosable from the label** | needs the screen it came from |
 
-## Interpreting results
-- "Discovered/Crawled – currently not indexed" on many pages with short or unverified content (see CNT-01) is a quality/priority signal, fixed by content and internal-link improvements, not by resubmission.
-- "Alternate page with proper canonical" on an `/en` page would be a real problem only if Google selected `/ar` as canonical; compare user vs Google canonical.
-- Redirect rows for `/` or the apex host are expected.
+Likely places the label comes from, **to be confirmed on screen**:
+- The "Last crawled" column of a sitemap or Page-indexing drill-down showing "N/A / غير متوفر" for URLs Google has never crawled.
+- A URL Inspection result whose data is not available yet.
+
+Neither is a site defect. If Page indexing shows reasons such as "Discovered – currently not indexed" or "Crawled – currently not indexed", that is Google deprioritising pages (often thin or unverified content, few links), not a blocking error.
+
+## Before inspecting: deploy
+
+Production runs `main` @ `0c68c1c` and its CMS runtime is failing (see `issue-register.md` OPS-01/REL-01). Merge the audit branch and fix the runtime env first. Then run the post-deploy checks in `final-verification.md`. Otherwise URL Inspection will test the old homepage metadata and sitemap.
+
+## Owner checklist (property: Domain `naqijo.com`)
+
+1. **Confirm the property.** The property selector shows `naqijo.com` (Domain), not only a `https://www.naqijo.com/` URL-prefix property. Screenshot it.
+2. **Sitemaps.** Confirm `https://www.naqijo.com/sitemap.xml`: status, "Last read", "Discovered pages". After deploying, click the sitemap → "Resubmit" once. The count should stay 92, and only guide URLs should carry `lastmod`.
+3. **Pages (Page indexing).** Send screenshots of:
+   - the chart with **Indexed** / **Not indexed** totals
+   - the full **"Why pages aren't indexed"** table (every reason + count + validation status)
+   - for each reason, the example URL list.
+4. **The "غير متوفرة" screen.** Open the exact report/column where it appears and screenshot it with the report title and column header visible.
+5. **URL Inspection**, in this order: `/ar`, `/en`, `/ar/products`, `/en/products`, `/ar/water-filters-amman`, `/ar/products/ro-bn01`, `/ar/products/category/drinking-water`, `/ar/services`, `/ar/guides/central-vs-drinking-water-filter`, `/ar/contact`, `/ar/faq`, `/ar/about`, `/ar/commercial-water-treatment`, `/ar/maintenance`. Then 1–2 URLs from each "not indexed" reason group. For each, record: verdict, discovery (sitemaps / referring page), last crawl, crawl allowed, page fetch, indexing allowed, user-declared vs Google-selected canonical.
+6. **Request indexing — sparingly.** Only after a successful live test, only for priority pages that say "URL is not on Google": `/ar`, `/en`, `/ar/water-filters-amman`, `/ar/products`, `/ar/products/category/drinking-water`. Don't resubmit pages already "Discovered" or recently requested. Do **not** request the 4 project pages until their content is confirmed (CNT-01).
+7. **Security & Manual actions.** Confirm "No issues detected" for both.
+8. **HTTPS report** (if shown) and **Core Web Vitals** (field data, if any). Screenshot both.
+9. **Settings → Crawl stats.** Screenshot host status (robots.txt fetch, DNS, server connectivity) and the response-code breakdown. Expect some 5xx if Googlebot touched `/api` or `/health`; robots.txt disallows `/api`.
+
+## How to read the results
+
+| You see | It means | Action |
+|---|---|---|
+| Indexed | Done | none |
+| Discovered – currently not indexed | Google knows the URL and has not crawled it yet | Internal links + better content; wait; inspect a couple |
+| Crawled – currently not indexed | Crawled, judged not worth indexing yet | Improve content (projects, thin categories); don't spam requests |
+| Alternate page with proper canonical | Expected only for redirecting/duplicate URLs. **Not** expected for `/en/*` (each locale is self-canonical) | If on `/en`, send the inspection screenshot |
+| Page with redirect | Expected for `naqijo.com/*`, `/`, trailing-slash URLs | none |
+| Excluded by noindex / Blocked by robots.txt / Soft 404 / Server error (5xx) | **Not** expected for any sitemap URL (none reproduced live) | Send the URL + inspection |

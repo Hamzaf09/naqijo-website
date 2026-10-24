@@ -1,0 +1,11 @@
+# sitemap.xml response headers (2026-10-24T09:22:52Z)
+HTTP/2 200 
+age: 730828
+content-type: application/xml
+date: Sat, 24 Oct 2026 09:22:52 GMT
+last-modified: Thu, 15 Oct 2026 22:22:24 GMT
+x-vercel-cache: HIT
+
+# sitemap stats
+urls=92 lastmod=92 x-default=0
+     92 <lastmod>2026-09-21T00:46:56.822Z
