@@ -42,6 +42,7 @@ export interface Guide {
 }
 
 const AUTHORED = "2026-09-08";
+const AUTHORED_SEP_20 = "2026-09-20";
 
 export const guides: Guide[] = [
   {
@@ -320,8 +321,8 @@ export const guides: Guide[] = [
   {
     slug: "seven-stage-water-filters",
     image: "underSinkSystem",
-    datePublished: AUTHORED,
-    dateModified: AUTHORED,
+    datePublished: AUTHORED_SEP_20,
+    dateModified: AUTHORED_SEP_20,
     title: {
       ar: "فلتر المياه ذو 7 مراحل: كم مرحلة تحتاج فعلاً؟",
       en: "7-Stage Water Filters: How Many Stages Do You Really Need?",
@@ -403,8 +404,8 @@ export const guides: Guide[] = [
   {
     slug: "central-vs-drinking-water-filter",
     image: "wholeHouseSystem",
-    datePublished: AUTHORED,
-    dateModified: AUTHORED,
+    datePublished: AUTHORED_SEP_20,
+    dateModified: AUTHORED_SEP_20,
     title: {
       ar: "الفلتر المركزي أم فلتر مياه الشرب؟ وهل تحتاج فلترة مركزية للمنزل؟",
       en: "Central Filtration vs a Drinking-Water Filter: Do You Need a Whole-Home System?",
@@ -486,8 +487,8 @@ export const guides: Guide[] = [
   {
     slug: "water-filter-maintenance-signs",
     image: "premiumInstallation",
-    datePublished: AUTHORED,
-    dateModified: AUTHORED,
+    datePublished: AUTHORED_SEP_20,
+    dateModified: AUTHORED_SEP_20,
     title: {
       ar: "كيف تعرف أن فلتر المياه يحتاج صيانة؟ (تغيير الشمعات والممبرين)",
       en: "How to Know Your Water Filter Needs Maintenance (Cartridge & Membrane Replacement)",
