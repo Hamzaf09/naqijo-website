@@ -14,6 +14,7 @@ import { Eyebrow } from "@/components/site/eyebrow";
 import { CtaBand } from "@/components/site/cta-band";
 import { Reveal, RevealGroup } from "@/components/motion/reveal";
 import { getSettings } from "@/data/settings";
+import { formatPhone } from "@/lib/utils";
 
 export const revalidate = 300;
 
@@ -171,7 +172,7 @@ export default async function WaterFiltersAmmanPage({
                     <dt className="text-fg-subtle">{locale === "ar" ? ":الهاتف" : "Phone:"}</dt>
                     <dd>
                       <a href={`tel:${settings.phones[0]}`} className="text-fg hover:text-primary">
-                        {settings.phones[0]?.replace("+962", "+962 ")}
+                        {settings.phones[0] ? formatPhone(settings.phones[0]) : null}
                       </a>
                     </dd>
                   </div>

@@ -4,6 +4,7 @@ import { Link } from "@/i18n/navigation";
 import { footerNav } from "@/config/navigation";
 import { getSettings } from "@/data/settings";
 import { Logo } from "@/components/brand/logo";
+import { formatPhone } from "@/lib/utils";
 import type { Locale } from "@/i18n/routing";
 
 export async function SiteFooter() {
@@ -79,7 +80,7 @@ export async function SiteFooter() {
               {settings.phones.map((p) => (
                 <li key={p}>
                   <a href={`tel:${p}`} className="hover:text-white">
-                    {p.replace("+962", "+962 ")}
+                    {formatPhone(p)}
                   </a>
                 </li>
               ))}

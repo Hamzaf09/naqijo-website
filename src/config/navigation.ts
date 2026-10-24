@@ -25,6 +25,7 @@ export const footerNav: Record<string, NavItem[]> = {
     { key: "solar", href: "/services/solar" },
     { key: "protection", href: "/services/protection" },
     { key: "commercial", href: "/commercial-water-treatment" },
+    { key: "localAmman", href: "/water-filters-amman" },
   ],
   company: [
     { key: "about", href: "/about" },

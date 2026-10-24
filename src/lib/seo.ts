@@ -22,6 +22,8 @@ interface PageMetadataInput {
   image?: OgImageInput;
   images?: OgImageInput[];
   type?: "website" | "article";
+  /** Use `title` verbatim (no layout brand suffix) — for titles that already carry the brand, e.g. the home page. */
+  absoluteTitle?: boolean;
 }
 
 const ogLocale: Record<Locale, string> = { ar: "ar_JO", en: "en_US" };
@@ -44,14 +46,15 @@ export function pageMetadata({
   image,
   images,
   type = "website",
+  absoluteTitle = false,
 }: PageMetadataInput): Metadata {
   const clean = path === "/" ? "" : path.replace(/\/+$/, "");
   const self = `/${locale}${clean}` || `/${locale}`;
   const ogImages = images ?? [image ?? DEFAULT_OG_IMAGE];
-  const ogTitle = `${title} — ${siteConfig.brand[locale]}`;
+  const ogTitle = absoluteTitle ? title : `${title} — ${siteConfig.brand[locale]}`;
 
   return {
-    title,
+    title: absoluteTitle ? { absolute: title } : title,
     ...(description ? { description } : {}),
     alternates: {
       canonical: self,
