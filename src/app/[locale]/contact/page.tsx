@@ -161,6 +161,8 @@ export default async function ContactPage({ params }: { params: Promise<{ locale
               <h2 className="text-xs font-medium uppercase tracking-[0.18em] text-primary">
                 {d.detailsTitle}
               </h2>
+              {/* Phone/email values stay dir="ltr" so the digit groups keep their
+                  order; rtl:text-right lines them up with the Arabic labels. */}
               <dl className="mt-8 space-y-8">
                 <div>
                   <dt className="text-sm text-fg-subtle">{d.addressLabel}</dt>
@@ -168,7 +170,7 @@ export default async function ContactPage({ params }: { params: Promise<{ locale
                 </div>
                 <div>
                   <dt className="text-sm text-fg-subtle">{d.consultationLabel}</dt>
-                  <dd className="mt-2" dir="ltr">
+                  <dd className="mt-2 rtl:text-right" dir="ltr">
                     <a href={`tel:${settings.phones[0]}`} className="text-fg hover:text-primary">
                       {settings.phones[0]?.replace("+962", "+962 ")}
                     </a>
@@ -177,7 +179,7 @@ export default async function ContactPage({ params }: { params: Promise<{ locale
                 {settings.phones[1] ? (
                   <div>
                     <dt className="text-sm text-fg-subtle">{d.officeLabel}</dt>
-                    <dd className="mt-2" dir="ltr">
+                    <dd className="mt-2 rtl:text-right" dir="ltr">
                       <a href={`tel:${settings.phones[1]}`} className="text-fg hover:text-primary">
                         {settings.phones[1].replace("+962", "+962 ")}
                       </a>
@@ -186,7 +188,7 @@ export default async function ContactPage({ params }: { params: Promise<{ locale
                 ) : null}
                 <div>
                   <dt className="text-sm text-fg-subtle">{d.emailLabel}</dt>
-                  <dd className="mt-2" dir="ltr">
+                  <dd className="mt-2 rtl:text-right" dir="ltr">
                     <a href={`mailto:${settings.email}`} className="text-fg hover:text-primary">
                       {settings.email}
                     </a>

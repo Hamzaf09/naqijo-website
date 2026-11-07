@@ -61,7 +61,8 @@ export async function SiteFooter() {
           ))}
         </div>
 
-        {/* Contact row */}
+        {/* Contact row. Phone/email blocks stay dir="ltr" so the digit groups
+            keep their order; rtl:text-right lines them up with the Arabic labels. */}
         <div className="mt-16 grid gap-8 border-t border-white/10 pt-10 sm:grid-cols-2 lg:grid-cols-4">
           <div>
             <h3 className="text-xs font-medium uppercase tracking-[0.18em] text-gold">
@@ -75,7 +76,7 @@ export async function SiteFooter() {
             <h3 className="text-xs font-medium uppercase tracking-[0.18em] text-gold">
               {t("cta.callUs")}
             </h3>
-            <ul className="mt-4 space-y-2 text-[0.95rem] text-white/70" dir="ltr">
+            <ul className="mt-4 space-y-2 text-[0.95rem] text-white/70 rtl:text-right" dir="ltr">
               {settings.phones.map((p) => (
                 <li key={p}>
                   <a href={`tel:${p}`} className="hover:text-white">
@@ -89,7 +90,7 @@ export async function SiteFooter() {
             <h3 className="text-xs font-medium uppercase tracking-[0.18em] text-gold">
               {t("footer.email")}
             </h3>
-            <p className="mt-4 text-[0.95rem] text-white/70" dir="ltr">
+            <p className="mt-4 text-[0.95rem] text-white/70 rtl:text-right" dir="ltr">
               <a href={`mailto:${settings.email}`} className="hover:text-white">
                 {settings.email}
               </a>

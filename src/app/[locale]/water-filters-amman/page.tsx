@@ -167,17 +167,17 @@ export default async function WaterFiltersAmmanPage({
                     <dt className="text-fg-subtle">{locale === "ar" ? "العنوان:" : "Address:"}</dt>
                     <dd className="text-fg">{settings.address[locale]}</dd>
                   </div>
-                  <div className="flex flex-wrap gap-x-3" dir="ltr">
-                    <dt className="text-fg-subtle">{locale === "ar" ? ":الهاتف" : "Phone:"}</dt>
-                    <dd>
+                  <div className="flex flex-wrap gap-x-3">
+                    <dt className="text-fg-subtle">{locale === "ar" ? "الهاتف:" : "Phone:"}</dt>
+                    <dd dir="ltr">
                       <a href={`tel:${settings.phones[0]}`} className="text-fg hover:text-primary">
                         {settings.phones[0]?.replace("+962", "+962 ")}
                       </a>
                     </dd>
                   </div>
-                  <div className="flex flex-wrap gap-x-3" dir="ltr">
-                    <dt className="text-fg-subtle">{locale === "ar" ? ":البريد" : "Email:"}</dt>
-                    <dd>
+                  <div className="flex flex-wrap gap-x-3">
+                    <dt className="text-fg-subtle">{locale === "ar" ? "البريد:" : "Email:"}</dt>
+                    <dd dir="ltr">
                       <a href={`mailto:${settings.email}`} className="text-fg hover:text-primary">
                         {settings.email}
                       </a>

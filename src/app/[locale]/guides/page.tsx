@@ -10,6 +10,7 @@ import { Container, Section } from "@/ui/container";
 import { PageHero } from "@/components/site/page-hero";
 import { Breadcrumbs } from "@/components/site/breadcrumbs";
 import { CtaBand } from "@/components/site/cta-band";
+import { LinkArrow } from "@/components/site/link-arrow";
 import { Reveal, RevealGroup } from "@/components/motion/reveal";
 import { getAllGuides } from "@/data/guides";
 import { approvedImages } from "@/config/images";
@@ -111,9 +112,7 @@ export default async function GuidesPage({
                     </p>
                     <span className="mt-5 inline-flex items-center gap-2 font-semibold text-primary">
                       {locale === "ar" ? "اقرأ الدليل" : "Read the guide"}
-                      <span aria-hidden className="transition-transform group-hover:-translate-x-1 rtl:group-hover:translate-x-1">
-                        ←
-                      </span>
+                      <LinkArrow locale={locale} />
                     </span>
                   </div>
                 </Link>

@@ -1,6 +1,7 @@
 import { Link } from "@/i18n/navigation";
 import { BrandImage, type BrandMedia } from "@/components/media/brand-image";
 import { Eyebrow } from "@/components/site/eyebrow";
+import { LinkArrow } from "@/components/site/link-arrow";
 import { H2, Lead } from "@/ui/typography";
 import { Reveal, RevealImage } from "@/components/motion/reveal";
 import type { ApprovedImageKey } from "@/config/images";
@@ -77,9 +78,7 @@ export function SolutionRow({
           className="group mt-8 inline-flex items-center gap-2 font-medium text-primary transition-colors hover:text-[var(--primary-hover)]"
         >
           {ctaLabel}
-          <span aria-hidden className="transition-transform group-hover:-translate-x-1 rtl:group-hover:translate-x-1">
-            ←
-          </span>
+          <LinkArrow locale={locale} />
         </Link>
       </Reveal>
     </div>

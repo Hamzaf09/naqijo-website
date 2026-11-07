@@ -3,6 +3,7 @@ import { Link } from "@/i18n/navigation";
 import type { Product } from "@/data/product-types";
 import type { Locale } from "@/i18n/routing";
 import { cn } from "@/lib/utils";
+import { LinkArrow } from "@/components/site/link-arrow";
 
 /**
  * Compact, premium product card — image on a quiet stage, category, name, short
@@ -53,9 +54,7 @@ export function ProductCard({
         </p>
         <span className="mt-5 inline-flex items-center gap-2 font-semibold text-primary">
           {locale === "ar" ? "عرض التفاصيل" : "View details"}
-          <span aria-hidden className="transition-transform group-hover:-translate-x-1 rtl:group-hover:translate-x-1">
-            ←
-          </span>
+          <LinkArrow locale={locale} />
         </span>
       </div>
     </Link>

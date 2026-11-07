@@ -7,6 +7,7 @@ import { Container, Section } from "@/ui/container";
 import { H2 } from "@/ui/typography";
 import { buttonVariants } from "@/ui/button";
 import { Eyebrow } from "@/components/site/eyebrow";
+import { LinkArrow } from "@/components/site/link-arrow";
 import { Reveal, RevealImage } from "@/components/motion/reveal";
 import { shuffle } from "@/lib/shuffle";
 import type { Product } from "@/data/product-types";
@@ -131,12 +132,7 @@ export function FeaturedProducts({
                     className="group mt-9 inline-flex items-center gap-2 font-medium text-primary transition-colors hover:text-[var(--primary-hover)]"
                   >
                     {s.cta}
-                    <span
-                      aria-hidden
-                      className="transition-transform group-hover:-translate-x-1 rtl:group-hover:translate-x-1"
-                    >
-                      ←
-                    </span>
+                    <LinkArrow locale={locale} />
                   </Link>
                 </Reveal>
               </div>
