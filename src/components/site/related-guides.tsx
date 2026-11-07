@@ -1,5 +1,6 @@
 import { Link } from "@/i18n/navigation";
 import { Eyebrow } from "@/components/site/eyebrow";
+import { LinkArrow } from "@/components/site/link-arrow";
 import { getAllGuides } from "@/data/guides";
 import type { Locale } from "@/i18n/routing";
 
@@ -35,9 +36,7 @@ export async function RelatedGuides({
               className="group inline-flex items-baseline gap-2 font-medium text-primary hover:text-[var(--primary-hover)]"
             >
               <span>{g.title[locale]}</span>
-              <span aria-hidden className="transition-transform group-hover:-translate-x-1 rtl:group-hover:translate-x-1">
-                {locale === "ar" ? "←" : "→"}
-              </span>
+              <LinkArrow locale={locale} />
             </Link>
           </li>
         ))}

@@ -10,6 +10,7 @@ import { H3 } from "@/ui/typography";
 import { PageHero } from "@/components/site/page-hero";
 import { BrandImage } from "@/components/media/brand-image";
 import { CtaBand } from "@/components/site/cta-band";
+import { LinkArrow } from "@/components/site/link-arrow";
 import { Reveal, RevealGroup } from "@/components/motion/reveal";
 import { getAllProjects } from "@/data/projects";
 
@@ -86,7 +87,7 @@ export default async function ProjectsPage({ params }: { params: Promise<{ local
                         {p.year ? ` · ${p.year}` : ""}
                       </p>
                     </div>
-                    <span aria-hidden className="mt-2 text-xl text-gold transition-transform group-hover:-translate-x-1 rtl:group-hover:translate-x-1">←</span>
+                    <LinkArrow locale={locale} className="mt-2 text-xl text-gold" />
                   </div>
                 </Link>
               </Reveal>

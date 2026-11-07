@@ -78,7 +78,8 @@ export function H3<T extends React.ElementType = "h3">({
   return (
     <Tag
       className={cn(
-        "font-sans font-bold leading-[1.2] tracking-[-0.01em]",
+        // Arabic needs more room for diacritics than Latin's tight 1.2.
+        "font-sans font-bold leading-[1.2] rtl:leading-[1.4] tracking-[-0.01em]",
         "text-[clamp(1.3rem,1.9vw,1.6rem)]",
         className,
       )}
@@ -94,7 +95,7 @@ export function Lead({
   return (
     <p
       className={cn(
-        "font-sans font-normal text-fg-muted leading-[1.6]",
+        "font-sans font-normal text-fg-muted leading-[1.6] rtl:leading-[1.7]",
         "text-[clamp(1.15rem,1.5vw,1.4rem)]",
         className,
       )}
