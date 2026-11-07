@@ -10,7 +10,7 @@ import { FloatingWhatsApp } from "@/components/site/floating-whatsapp";
 import { JsonLd } from "@/components/seo/json-ld";
 import { siteGraph } from "@/lib/schema";
 import { ScrollManager } from "@/components/layout/scroll-manager";
-import { alexandria } from "@/fonts/alexandria";
+import { plexSansArabic } from "@/fonts/ibm-plex-sans-arabic";
 import { getServerURL } from "@/lib/env";
 import { getSettings } from "@/data/settings";
 import "../globals.css";
@@ -97,7 +97,7 @@ export default async function LocaleLayout({
     <html
       lang={locale}
       dir={dir}
-      className={alexandria.variable}
+      className={plexSansArabic.variable}
       suppressHydrationWarning
     >
       <head>
