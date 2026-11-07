@@ -24,7 +24,7 @@ scalable for a future dashboard and CMS.
 -   Git
 -   GitHub
 -   Vercel
--   Local Alexandria font
+-   Local IBM Plex Sans Arabic font (self-hosted, SIL OFL 1.1)
 -   RTL-first architecture
 
 # 3. Design Philosophy
@@ -46,7 +46,8 @@ architectural studio websites.
 
 ## Typography
 
--   Switched to Alexandria font.
+-   Switched to Alexandria font, later replaced by IBM Plex Sans Arabic
+    (Arabic + Latin, weights 400–700).
 -   Arabic typography prioritized.
 -   English numerals requested in both Arabic and English interfaces.
 -   Focus on larger readable body text.
