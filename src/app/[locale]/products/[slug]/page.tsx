@@ -17,6 +17,7 @@ import { ProductCard } from "@/components/site/product-card";
 import { CtaBand } from "@/components/site/cta-band";
 import { Reveal, RevealGroup } from "@/components/motion/reveal";
 import { buttonVariants } from "@/ui/button";
+import { getCategoryContent } from "@/content/product-categories";
 import { getSettings } from "@/data/settings";
 import { availabilityLabels } from "@/data/product-types";
 import {
@@ -116,6 +117,8 @@ export default async function ProductDetailPage({
     c.whatsappText(product.name[locale]),
   )}`;
 
+  const hasCategoryPage = Boolean(getCategoryContent(product.categoryKey));
+  const categoryHref = `/products/category/${product.categoryKey}` as const;
   const productUrl = absoluteUrl(`/${locale}/products/${slug}`);
   const productLd = productSchema({
     name: product.name[locale],
@@ -129,6 +132,9 @@ export default async function ProductDetailPage({
     [
       { name: c.breadcrumbHome, path: "/" },
       { name: c.breadcrumbProducts, path: "/products" },
+      ...(category && hasCategoryPage
+        ? [{ name: category[locale], path: `/products/category/${product.categoryKey}` }]
+        : []),
       { name: product.name[locale], path: `/products/${slug}` },
     ],
     locale,
@@ -154,6 +160,16 @@ export default async function ProductDetailPage({
                 </Link>
               </li>
               <li aria-hidden>/</li>
+              {category && hasCategoryPage ? (
+                <>
+                  <li>
+                    <Link href={categoryHref} className="transition-colors hover:text-fg">
+                      {category[locale]}
+                    </Link>
+                  </li>
+                  <li aria-hidden>/</li>
+                </>
+              ) : null}
               <li className="text-fg-muted">{product.name[locale]}</li>
             </ol>
           </nav>
@@ -195,7 +211,15 @@ export default async function ProductDetailPage({
 
             {/* Product summary */}
             <Reveal delay={0.05} className="lg:pt-4">
-              {category ? <Eyebrow>{category[locale]}</Eyebrow> : null}
+              {category ? (
+                hasCategoryPage ? (
+                  <Link href={categoryHref} className="inline-block">
+                    <Eyebrow>{category[locale]}</Eyebrow>
+                  </Link>
+                ) : (
+                  <Eyebrow>{category[locale]}</Eyebrow>
+                )
+              ) : null}
               <Display className="mt-6 text-[clamp(2.1rem,4vw,3.25rem)]">
                 {product.name[locale]}
               </Display>

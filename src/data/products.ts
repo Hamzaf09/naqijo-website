@@ -45,8 +45,8 @@ function toProduct(p: StaticProduct): Product {
     included: [],
     downloads: [],
     faqs: [],
-    seoTitle: null,
-    seoDescription: null,
+    seoTitle: p.seoTitle ?? null,
+    seoDescription: p.seoDescription ?? null,
   };
 }
 
