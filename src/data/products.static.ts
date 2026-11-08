@@ -40,6 +40,9 @@ export interface Product {
   gallery: ProductImage[];
   features: L[];
   specs: ProductSpec[];
+  /** Optional dedicated SEO overrides (brand suffix is added by the site title template). */
+  seoTitle?: L;
+  seoDescription?: L;
 }
 
 export interface ProductCategory {
@@ -432,6 +435,59 @@ export const products: Product[] = [
       { label: { ar: "التصميم", en: "Design" }, value: { ar: "بدون خزّان (مدمج)", en: "Tankless (compact)" } },
       { label: { ar: "التحكّم", en: "Controls" }, value: { ar: "لوحة لمسية ومؤشّرات", en: "Touch panel + indicators" } },
       { label: { ar: "الشهادات", en: "Certifications" }, value: { ar: "CE و ISO 9001", en: "CE, ISO 9001" } },
+    ],
+  },
+  {
+    slug: "naqi-m445-softening-resin",
+    categoryKey: "water-softening",
+    availability: "available",
+    name: {
+      ar: "رزن تليين المياه نقي M445 – 25 كغ",
+      en: "NAQI M445 Softening Resin – 25 kg",
+    },
+    seoTitle: {
+      ar: "رزن تليين المياه نقي M445 – عبوة 25 كغ",
+      en: "NAQI M445 Softening Resin, 25 kg Bag",
+    },
+    seoDescription: {
+      ar: "رزن تبادل كاتيوني قوي الحموضة (Na⁺) لأجهزة تليين المياه، بسعة تبادل ≥2.0 مكافئ/لتر وعبوة 25 كغ. متوفر في الأردن.",
+      en: "Strong-acid cation (Na⁺ form) softening resin with ≥2.0 eq/L exchange capacity, supplied in a 25 kg bag. Available in Jordan.",
+    },
+    shortDescription: {
+      ar: "رزن تبادل كاتيوني قوي الحموضة (شكل الصوديوم) عالي السعة لأجهزة تليين المياه، بحبيبات منتظمة وثبات عالٍ للحبيبات، حصرياً لنقي الدولية.",
+      en: "A high-capacity strong-acid cation exchange resin (Na⁺ form) for water softeners, with uniform beads and high bead integrity — exclusive to NAQI International.",
+    },
+    fullDescription: {
+      ar: "نقي M445 رزن تبادل أيوني من النوع الكاتيوني القوي الحموضة (شكل الصوديوم Na⁺)، مصمّم لأجهزة تليين المياه. تأتي حبيباته بحجم منتظم يتراوح بين 0.3 و1.2 ملم، ويتميّز بسعة تبادل عالية لا تقل عن 2.0 مكافئ/لتر (4.5 مكافئ/كغ جاف) وبثبات للحبيبات لا يقل عن 95%. يُشار على عبوته إلى معيار NSF/ANSI/CAN 61 للاستخدام مع مياه الشرب. يُورَّد في عبوة صافي وزنها 25 كغ، وهو منتج حصري لنقي الدولية.",
+      en: "NAQI M445 is a strong-acid cation exchange resin (sodium, Na⁺ form) designed for water softeners. Its beads are uniformly sized between 0.3 and 1.2 mm, with a high exchange capacity of at least 2.0 eq/L (4.5 eq/kg dry) and bead integrity of 95% or better. It is marked NSF/ANSI/CAN 61 for drinking-water use. Supplied in a 25 kg net-weight bag, and exclusive to NAQI International.",
+    },
+    image: {
+      src: "/images/products/naqi-m445-resin.webp",
+      width: 1050,
+      height: 1400,
+      alt: {
+        ar: "عبوة رزن تليين المياه نقي M445 وزن 25 كغ",
+        en: "NAQI M445 premium softening resin, 25 kg bag",
+      },
+    },
+    gallery: [],
+    features: [
+      { ar: "تبادل كاتيوني قوي الحموضة (Na⁺)", en: "Strong-acid cation exchange (Na⁺ form)" },
+      { ar: "سعة تبادل عالية ≥ 2.0 مكافئ/لتر", en: "High exchange capacity ≥ 2.0 eq/L" },
+      { ar: "حبيبات منتظمة 0.3–1.2 ملم", en: "Uniform 0.3–1.2 mm beads" },
+      { ar: "ثبات الحبيبات ≥ 95%", en: "Bead integrity ≥ 95%" },
+      { ar: "NSF/ANSI/CAN 61 لمياه الشرب", en: "NSF/ANSI/CAN 61 for drinking water" },
+    ],
+    specs: [
+      { label: { ar: "نوع الرزن", en: "Resin type" }, value: { ar: "كاتيوني قوي الحموضة", en: "Strong acid cation" } },
+      { label: { ar: "الشكل الأيوني", en: "Ionic form" }, value: { ar: "صوديوم (Na⁺)", en: "Sodium (Na⁺)" } },
+      { label: { ar: "سعة التبادل الكلية", en: "Total exchange capacity" }, value: { ar: "≥ 2.0 مكافئ/لتر", en: "≥ 2.0 eq/L" } },
+      { label: { ar: "السعة الوزنية", en: "Gravimetric capacity" }, value: { ar: "≥ 4.5 مكافئ/كغ (جاف)", en: "≥ 4.5 eq/kg (dry)" } },
+      { label: { ar: "حجم الحبيبات", en: "Particle size" }, value: { ar: "0.3–1.2 ملم", en: "0.3–1.2 mm" } },
+      { label: { ar: "ثبات الحبيبات", en: "Bead integrity" }, value: { ar: "≥ 95%", en: "≥ 95%" } },
+      { label: { ar: "الاستخدام", en: "Application" }, value: { ar: "تليين المياه", en: "Water softening" } },
+      { label: { ar: "المعيار المذكور على العبوة", en: "Standard (per packaging)" }, value: { ar: "NSF/ANSI/CAN 61", en: "NSF/ANSI/CAN 61" } },
+      { label: { ar: "صافي الوزن", en: "Net weight" }, value: { ar: "25 كغ", en: "25 kg" } },
     ],
   },
 ];
