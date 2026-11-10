@@ -4,6 +4,7 @@ import type { Product } from "@/data/product-types";
 import type { Locale } from "@/i18n/routing";
 import { cn } from "@/lib/utils";
 import { LinkArrow } from "@/components/site/link-arrow";
+import { ProductPrice } from "@/components/site/product-price";
 
 /**
  * Compact, premium product card — image on a quiet stage, category, name, short
@@ -52,6 +53,7 @@ export function ProductCard({
         <p className="mt-3 line-clamp-2 flex-1 text-[1.02rem] leading-relaxed text-fg-muted">
           {product.shortDescription[locale]}
         </p>
+        <ProductPrice price={product.price} locale={locale} className="mt-4" />
         <span className="mt-5 inline-flex items-center gap-2 font-semibold text-primary">
           {locale === "ar" ? "عرض التفاصيل" : "View details"}
           <LinkArrow locale={locale} />

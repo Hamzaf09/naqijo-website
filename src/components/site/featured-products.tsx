@@ -8,6 +8,7 @@ import { H2 } from "@/ui/typography";
 import { buttonVariants } from "@/ui/button";
 import { Eyebrow } from "@/components/site/eyebrow";
 import { LinkArrow } from "@/components/site/link-arrow";
+import { ProductPrice } from "@/components/site/product-price";
 import { Reveal, RevealImage } from "@/components/motion/reveal";
 import { shuffle } from "@/lib/shuffle";
 import type { Product } from "@/data/product-types";
@@ -116,6 +117,12 @@ export function FeaturedProducts({
                   <p className="mt-5 max-w-[44ch] text-lg leading-relaxed text-fg-muted">
                     {p.shortDescription[locale]}
                   </p>
+                  <ProductPrice
+                    price={p.price}
+                    locale={locale}
+                    className="mt-6"
+                    amountClassName="text-3xl"
+                  />
                   <ul className="mt-8 space-y-3">
                     {p.features.map((b) => (
                       <li key={b[locale]} className="flex items-start gap-3 text-fg">
