@@ -74,7 +74,10 @@ export const products: Product[] = [
     slug: "jumbo-filter",
     categoryKey: "central-filtration",
     availability: "available",
-    name: { ar: "فلتر مركزي جامبو", en: "Jumbo Central Filter" },
+    name: {
+      ar: "فلتر مياه مركزي نقي جامبو – 3 مراحل",
+      en: "Naqi Jumbo Central Water Filter – 3 Stages",
+    },
     shortDescription: {
       ar: "فلتر مركزي عالي السعة يحمي شبكة المياه المنزلية ويزيل الرواسب والشوائب قبل وصولها إلى جميع نقاط الاستخدام.",
       en: "A high-capacity central filter that protects your home's water network, removing sediment and impurities before they reach every point of use.",
@@ -87,7 +90,7 @@ export const products: Product[] = [
       src: "/images/products/jumbo-filter.webp",
       width: 1162,
       height: 1400,
-      alt: { ar: "فلتر مركزي جامبو من نقي الرابية", en: "NaqiJo Jumbo central filter" },
+      alt: { ar: "فلتر مياه مركزي نقي جامبو – 3 مراحل", en: "Naqi Jumbo Central Water Filter – 3 Stages" },
     },
     gallery: [],
     features: [
@@ -107,7 +110,10 @@ export const products: Product[] = [
     slug: "softener",
     categoryKey: "water-softening",
     availability: "available",
-    name: { ar: "سوفتنر منزلي", en: "Home Water Softener" },
+    name: {
+      ar: "سوفتنر نقي منزلي – تجديد أوتوماتيكي",
+      en: "Naqi Home Water Softener – Automatic Regeneration",
+    },
     shortDescription: {
       ar: "نظام معالجة المياه القاسية لحماية السخانات والتمديدات والأجهزة المنزلية وإطالة عمرها.",
       en: "A hard-water treatment system that protects heaters, plumbing and home appliances — and extends their life.",
@@ -120,7 +126,7 @@ export const products: Product[] = [
       src: "/images/products/softener.webp",
       width: 1400,
       height: 1174,
-      alt: { ar: "سوفتنر منزلي من نقي الرابية", en: "NaqiJo home water softener" },
+      alt: { ar: "سوفتنر نقي منزلي – تجديد أوتوماتيكي", en: "Naqi Home Water Softener – Automatic Regeneration" },
     },
     gallery: [],
     features: [
@@ -140,7 +146,10 @@ export const products: Product[] = [
     slug: "digital-filter-8s",
     categoryKey: "drinking-water",
     availability: "available",
-    name: { ar: "فلتر رقمي ذكي – 8 مراحل", en: "Smart Digital Filter – 8 Stages" },
+    name: {
+      ar: "فلتر مياه نقي ديجيتال – 8 مراحل",
+      en: "Naqi Digital 8-Stage Water Filter",
+    },
     shortDescription: {
       ar: "منظومة تنقية ذكية متعددة المراحل مزودة بشاشة رقمية لمراقبة الأداء وجودة المياه.",
       en: "A smart multi-stage purification system with a digital display to monitor performance and water quality.",
@@ -153,7 +162,7 @@ export const products: Product[] = [
       src: "/images/products/digital-filter-8s.webp",
       width: 917,
       height: 1400,
-      alt: { ar: "فلتر رقمي ذكي 8 مراحل من نقي الرابية", en: "NaqiJo smart digital 8-stage filter" },
+      alt: { ar: "فلتر مياه نقي ديجيتال – 8 مراحل", en: "Naqi Digital 8-Stage Water Filter" },
     },
     gallery: [],
     features: [
@@ -173,7 +182,10 @@ export const products: Product[] = [
     slug: "ro-system-7stage",
     categoryKey: "drinking-water",
     availability: "available",
-    name: { ar: "نظام تناضح عكسي – 7 مراحل", en: "7-Stage Reverse Osmosis System" },
+    name: {
+      ar: "فلتر مياه نقي – 7 مراحل تناضح عكسي (RO)",
+      en: "Naqi 7-Stage RO Water Filter",
+    },
     shortDescription: {
       ar: "نظام تنقية مياه الشرب بالتناضح العكسي عبر سبع مراحل، مزوّد بمضخة دفع وخزان تخزين وصنبور مخصّص، لمياهٍ نقية ومتوازنة الطعم.",
       en: "A seven-stage reverse-osmosis drinking-water system with a booster pump, storage tank and dedicated faucet — for pure, balanced-tasting water.",
@@ -186,7 +198,7 @@ export const products: Product[] = [
       src: "/images/products/ro-system-7stage.webp",
       width: 1400,
       height: 947,
-      alt: { ar: "نظام تناضح عكسي بسبع مراحل من نقي الرابية", en: "Naqi Al-Rabia 7-stage reverse osmosis system" },
+      alt: { ar: "فلتر مياه نقي – 7 مراحل تناضح عكسي (RO)", en: "Naqi 7-Stage RO Water Filter" },
     },
     gallery: [],
     features: [
@@ -207,7 +219,10 @@ export const products: Product[] = [
     slug: "water-dispenser-hot-cold",
     categoryKey: "water-dispensers",
     availability: "available",
-    name: { ar: "برّاد وموزّع مياه ساخن وبارد", en: "Hot & Cold Water Dispenser" },
+    name: {
+      ar: "كولر مياه نقي – ساخن وبارد، مكتبي",
+      en: "Naqi Countertop Hot & Cold Water Cooler",
+    },
     shortDescription: {
       ar: "موزّع مياه سطحي أنيق يقدّم الماء الساخن والبارد بلمسة زر، بتصميمٍ عصري يناسب المطبخ والمكتب.",
       en: "A sleek countertop dispenser that serves hot and cold water at the touch of a button, with a modern design for kitchen or office.",
@@ -220,7 +235,7 @@ export const products: Product[] = [
       src: "/images/products/water-dispenser.webp",
       width: 871,
       height: 1400,
-      alt: { ar: "برّاد وموزّع مياه ساخن وبارد من نقي الرابية", en: "Naqi Al-Rabia hot and cold water dispenser" },
+      alt: { ar: "كولر مياه نقي – ساخن وبارد، مكتبي", en: "Naqi Countertop Hot & Cold Water Cooler" },
     },
     gallery: [],
     features: [
@@ -239,7 +254,10 @@ export const products: Product[] = [
     slug: "tankless-ro-purifier",
     categoryKey: "drinking-water",
     availability: "available",
-    name: { ar: "منقّي مياه بالتناضح العكسي بدون خزّان", en: "Tankless RO Water Purifier" },
+    name: {
+      ar: "فلتر مياه نقي RO بدون خزان – تحت المجلى",
+      en: "Naqi Tankless RO Water Filter – Under-Sink",
+    },
     shortDescription: {
       ar: "منقّي مياه شرب بالتناضح العكسي بتصميمٍ مدمج بدون خزّان، يوفّر مياهاً نقية مباشرةً ويشغل حيّزاً أقل أسفل الحوض.",
       en: "A compact tankless reverse-osmosis drinking-water purifier that delivers pure water on demand while taking up less space under the sink.",
@@ -252,7 +270,7 @@ export const products: Product[] = [
       src: "/images/products/tankless-ro.webp",
       width: 1175,
       height: 1400,
-      alt: { ar: "منقّي مياه بالتناضح العكسي بدون خزّان من نقي الرابية", en: "Naqi Al-Rabia tankless RO water purifier" },
+      alt: { ar: "فلتر مياه نقي RO بدون خزان – تحت المجلى", en: "Naqi Tankless RO Water Filter – Under-Sink" },
     },
     gallery: [],
     features: [
@@ -271,7 +289,10 @@ export const products: Product[] = [
     slug: "whole-home-treatment-station",
     categoryKey: "central-filtration",
     availability: "on-order",
-    name: { ar: "محطة معالجة مياه متكاملة للمنزل", en: "Whole-Home Water Treatment Station" },
+    name: {
+      ar: "محطة معالجة مياه نقي المتكاملة للفلل والمنازل",
+      en: "Naqi Whole-Home Water Treatment Station",
+    },
     shortDescription: {
       ar: "محطة معالجة متكاملة تجمع خزّانات الوسائط ومعالجة العسر مع مرحلة فلترة/تناضح، لتزويد المنزل بأكمله بمياهٍ نظيفة ومعالجة.",
       en: "An integrated treatment station that combines media tanks and hardness treatment with a filtration/RO stage, supplying the whole home with clean, treated water.",
@@ -284,7 +305,7 @@ export const products: Product[] = [
       src: "/images/products/treatment-station.webp",
       width: 1011,
       height: 1400,
-      alt: { ar: "محطة معالجة مياه متكاملة للمنزل من نقي الرابية", en: "Naqi Al-Rabia whole-home water treatment station" },
+      alt: { ar: "محطة معالجة مياه نقي المتكاملة للفلل والمنازل", en: "Naqi Whole-Home Water Treatment Station" },
     },
     gallery: [],
     features: [
@@ -305,7 +326,10 @@ export const products: Product[] = [
     slug: "replacement-cartridge-set",
     categoryKey: "filter-cartridges",
     availability: "available",
-    name: { ar: "طقم حشوات فلاتر بديلة", en: "Replacement Filter Cartridge Set" },
+    name: {
+      ar: "طقم شمعات فلتر نقي بديلة – كربون وترسيب",
+      en: "Naqi Replacement Filter Cartridge Set – GAC, Carbon Block & Sediment",
+    },
     shortDescription: {
       ar: "طقم حشوات بديلة يشمل الكربون الحبيبي والكربون المكتل وحشوة السيديمنت، للحفاظ على أداء نظام التنقية وجودة المياه.",
       en: "A replacement cartridge set — granular carbon, carbon block and sediment — to keep your purification system performing and your water quality high.",
@@ -318,7 +342,11 @@ export const products: Product[] = [
       src: "/images/products/filter-cartridges.webp",
       width: 1362,
       height: 1400,
-      alt: { ar: "طقم حشوات فلاتر بديلة من نقي الرابية", en: "Naqi Al-Rabia replacement filter cartridge set" },
+      alt: { ar: "طقم شمعات فلتر نقي بديلة – كربون وترسيب", en: "Naqi Replacement Filter Cartridge Set – GAC, Carbon Block & Sediment" },
+    },
+    seoTitle: {
+      ar: "طقم شمعات فلتر نقي بديلة – كربون وترسيب",
+      en: "Naqi Replacement Filter Cartridge Set – GAC & Carbon Block",
     },
     gallery: [],
     features: [
@@ -336,7 +364,10 @@ export const products: Product[] = [
     slug: "water-booster-pump",
     categoryKey: "water-pumps",
     availability: "available",
-    name: { ar: "مضخة دفع وتقوية ضغط المياه", en: "Water Booster Pump" },
+    name: {
+      ar: "مضخة تقوية ضغط مياه نقي – أوتوماتيك، ستانلس ستيل",
+      en: "Naqi Automatic Water Booster Pump – Stainless Steel",
+    },
     shortDescription: {
       ar: "مضخة سطحية لتقوية ضغط المياه مزوّدة بمنظّم ضغط أوتوماتيكي، لتحسين تدفّق المياه في المنزل وتشغيلٍ ذكي عند الحاجة.",
       en: "A surface booster pump with an automatic pressure controller that improves water flow around the home and runs on demand.",
@@ -349,7 +380,7 @@ export const products: Product[] = [
       src: "/images/products/booster-pump.webp",
       width: 1203,
       height: 1400,
-      alt: { ar: "مضخة دفع وتقوية ضغط المياه من نقي الرابية", en: "Naqi Al-Rabia water booster pump" },
+      alt: { ar: "مضخة تقوية ضغط مياه نقي – أوتوماتيك، ستانلس ستيل", en: "Naqi Automatic Water Booster Pump – Stainless Steel" },
     },
     gallery: [],
     features: [
@@ -368,7 +399,10 @@ export const products: Product[] = [
     slug: "air-purifier",
     categoryKey: "air-purification",
     availability: "available",
-    name: { ar: "جهاز تنقية الهواء", en: "Air Purifier" },
+    name: {
+      ar: "جهاز تنقية هواء نقي – شاشة رقمية ولمس",
+      en: "Naqi Digital Air Purifier – Touch Control",
+    },
     shortDescription: {
       ar: "جهاز تنقية هواء منزلي بتصميمٍ عصري وشاشة رقمية وتحكّمٍ لمسي، لهواءٍ أنظف وأكثر انتعاشاً في الغرفة.",
       en: "A home air purifier with a modern design, digital display and touch control — for cleaner, fresher room air.",
@@ -381,7 +415,7 @@ export const products: Product[] = [
       src: "/images/products/air-purifier.webp",
       width: 773,
       height: 1400,
-      alt: { ar: "جهاز تنقية الهواء من نقي الرابية", en: "Naqi Al-Rabia air purifier" },
+      alt: { ar: "جهاز تنقية هواء نقي – شاشة رقمية ولمس", en: "Naqi Digital Air Purifier – Touch Control" },
     },
     gallery: [],
     features: [
@@ -401,8 +435,8 @@ export const products: Product[] = [
     categoryKey: "drinking-water",
     availability: "available",
     name: {
-      ar: "منقّي تناضح عكسي مع تعقيم UV — RO-BN01",
-      en: "RO-BN01 Reverse Osmosis Purifier with UV",
+      ar: "فلتر مياه نقي RO-BN01 – تناضح عكسي مع UV بدون خزان",
+      en: "Naqi RO-BN01 Tankless RO Water Filter with UV",
     },
     shortDescription: {
       ar: "منظومة تناضح عكسي بدون خزّان مع تعقيم بالأشعّة فوق البنفسجية (UV) ولوحة تحكّم لمسية ذكية، لمياه شربٍ نقية ومعقّمة.",
@@ -416,10 +450,7 @@ export const products: Product[] = [
       src: "/images/products/ro-bn01.webp",
       width: 1086,
       height: 1448,
-      alt: {
-        ar: "منقّي مياه RO-BN01 بالتناضح العكسي مع UV من نقي الرابية",
-        en: "Naqi Al-Rabia RO-BN01 reverse osmosis purifier with UV",
-      },
+      alt: { ar: "فلتر مياه نقي RO-BN01 – تناضح عكسي مع UV بدون خزان", en: "Naqi RO-BN01 Tankless RO Water Filter with UV" },
     },
     gallery: [],
     features: [
