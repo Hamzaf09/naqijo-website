@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { alexandria } from "@/fonts/alexandria";
+import { plexSansArabic } from "@/fonts/ibm-plex-sans-arabic";
 import "../globals.css";
 
 export const metadata: Metadata = {
@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 /** Staff-only dashboard shell (Arabic, RTL). Not part of the public localized site. */
 export default function InboxLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="ar" dir="rtl" className={alexandria.variable}>
+    <html lang="ar" dir="rtl" className={plexSansArabic.variable}>
       <body className="min-h-dvh bg-bg-subtle font-sans text-fg antialiased">{children}</body>
     </html>
   );
