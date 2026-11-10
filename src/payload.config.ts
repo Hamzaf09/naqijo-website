@@ -23,6 +23,20 @@ import { Testimonials } from "./collections/Testimonials";
 import { Faqs } from "./collections/Faqs";
 import { Banners } from "./collections/Banners";
 import { Posts } from "./collections/Posts";
+import {
+  Conversations,
+  Messages,
+  Customers,
+  Leads,
+  Appointments,
+  Handoffs,
+  InternalNotes,
+  KnowledgeEntries,
+  Offers,
+  KnowledgeGaps,
+  AuditLogs,
+  WebhookEvents,
+} from "./collections/assistant";
 import { Settings } from "./globals/Settings";
 import { Homepage } from "./globals/Homepage";
 
@@ -151,6 +165,19 @@ export default buildConfig({
     Faqs,
     Banners,
     Posts,
+    // AI customer-service & sales assistant (WhatsApp / Messenger / Instagram)
+    Conversations,
+    Messages,
+    Customers,
+    Leads,
+    Appointments,
+    Handoffs,
+    InternalNotes,
+    KnowledgeEntries,
+    Offers,
+    KnowledgeGaps,
+    AuditLogs,
+    WebhookEvents,
   ],
   globals: [Settings, Homepage],
   localization: {

@@ -34,3 +34,15 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+## AI customer-service & sales assistant
+
+WhatsApp / Messenger / Instagram assistant with a staff inbox at `/inbox`. Docs: [docs/agent/README.md](docs/agent/README.md)
+(architecture), [Meta setup](docs/agent/03-meta-setup.md), [knowledge base](docs/agent/04-knowledge-base.md),
+[operations](docs/agent/05-deployment-operations.md), [tests & demo plan](docs/agent/06-test-plan.md),
+[missing information & blockers](docs/agent/missing-company-information.md).
+
+```bash
+npm run migrate && npm run seed:agent   # schema + initial approved knowledge
+npm test                                # unit + integration (SQLite); TEST_DATABASE_URI=postgres://… for Postgres
+```

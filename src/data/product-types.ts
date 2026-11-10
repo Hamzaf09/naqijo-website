@@ -35,8 +35,16 @@ export interface ProductFaq {
 /** Lexical rich-text state per locale (rendered with Payload's <RichText />). */
 export type LocalizedRichText = Record<Locale, unknown>;
 
+export interface ProductPrice {
+  amount: number;
+  currency: "JOD" | "USD";
+  startingFrom: boolean;
+}
+
 export interface Product {
   slug: string;
+  /** Public price; null = not published (page shows the quote call to action). */
+  price: ProductPrice | null;
   categoryKey: string;
   categoryLabel: LocalizedString | null;
   subcategoryLabel: LocalizedString | null;

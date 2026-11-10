@@ -229,6 +229,28 @@ export default async function ProductDetailPage({
                 {availability}
               </span>
 
+              {product.price ? (
+                <p className="mt-6 flex flex-wrap items-baseline gap-x-2 gap-y-1">
+                  {product.price.startingFrom ? (
+                    <span className="text-base text-fg-muted">
+                      {locale === "ar" ? "ابتداءً من" : "Starting from"}
+                    </span>
+                  ) : null}
+                  <span className="text-[2rem] font-bold leading-none text-fg">
+                    {product.price.amount.toLocaleString("en-US")}
+                  </span>
+                  <span className="text-lg font-medium text-fg-muted">
+                    {product.price.currency === "JOD"
+                      ? locale === "ar"
+                        ? "د.أ"
+                        : "JOD"
+                      : locale === "ar"
+                        ? "دولار"
+                        : "USD"}
+                  </span>
+                </p>
+              ) : null}
+
               <p className="mt-6 max-w-[46ch] text-[1.2rem] leading-relaxed text-fg-muted">
                 {product.shortDescription[locale]}
               </p>

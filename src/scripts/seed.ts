@@ -147,6 +147,14 @@ async function seed() {
         mainImage: media.id,
         specs: p.specs.map((s) => ({ label: s.label.ar, value: s.value.ar })),
         features: p.features.map((f) => ({ text: f.ar })),
+        ...(p.seoTitle || p.seoDescription
+          ? {
+              seo: {
+                metaTitle: p.seoTitle?.ar,
+                metaDescription: p.seoDescription?.ar,
+              },
+            }
+          : {}),
       },
     });
 
@@ -168,6 +176,14 @@ async function seed() {
           id: row.id,
           text: p.features[idx].en,
         })),
+        ...(p.seoTitle || p.seoDescription
+          ? {
+              seo: {
+                metaTitle: p.seoTitle?.en,
+                metaDescription: p.seoDescription?.en,
+              },
+            }
+          : {}),
       },
     });
     payload.logger.info(`Seeded product: ${p.slug}`);
