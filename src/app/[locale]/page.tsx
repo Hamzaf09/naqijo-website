@@ -1,7 +1,11 @@
 import { setRequestLocale } from "next-intl/server";
 import { Star, BadgeCheck } from "lucide-react";
 import { Link } from "@/i18n/navigation";
+import type { Metadata } from "next";
 import { requireLocale } from "@/i18n/routing";
+import { pageMetadata } from "@/lib/seo";
+import { homeSeo } from "@/content/home";
+import { approvedImages } from "@/config/images";
 import { Container, Section } from "@/ui/container";
 import { H2, H3, Lead } from "@/ui/typography";
 import { buttonVariants } from "@/ui/button";
@@ -21,6 +25,24 @@ import { cn } from "@/lib/utils";
 
 // ISR: re-render from the CMS at most every 5 minutes.
 export const revalidate = 300;
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale: requestedLocale } = await params;
+  const locale = requireLocale(requestedLocale);
+  const seo = homeSeo[locale];
+  const og = approvedImages.heroLifestyle;
+  return pageMetadata({
+    locale,
+    path: "/",
+    title: seo.title,
+    description: seo.description,
+    image: { url: og.src, alt: og.alt[locale] },
+  });
+}
 
 export default async function HomePage({
   params,

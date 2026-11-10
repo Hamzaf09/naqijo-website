@@ -34,7 +34,7 @@ export const categoryContent: Record<string, CategoryContent> = {
     },
     metaTitle: {
       ar: "فلاتر مياه الشرب وأنظمة التناضح العكسي RO",
-      en: "Drinking Water Filters & Reverse Osmosis (RO) Systems",
+      en: "Drinking Water Filters & RO Systems",
     },
     metaDescription: {
       ar: "أنظمة تنقية مياه الشرب من نقي الرابية: فلاتر متعددة المراحل وأنظمة التناضح العكسي (RO) للمنازل في عمّان والأردن.",
@@ -63,7 +63,7 @@ export const categoryContent: Record<string, CategoryContent> = {
       en: "Water Softening Systems",
     },
     metaTitle: {
-      ar: "معالجة عسر المياه وإزالة الكلس (Water Softener / سوفتنر)",
+      ar: "معالجة عسر المياه وإزالة الكلس (سوفتنر)",
       en: "Water Softeners & Hard-Water Treatment",
     },
     metaDescription: {
@@ -93,7 +93,7 @@ export const categoryContent: Record<string, CategoryContent> = {
       en: "Central Whole-Home Filtration",
     },
     metaTitle: {
-      ar: "فلتر مياه مركزي للمنزل (Central Filter / سنترال فلتر)",
+      ar: "فلتر مياه مركزي للمنزل (سنترال فلتر)",
       en: "Central Water Filtration Systems for the Whole Home",
     },
     metaDescription: {
@@ -149,7 +149,7 @@ export const categoryContent: Record<string, CategoryContent> = {
       en: "Filter Cartridges & Replacement Parts",
     },
     metaTitle: {
-      ar: "شمعات وخراطيش فلاتر المياه البديلة (Cartridge / كارتردج)",
+      ar: "شمعات وخراطيش فلاتر المياه البديلة (كارتردج)",
       en: "Replacement Water-Filter Cartridges & Accessories",
     },
     metaDescription: {
@@ -179,7 +179,7 @@ export const categoryContent: Record<string, CategoryContent> = {
       en: "Water Pumps & Pressure Boosters",
     },
     metaTitle: {
-      ar: "مضخات المياه ومضخات تقوية الضغط (Booster Pump / بمب ضغط)",
+      ar: "مضخات المياه وتقوية الضغط (بمب ضغط)",
       en: "Water Pumps & Booster Pumps for Home Water Pressure",
     },
     metaDescription: {

@@ -258,3 +258,21 @@ export const homeContent: Record<Locale, HomeContent> = {
     },
   },
 };
+
+/**
+ * Search-result metadata for the locale home (`/ar`, `/en`). Kept separate from
+ * the on-page hero copy so the snippet can be tuned without touching the design.
+ * Only verified facts: founded 2005, services listed on the site, free consultation.
+ */
+export const homeSeo: Record<Locale, { title: string; description: string }> = {
+  ar: {
+    title: "فلاتر مياه وأنظمة معالجة المياه في عمّان",
+    description:
+      "نقي الرابية: فلاتر مياه وتناضح عكسي RO وسوفتنر وفلترة مركزية مع تركيب وصيانة للمنازل والمشاريع في عمّان والأردن منذ 2005. استشارة هندسية مجانية.",
+  },
+  en: {
+    title: "Water Filters & Water Treatment Systems in Amman, Jordan",
+    description:
+      "Naqi Al Rabia (NaqiJo): water filters, RO, water softeners and central filtration, with installation and maintenance for homes and projects in Jordan since 2005.",
+  },
+};

@@ -12,6 +12,9 @@ export const routing = defineRouting({
   locales: ["ar", "en"],
   defaultLocale: "ar",
   localePrefix: "always",
+  // hreflang is emitted once, in the page <head> (see lib/seo.ts). The default
+  // Link header would add a second, inconsistent x-default (locale-less URL).
+  alternateLinks: false,
 });
 
 export type Locale = (typeof routing.locales)[number];

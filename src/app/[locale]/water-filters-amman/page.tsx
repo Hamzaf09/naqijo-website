@@ -33,7 +33,7 @@ export async function generateMetadata({
     en: {
       title: "Water Filters in Amman — Purification & Treatment",
       description:
-        "Naqi Al Rabia Water & Energy in Amman: water filters, reverse-osmosis (RO) systems, central filtration, and water softening for homes and businesses. Free consultation and assessment.",
+        "Naqi Al Rabia in Amman: water filters, reverse-osmosis (RO) systems, central filtration and water softening for homes and businesses. Free consultation.",
     },
   }[locale];
   return pageMetadata({ locale, path: "/water-filters-amman", title: meta.title, description: meta.description });

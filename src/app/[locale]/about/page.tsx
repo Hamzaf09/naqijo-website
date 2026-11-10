@@ -21,7 +21,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     en: {
       title: "About — Water Solutions Expertise Since 2005",
       description:
-        "Naqi Al Rabia Water & Energy, founded in 2005, specializes in water filtration, purification and treatment, and integrated water and energy solutions across Jordan and the region.",
+        "Naqi Al Rabia Water & Energy, founded in 2005: water filtration, purification and treatment, plus integrated water and energy solutions across Jordan.",
     },
   }[locale];
   return pageMetadata({ locale, path: "/about", title: meta.title, description: meta.description });

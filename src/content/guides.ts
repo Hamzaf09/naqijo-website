@@ -35,7 +35,11 @@ export interface Guide {
   datePublished: string; // ISO date
   dateModified: string; // ISO date
   title: L;
+  /** Optional shorter <title> for search results (H1 stays `title`). */
+  metaTitle?: Partial<L>;
   description: L; // meta description + hero lead
+  /** Optional search-result description when `description` is too long for a snippet. */
+  metaDescription?: Partial<L>;
   sections: GuideSection[];
   faqs?: GuideFaq[];
   related: GuideRelatedLink[];
@@ -46,6 +50,7 @@ const AUTHORED = "2026-09-08";
 export const guides: Guide[] = [
   {
     slug: "choosing-a-water-filter",
+    metaDescription: { en: "A practical guide to choosing a water filter: define the problem, compare drinking-water and whole-home filtration, and know when RO makes sense." },
     image: "underSinkSystem",
     datePublished: AUTHORED,
     dateModified: AUTHORED,
@@ -146,6 +151,7 @@ export const guides: Guide[] = [
   },
   {
     slug: "reverse-osmosis-vs-filtration",
+    metaTitle: { ar: "الفرق بين التناضح العكسي RO وأنظمة التنقية الأخرى" },
     image: "crystalWater",
     datePublished: AUTHORED,
     dateModified: AUTHORED,
@@ -220,6 +226,7 @@ export const guides: Guide[] = [
   },
   {
     slug: "hard-water-and-water-softeners",
+    metaTitle: { ar: "عسر المياه والكلس: متى تحتاج جهاز تليين المياه؟", en: "Hard Water & Limescale: Need a Water Softener?" },
     image: "wholeHouseSystem",
     datePublished: AUTHORED,
     dateModified: AUTHORED,
@@ -319,6 +326,8 @@ export const guides: Guide[] = [
   },
   {
     slug: "seven-stage-water-filters",
+    metaTitle: { en: "7-Stage Water Filters: How Many Stages Do You Need?" },
+    metaDescription: { en: "What «stages» mean in a water filter, how 5-stage and 7-stage («فلتر 7 مراحل») differ, and how to choose the number of stages that fits your water." },
     image: "underSinkSystem",
     datePublished: AUTHORED,
     dateModified: AUTHORED,
@@ -402,6 +411,8 @@ export const guides: Guide[] = [
   },
   {
     slug: "central-vs-drinking-water-filter",
+    metaTitle: { ar: "الفلتر المركزي أم فلتر مياه الشرب؟ ماذا يناسب بيتك؟", en: "Central Filtration vs a Drinking-Water Filter" },
+    metaDescription: { en: "The difference between central filtration («سنترال فلتر») and a drinking-water filter, what each treats, and when a whole-home system makes sense." },
     image: "wholeHouseSystem",
     datePublished: AUTHORED,
     dateModified: AUTHORED,
@@ -485,6 +496,8 @@ export const guides: Guide[] = [
   },
   {
     slug: "water-filter-maintenance-signs",
+    metaTitle: { ar: "علامات حاجة فلتر المياه للصيانة: الشمعات والممبرين", en: "Signs Your Water Filter Needs Maintenance" },
+    metaDescription: { en: "Practical signs your water filter needs servicing, the role of cartridges («الكارتردج») and the membrane («ممبرين»), and when to change them." },
     image: "premiumInstallation",
     datePublished: AUTHORED,
     dateModified: AUTHORED,

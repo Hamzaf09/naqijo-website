@@ -38,8 +38,8 @@ export async function generateMetadata({
   return pageMetadata({
     locale,
     path: `/guides/${slug}`,
-    title: g.title[locale],
-    description: g.description[locale],
+    title: g.metaTitle?.[locale] ?? g.title[locale],
+    description: g.metaDescription?.[locale] ?? g.description[locale],
     image: { url: approvedImages[g.image].src, alt: g.title[locale] },
     type: "article",
   });

@@ -35,7 +35,7 @@ export async function generateMetadata({
     en: {
       title: "Commercial Water Treatment for Businesses",
       description:
-        "Naqi Al Rabia water treatment and purification solutions for commercial environments — companies, restaurants, hotels and facilities in Amman and Jordan, with maintenance and engineering consultation.",
+        "Water treatment and purification for companies, restaurants, hotels and facilities in Amman and Jordan, with maintenance and engineering consultation.",
     },
   }[locale];
   return pageMetadata({

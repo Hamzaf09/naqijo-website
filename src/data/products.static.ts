@@ -74,6 +74,10 @@ export const products: Product[] = [
     slug: "jumbo-filter",
     categoryKey: "central-filtration",
     availability: "available",
+    seoDescription: {
+      ar: "فلتر مياه مركزي نقي جامبو بثلاث مراحل يحمي شبكة المنزل من الرواسب والشوائب قبل وصولها لكل الصنابير. متوفر في عمّان والأردن مع تركيب وصيانة.",
+      en: "Naqi Jumbo central water filter with 3 stages protects your home's plumbing from sediment and impurities at every tap. Available in Amman and Jordan.",
+    },
     name: {
       ar: "فلتر مياه مركزي نقي جامبو – 3 مراحل",
       en: "Naqi Jumbo Central Water Filter – 3 Stages",
@@ -110,6 +114,10 @@ export const products: Product[] = [
     slug: "softener",
     categoryKey: "water-softening",
     availability: "available",
+    seoDescription: {
+      ar: "سوفتنر نقي منزلي بالتبادل الأيوني وتجديد أوتوماتيكي، يحمي السخانات والأجهزة من الكلس. متوفر في عمّان والأردن مع استشارة مجانية.",
+      en: "Naqi home water softener using ion exchange with automatic regeneration, protecting heaters and appliances from limescale. Available in Amman and Jordan.",
+    },
     name: {
       ar: "سوفتنر نقي منزلي – تجديد أوتوماتيكي",
       en: "Naqi Home Water Softener – Automatic Regeneration",
@@ -146,6 +154,10 @@ export const products: Product[] = [
     slug: "digital-filter-8s",
     categoryKey: "drinking-water",
     availability: "available",
+    seoDescription: {
+      ar: "فلتر مياه نقي ديجيتال بثماني مراحل وشاشة ذكية تعرض جودة المياه (TDS) وتنبّه لموعد تبديل الفلاتر. متوفر في عمّان والأردن.",
+      en: "Naqi digital 8-stage water filter with a smart display showing water quality (TDS) and filter-change reminders. Available in Amman and Jordan.",
+    },
     name: {
       ar: "فلتر مياه نقي ديجيتال – 8 مراحل",
       en: "Naqi Digital 8-Stage Water Filter",
@@ -182,6 +194,10 @@ export const products: Product[] = [
     slug: "ro-system-7stage",
     categoryKey: "drinking-water",
     availability: "available",
+    seoDescription: {
+      ar: "فلتر مياه نقي بسبع مراحل تناضح عكسي (RO) مع معالجة معادن وقلوية وهيدروجين، ويشمل مضخة وخزاناً وصنبوراً. تركيب تحت المجلى في عمّان والأردن.",
+      en: "Naqi 7-stage reverse-osmosis (RO) water filter with mineral, alkaline and hydrogen post-treatment. Under-sink, with pump, tank and faucet. Amman, Jordan.",
+    },
     name: {
       ar: "فلتر مياه نقي – 7 مراحل تناضح عكسي (RO)",
       en: "Naqi 7-Stage RO Water Filter",
@@ -219,6 +235,10 @@ export const products: Product[] = [
     slug: "water-dispenser-hot-cold",
     categoryKey: "water-dispensers",
     availability: "available",
+    seoDescription: {
+      ar: "كولر مياه نقي مكتبي بماء ساخن وبارد ولوحة تحكم لمسية، مناسب للمنزل والمكتب. متوفر في عمّان والأردن.",
+      en: "Naqi countertop hot and cold water cooler with a touch control panel, suited to homes and offices. Available in Amman and Jordan.",
+    },
     name: {
       ar: "كولر مياه نقي – ساخن وبارد، مكتبي",
       en: "Naqi Countertop Hot & Cold Water Cooler",
@@ -254,6 +274,10 @@ export const products: Product[] = [
     slug: "tankless-ro-purifier",
     categoryKey: "drinking-water",
     availability: "available",
+    seoDescription: {
+      ar: "فلتر مياه نقي RO بدون خزان بتصميم مدمج للتركيب تحت المجلى، لمياه شرب نقية. متوفر في عمّان والأردن مع تركيب وصيانة.",
+      en: "Naqi compact tankless RO water filter for under-sink installation, delivering pure drinking water. Available in Amman and Jordan.",
+    },
     name: {
       ar: "فلتر مياه نقي RO بدون خزان – تحت المجلى",
       en: "Naqi Tankless RO Water Filter – Under-Sink",
@@ -289,6 +313,10 @@ export const products: Product[] = [
     slug: "whole-home-treatment-station",
     categoryKey: "central-filtration",
     availability: "on-order",
+    seoDescription: {
+      ar: "محطة معالجة مياه نقي المتكاملة للفلل والمنازل: خزانات وسائط وخزان ملح ومرحلة RO بصمام رقمي، وتُضبط بعد استشارة هندسية في الأردن.",
+      en: "Naqi whole-home water treatment station for villas and high-demand homes: media tanks, brine tank, RO stage and digital valve, set up after a consultation.",
+    },
     name: {
       ar: "محطة معالجة مياه نقي المتكاملة للفلل والمنازل",
       en: "Naqi Whole-Home Water Treatment Station",
@@ -326,6 +354,14 @@ export const products: Product[] = [
     slug: "replacement-cartridge-set",
     categoryKey: "filter-cartridges",
     availability: "available",
+    seoTitle: {
+      ar: "طقم شمعات فلتر نقي بديلة",
+      en: "Naqi Replacement Filter Cartridge Set",
+    },
+    seoDescription: {
+      ar: "طقم شمعات فلتر نقي بديلة (GAC وكربون بلوك وترسيب) للحفاظ على أداء جهاز التنقية. متوفر في عمّان والأردن.",
+      en: "Naqi replacement filter cartridge set — GAC, carbon block and sediment — to keep your purifier performing. Available in Amman and Jordan.",
+    },
     name: {
       ar: "طقم شمعات فلتر نقي بديلة – كربون وترسيب",
       en: "Naqi Replacement Filter Cartridge Set – GAC, Carbon Block & Sediment",
@@ -344,10 +380,6 @@ export const products: Product[] = [
       height: 1400,
       alt: { ar: "طقم شمعات فلتر نقي بديلة – كربون وترسيب", en: "Naqi Replacement Filter Cartridge Set – GAC, Carbon Block & Sediment" },
     },
-    seoTitle: {
-      ar: "طقم شمعات فلتر نقي بديلة – كربون وترسيب",
-      en: "Naqi Replacement Filter Cartridge Set – GAC & Carbon Block",
-    },
     gallery: [],
     features: [
       { ar: "حشوة كربون حبيبي (GAC)", en: "Granular activated carbon (GAC)" },
@@ -364,6 +396,14 @@ export const products: Product[] = [
     slug: "water-booster-pump",
     categoryKey: "water-pumps",
     availability: "available",
+    seoTitle: {
+      ar: "مضخة تقوية ضغط مياه نقي أوتوماتيك",
+      en: "Naqi Automatic Water Booster Pump",
+    },
+    seoDescription: {
+      ar: "مضخة تقوية ضغط مياه نقي بجسم ستانلس ستيل ومتحكم ضغط أوتوماتيكي لرفع ضغط المياه في المنزل. متوفرة في عمّان والأردن.",
+      en: "Naqi automatic water booster pump with a stainless-steel body and automatic pressure controller to raise household water pressure. Available in Amman, Jordan.",
+    },
     name: {
       ar: "مضخة تقوية ضغط مياه نقي – أوتوماتيك، ستانلس ستيل",
       en: "Naqi Automatic Water Booster Pump – Stainless Steel",
@@ -399,6 +439,10 @@ export const products: Product[] = [
     slug: "air-purifier",
     categoryKey: "air-purification",
     availability: "available",
+    seoDescription: {
+      ar: "جهاز تنقية هواء نقي منزلي بشاشة رقمية وتحكم لمسي، لهواء أنظف داخل المنزل. متوفر في عمّان والأردن.",
+      en: "Naqi home air purifier with a digital display and touch controls for cleaner indoor air. Available in Amman and Jordan.",
+    },
     name: {
       ar: "جهاز تنقية هواء نقي – شاشة رقمية ولمس",
       en: "Naqi Digital Air Purifier – Touch Control",
@@ -434,6 +478,14 @@ export const products: Product[] = [
     slug: "ro-bn01",
     categoryKey: "drinking-water",
     availability: "available",
+    seoTitle: {
+      ar: "فلتر مياه نقي RO-BN01 – تناضح عكسي مع UV",
+      en: "Naqi RO-BN01 Tankless RO Water Filter with UV",
+    },
+    seoDescription: {
+      ar: "فلتر مياه نقي RO-BN01 بتناضح عكسي وتعقيم UV وبدون خزان، بغشاء 75 GPD ولوحة لمسية وطقم تركيب كامل. متوفر في عمّان والأردن.",
+      en: "Naqi RO-BN01 tankless reverse-osmosis water filter with UV sterilization, a 75 GPD membrane, touch panel and full install kit. Available in Amman, Jordan.",
+    },
     name: {
       ar: "فلتر مياه نقي RO-BN01 – تناضح عكسي مع UV بدون خزان",
       en: "Naqi RO-BN01 Tankless RO Water Filter with UV",

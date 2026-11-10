@@ -48,8 +48,17 @@ Guides (cornerstone):
 - /{ar,en}/guides/central-vs-drinking-water-filter
 - /{ar,en}/guides/water-filter-maintenance-signs
 
-Representative products / services:
-- a few top product detail pages under /{ar,en}/products/<slug>
+Product detail pages (renamed to the "type + Naqi" pattern; request indexing for
+these after the rename deploys so Google re-reads the new names):
+- /{ar,en}/products/naqi-m445-softening-resin (new — M445 softening resin)
+- /{ar,en}/products/ro-system-7stage
+- /{ar,en}/products/digital-filter-8s
+- /{ar,en}/products/softener
+- /{ar,en}/products/jumbo-filter
+- /{ar,en}/products/water-dispenser-hot-cold
+- the other products are covered by the sitemap
+
+Representative services:
 - /{ar,en}/services/water and other /{ar,en}/services/<slug>
 
 Inspect one or two of each type to confirm the template indexes correctly; the
