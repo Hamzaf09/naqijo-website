@@ -44,6 +44,8 @@ export const Users: CollectionConfig = {
         { label: "Editor", value: "editor" },
         { label: "Content Manager", value: "content-manager" },
         { label: "Viewer", value: "viewer" },
+        { label: "Sales (inbox)", value: "sales" },
+        { label: "Technical support (inbox)", value: "support" },
       ],
       access: { update: isAdminField },
       admin: { position: "sidebar" },

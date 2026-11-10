@@ -77,6 +77,18 @@ export interface Config {
     faqs: Faq;
     banners: Banner;
     posts: Post;
+    conversations: Conversation;
+    messages: Message;
+    customers: Customer;
+    leads: Lead;
+    appointments: Appointment;
+    handoffs: Handoff;
+    'internal-notes': InternalNote;
+    'knowledge-entries': KnowledgeEntry;
+    offers: Offer;
+    'knowledge-gaps': KnowledgeGap;
+    'audit-logs': AuditLog;
+    'webhook-events': WebhookEvent;
     exports: Export;
     imports: Import;
     search: Search;
@@ -103,6 +115,18 @@ export interface Config {
     faqs: FaqsSelect<false> | FaqsSelect<true>;
     banners: BannersSelect<false> | BannersSelect<true>;
     posts: PostsSelect<false> | PostsSelect<true>;
+    conversations: ConversationsSelect<false> | ConversationsSelect<true>;
+    messages: MessagesSelect<false> | MessagesSelect<true>;
+    customers: CustomersSelect<false> | CustomersSelect<true>;
+    leads: LeadsSelect<false> | LeadsSelect<true>;
+    appointments: AppointmentsSelect<false> | AppointmentsSelect<true>;
+    handoffs: HandoffsSelect<false> | HandoffsSelect<true>;
+    'internal-notes': InternalNotesSelect<false> | InternalNotesSelect<true>;
+    'knowledge-entries': KnowledgeEntriesSelect<false> | KnowledgeEntriesSelect<true>;
+    offers: OffersSelect<false> | OffersSelect<true>;
+    'knowledge-gaps': KnowledgeGapsSelect<false> | KnowledgeGapsSelect<true>;
+    'audit-logs': AuditLogsSelect<false> | AuditLogsSelect<true>;
+    'webhook-events': WebhookEventsSelect<false> | WebhookEventsSelect<true>;
     exports: ExportsSelect<false> | ExportsSelect<true>;
     imports: ImportsSelect<false> | ImportsSelect<true>;
     search: SearchSelect<false> | SearchSelect<true>;
@@ -167,7 +191,7 @@ export interface UserAuthOperations {
 export interface User {
   id: number;
   name?: string | null;
-  role: 'super-admin' | 'admin' | 'editor' | 'content-manager' | 'viewer';
+  role: 'super-admin' | 'admin' | 'editor' | 'content-manager' | 'viewer' | 'sales' | 'support';
   updatedAt: string;
   createdAt: string;
   email: string;
@@ -321,6 +345,14 @@ export interface Product {
    * Optional — a child of the category.
    */
   subcategory?: (number | null) | Category;
+  /**
+   * Shown on the product page. Leave the amount empty to hide the price (the page then shows the consultation / quote call to action).
+   */
+  pricing?: {
+    amount?: number | null;
+    currency?: ('JOD' | 'USD') | null;
+    startingFrom?: boolean | null;
+  };
   /**
    * One or two sentences for cards and hero.
    */
@@ -692,6 +724,420 @@ export interface Post {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "conversations".
+ */
+export interface Conversation {
+  id: number;
+  tenant?: string | null;
+  /**
+   * tenant:channel:account:customer — one conversation per customer per channel.
+   */
+  threadKey: string;
+  channel: 'whatsapp' | 'messenger' | 'instagram' | 'test';
+  customerExternalId: string;
+  channelAccountId?: string | null;
+  customerName?: string | null;
+  customer?: (number | null) | Customer;
+  status?: ('open' | 'pending' | 'resolved') | null;
+  aiMode?: ('ai' | 'human' | 'paused') | null;
+  assignedTo?: (number | null) | User;
+  assignedTeam?: ('sales' | 'support') | null;
+  unreadCount?: number | null;
+  needsHuman?: boolean | null;
+  lastMessageAt?: string | null;
+  lastInboundAt?: string | null;
+  lastMessagePreview?: string | null;
+  lastIntent?: string | null;
+  firstInboundAt?: string | null;
+  /**
+   * First reply by AI or a person (response-time analytics).
+   */
+  firstReplyAt?: string | null;
+  firstHumanReplyAt?: string | null;
+  aiReplyCount?: number | null;
+  humanReplyCount?: number | null;
+  mediaStrikes?: number | null;
+  consentAskedAt?: string | null;
+  processingLockUntil?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "customers".
+ */
+export interface Customer {
+  id: number;
+  tenant?: string | null;
+  /**
+   * channel:platform-user-id
+   */
+  identityKey: string;
+  channel?: ('whatsapp' | 'messenger' | 'instagram' | 'test') | null;
+  /**
+   * Profile name supplied by the platform.
+   */
+  displayName?: string | null;
+  /**
+   * Stored only after the customer consented.
+   */
+  name?: string | null;
+  phone?: string | null;
+  area?: string | null;
+  address?: string | null;
+  consentStatus?: ('unknown' | 'requested' | 'granted' | 'declined') | null;
+  consentAt?: string | null;
+  optedOut?: boolean | null;
+  notes?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "messages".
+ */
+export interface Message {
+  id: number;
+  tenant?: string | null;
+  conversation: number | Conversation;
+  channel: 'whatsapp' | 'messenger' | 'instagram' | 'test';
+  direction: 'inbound' | 'outbound';
+  senderType: 'customer' | 'ai' | 'agent' | 'system';
+  sentBy?: (number | null) | User;
+  kind?: ('text' | 'media' | 'unsupported' | 'template') | null;
+  text?: string | null;
+  /**
+   * Provider message id (wamid / mid).
+   */
+  externalId?: string | null;
+  /**
+   * channel:externalId — database-level duplicate-event guard.
+   */
+  dedupeKey?: string | null;
+  status?: ('received' | 'queued' | 'sent' | 'delivered' | 'read' | 'failed' | 'blocked') | null;
+  error?: string | null;
+  errorCode?: string | null;
+  attempts?: number | null;
+  nextRetryAt?: string | null;
+  processedAt?: string | null;
+  processAttempts?: number | null;
+  sentAt?: string | null;
+  deliveredAt?: string | null;
+  readAt?: string | null;
+  simulated?: boolean | null;
+  template?:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
+  aiMeta?:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
+  /**
+   * Provider payload — kept only for non-text messages.
+   */
+  raw?:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "leads".
+ */
+export interface Lead {
+  id: number;
+  tenant?: string | null;
+  conversation: number | Conversation;
+  customer?: (number | null) | Customer;
+  kind?: ('sales' | 'maintenance') | null;
+  stage?: ('new' | 'qualifying' | 'qualified' | 'handed-off' | 'won' | 'lost') | null;
+  qualified?: boolean | null;
+  qualifiedAt?: string | null;
+  productInterest?: string | null;
+  area?: string | null;
+  homeType?: string | null;
+  existingSystem?: string | null;
+  problem?: string | null;
+  budget?: string | null;
+  equipmentType?: string | null;
+  brandModel?: string | null;
+  preferredTime?: string | null;
+  address?: string | null;
+  /**
+   * Campaign offer the customer asked about, if any.
+   */
+  offerKey?: string | null;
+  assignedTo?: (number | null) | User;
+  /**
+   * Filled by staff. Analytics counts a sale only when evidence is recorded here.
+   */
+  verified?: {
+    /**
+     * Invoice / order / receipt reference.
+     */
+    evidence?: string | null;
+    amountJOD?: number | null;
+    verifiedBy?: (number | null) | User;
+    verifiedAt?: string | null;
+  };
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "appointments".
+ */
+export interface Appointment {
+  id: number;
+  tenant?: string | null;
+  conversation: number | Conversation;
+  lead?: (number | null) | Lead;
+  customer?: (number | null) | Customer;
+  kind?: ('maintenance' | 'installation' | 'consultation' | 'inspection') | null;
+  status?: ('requested' | 'confirmed' | 'completed' | 'cancelled') | null;
+  /**
+   * What the customer asked for (free text).
+   */
+  requestedWindow?: string | null;
+  scheduledFor?: string | null;
+  address?: string | null;
+  details?: string | null;
+  confirmedBy?: (number | null) | User;
+  confirmedAt?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "handoffs".
+ */
+export interface Handoff {
+  id: number;
+  tenant?: string | null;
+  conversation: number | Conversation;
+  lead?: (number | null) | Lead;
+  reason:
+    | 'complaint'
+    | 'human_request'
+    | 'technical_uncertain'
+    | 'missing_info'
+    | 'discount_request'
+    | 'warranty_dispute'
+    | 'appointment_confirmation'
+    | 'high_intent_lead'
+    | 'safety'
+    | 'unsupported_service'
+    | 'existing_order'
+    | 'ai_failure';
+  status?: ('open' | 'claimed' | 'resolved') | null;
+  /**
+   * Structured escalation summary.
+   */
+  summary?:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
+  summaryText?: string | null;
+  recommendedAction?: string | null;
+  unansweredQuestion?: string | null;
+  notifyStatus?: ('pending' | 'sent' | 'partial' | 'failed' | 'not_configured') | null;
+  notifyDetail?: string | null;
+  notifiedAt?: string | null;
+  assignedTo?: (number | null) | User;
+  resolvedAt?: string | null;
+  resolvedBy?: (number | null) | User;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "internal-notes".
+ */
+export interface InternalNote {
+  id: number;
+  tenant?: string | null;
+  conversation: number | Conversation;
+  author?: (number | null) | User;
+  body: string;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * Everything the AI assistant may tell customers. Save as Draft to propose; an administrator Publishes to approve. Missing facts are never guessed.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "knowledge-entries".
+ */
+export interface KnowledgeEntry {
+  id: number;
+  tenant?: string | null;
+  category:
+    | 'company'
+    | 'product'
+    | 'price'
+    | 'maintenance'
+    | 'installation'
+    | 'warranty'
+    | 'coverage'
+    | 'faq'
+    | 'booking'
+    | 'escalation';
+  title: string;
+  /**
+   * Approved wording. Include prices/terms only if verified.
+   */
+  content: string;
+  /**
+   * Extra search words / synonyms, one per line (Arabic & English, dialect terms).
+   */
+  keywords?: string | null;
+  /**
+   * For products/services: what the company has confirmed.
+   */
+  availability?: ('n/a' | 'unconfirmed' | 'available' | 'unavailable') | null;
+  /**
+   * Always given to the assistant (keep these few and short).
+   */
+  alwaysInclude?: boolean | null;
+  /**
+   * Who/what verified this (e.g. 'Owner, 2026-10-09').
+   */
+  source?: string | null;
+  createdBy?: (number | null) | User;
+  updatedBy?: (number | null) | User;
+  publishedBy?: (number | null) | User;
+  publishedAt?: string | null;
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * Campaign offers the assistant may quote. Change Status to Paused/Inactive and publish to stop quoting an offer instantly — no code change.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "offers".
+ */
+export interface Offer {
+  id: number;
+  tenant?: string | null;
+  /**
+   * Stable id, e.g. filter-maintenance.
+   */
+  key: string;
+  title: string;
+  kind?: ('product' | 'maintenance') | null;
+  priceJOD: number;
+  state?: ('active' | 'paused' | 'inactive') | null;
+  /**
+   * APPROVED scope: what exactly is included. Leave EMPTY if unconfirmed — the assistant will then refer the question to sales.
+   */
+  scope?: string | null;
+  installationIncluded?: ('no' | 'yes' | 'unknown') | null;
+  /**
+   * Approved installation terms/charges, if any.
+   */
+  installationNote?: string | null;
+  /**
+   * Approved warranty wording. Empty = no warranty claims allowed.
+   */
+  warrantyText?: string | null;
+  /**
+   * Approved accessories included. Empty = none promised.
+   */
+  accessoriesText?: string | null;
+  installmentsAllowed?: boolean | null;
+  startsAt?: string | null;
+  endsAt?: string | null;
+  createdBy?: (number | null) | User;
+  updatedBy?: (number | null) | User;
+  publishedBy?: (number | null) | User;
+  publishedAt?: string | null;
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "knowledge-gaps".
+ */
+export interface KnowledgeGap {
+  id: number;
+  tenant?: string | null;
+  question: string;
+  normalizedKey: string;
+  count?: number | null;
+  status?: ('open' | 'answered' | 'ignored') | null;
+  lastConversation?: (number | null) | Conversation;
+  lastSeenAt?: string | null;
+  resolvedBy?: (number | null) | KnowledgeEntry;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "audit-logs".
+ */
+export interface AuditLog {
+  id: number;
+  tenant?: string | null;
+  action: string;
+  actorType: 'staff' | 'ai' | 'system' | 'webhook';
+  actor?: (number | null) | User;
+  entity?: string | null;
+  entityId?: string | null;
+  detail?:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "webhook-events".
+ */
+export interface WebhookEvent {
+  id: number;
+  tenant?: string | null;
+  channel: 'whatsapp' | 'messenger' | 'instagram';
+  status: 'verification' | 'processed' | 'ignored' | 'invalid_signature' | 'bad_request' | 'error';
+  messageCount?: number | null;
+  statusCount?: number | null;
+  duplicateCount?: number | null;
+  error?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "exports".
  */
 export interface Export {
@@ -960,6 +1406,54 @@ export interface PayloadLockedDocument {
         value: number | Post;
       } | null)
     | ({
+        relationTo: 'conversations';
+        value: number | Conversation;
+      } | null)
+    | ({
+        relationTo: 'messages';
+        value: number | Message;
+      } | null)
+    | ({
+        relationTo: 'customers';
+        value: number | Customer;
+      } | null)
+    | ({
+        relationTo: 'leads';
+        value: number | Lead;
+      } | null)
+    | ({
+        relationTo: 'appointments';
+        value: number | Appointment;
+      } | null)
+    | ({
+        relationTo: 'handoffs';
+        value: number | Handoff;
+      } | null)
+    | ({
+        relationTo: 'internal-notes';
+        value: number | InternalNote;
+      } | null)
+    | ({
+        relationTo: 'knowledge-entries';
+        value: number | KnowledgeEntry;
+      } | null)
+    | ({
+        relationTo: 'offers';
+        value: number | Offer;
+      } | null)
+    | ({
+        relationTo: 'knowledge-gaps';
+        value: number | KnowledgeGap;
+      } | null)
+    | ({
+        relationTo: 'audit-logs';
+        value: number | AuditLog;
+      } | null)
+    | ({
+        relationTo: 'webhook-events';
+        value: number | WebhookEvent;
+      } | null)
+    | ({
         relationTo: 'search';
         value: number | Search;
       } | null)
@@ -1124,6 +1618,13 @@ export interface ProductsSelect<T extends boolean = true> {
   slug?: T;
   category?: T;
   subcategory?: T;
+  pricing?:
+    | T
+    | {
+        amount?: T;
+        currency?: T;
+        startingFrom?: T;
+      };
   shortDescription?: T;
   fullDescription?: T;
   mainImage?: T;
@@ -1356,6 +1857,275 @@ export interface PostsSelect<T extends boolean = true> {
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "conversations_select".
+ */
+export interface ConversationsSelect<T extends boolean = true> {
+  tenant?: T;
+  threadKey?: T;
+  channel?: T;
+  customerExternalId?: T;
+  channelAccountId?: T;
+  customerName?: T;
+  customer?: T;
+  status?: T;
+  aiMode?: T;
+  assignedTo?: T;
+  assignedTeam?: T;
+  unreadCount?: T;
+  needsHuman?: T;
+  lastMessageAt?: T;
+  lastInboundAt?: T;
+  lastMessagePreview?: T;
+  lastIntent?: T;
+  firstInboundAt?: T;
+  firstReplyAt?: T;
+  firstHumanReplyAt?: T;
+  aiReplyCount?: T;
+  humanReplyCount?: T;
+  mediaStrikes?: T;
+  consentAskedAt?: T;
+  processingLockUntil?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "messages_select".
+ */
+export interface MessagesSelect<T extends boolean = true> {
+  tenant?: T;
+  conversation?: T;
+  channel?: T;
+  direction?: T;
+  senderType?: T;
+  sentBy?: T;
+  kind?: T;
+  text?: T;
+  externalId?: T;
+  dedupeKey?: T;
+  status?: T;
+  error?: T;
+  errorCode?: T;
+  attempts?: T;
+  nextRetryAt?: T;
+  processedAt?: T;
+  processAttempts?: T;
+  sentAt?: T;
+  deliveredAt?: T;
+  readAt?: T;
+  simulated?: T;
+  template?: T;
+  aiMeta?: T;
+  raw?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "customers_select".
+ */
+export interface CustomersSelect<T extends boolean = true> {
+  tenant?: T;
+  identityKey?: T;
+  channel?: T;
+  displayName?: T;
+  name?: T;
+  phone?: T;
+  area?: T;
+  address?: T;
+  consentStatus?: T;
+  consentAt?: T;
+  optedOut?: T;
+  notes?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "leads_select".
+ */
+export interface LeadsSelect<T extends boolean = true> {
+  tenant?: T;
+  conversation?: T;
+  customer?: T;
+  kind?: T;
+  stage?: T;
+  qualified?: T;
+  qualifiedAt?: T;
+  productInterest?: T;
+  area?: T;
+  homeType?: T;
+  existingSystem?: T;
+  problem?: T;
+  budget?: T;
+  equipmentType?: T;
+  brandModel?: T;
+  preferredTime?: T;
+  address?: T;
+  offerKey?: T;
+  assignedTo?: T;
+  verified?:
+    | T
+    | {
+        evidence?: T;
+        amountJOD?: T;
+        verifiedBy?: T;
+        verifiedAt?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "appointments_select".
+ */
+export interface AppointmentsSelect<T extends boolean = true> {
+  tenant?: T;
+  conversation?: T;
+  lead?: T;
+  customer?: T;
+  kind?: T;
+  status?: T;
+  requestedWindow?: T;
+  scheduledFor?: T;
+  address?: T;
+  details?: T;
+  confirmedBy?: T;
+  confirmedAt?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "handoffs_select".
+ */
+export interface HandoffsSelect<T extends boolean = true> {
+  tenant?: T;
+  conversation?: T;
+  lead?: T;
+  reason?: T;
+  status?: T;
+  summary?: T;
+  summaryText?: T;
+  recommendedAction?: T;
+  unansweredQuestion?: T;
+  notifyStatus?: T;
+  notifyDetail?: T;
+  notifiedAt?: T;
+  assignedTo?: T;
+  resolvedAt?: T;
+  resolvedBy?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "internal-notes_select".
+ */
+export interface InternalNotesSelect<T extends boolean = true> {
+  tenant?: T;
+  conversation?: T;
+  author?: T;
+  body?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "knowledge-entries_select".
+ */
+export interface KnowledgeEntriesSelect<T extends boolean = true> {
+  tenant?: T;
+  category?: T;
+  title?: T;
+  content?: T;
+  keywords?: T;
+  availability?: T;
+  alwaysInclude?: T;
+  source?: T;
+  createdBy?: T;
+  updatedBy?: T;
+  publishedBy?: T;
+  publishedAt?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "offers_select".
+ */
+export interface OffersSelect<T extends boolean = true> {
+  tenant?: T;
+  key?: T;
+  title?: T;
+  kind?: T;
+  priceJOD?: T;
+  state?: T;
+  scope?: T;
+  installationIncluded?: T;
+  installationNote?: T;
+  warrantyText?: T;
+  accessoriesText?: T;
+  installmentsAllowed?: T;
+  startsAt?: T;
+  endsAt?: T;
+  createdBy?: T;
+  updatedBy?: T;
+  publishedBy?: T;
+  publishedAt?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "knowledge-gaps_select".
+ */
+export interface KnowledgeGapsSelect<T extends boolean = true> {
+  tenant?: T;
+  question?: T;
+  normalizedKey?: T;
+  count?: T;
+  status?: T;
+  lastConversation?: T;
+  lastSeenAt?: T;
+  resolvedBy?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "audit-logs_select".
+ */
+export interface AuditLogsSelect<T extends boolean = true> {
+  tenant?: T;
+  action?: T;
+  actorType?: T;
+  actor?: T;
+  entity?: T;
+  entityId?: T;
+  detail?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "webhook-events_select".
+ */
+export interface WebhookEventsSelect<T extends boolean = true> {
+  tenant?: T;
+  channel?: T;
+  status?: T;
+  messageCount?: T;
+  statusCount?: T;
+  duplicateCount?: T;
+  error?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1865,6 +2635,18 @@ export interface TaskCreateCollectionExport {
       | 'faqs'
       | 'banners'
       | 'posts'
+      | 'conversations'
+      | 'messages'
+      | 'customers'
+      | 'leads'
+      | 'appointments'
+      | 'handoffs'
+      | 'internal-notes'
+      | 'knowledge-entries'
+      | 'offers'
+      | 'knowledge-gaps'
+      | 'audit-logs'
+      | 'webhook-events'
       | 'exports'
       | 'imports';
     drafts?: ('yes' | 'no') | null;

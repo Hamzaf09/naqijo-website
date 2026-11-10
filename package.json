@@ -21,9 +21,13 @@
     "migrate:down": "payload migrate:down",
     "migrate:fresh": "payload migrate:fresh",
     "seed": "tsx src/scripts/seed.ts && tsx src/scripts/seed-phase2.ts && tsx src/scripts/seed-phase3.ts && tsx src/scripts/seed-phase4.ts",
-    "sync:contact": "tsx src/scripts/sync-contact.ts"
+    "sync:contact": "tsx src/scripts/sync-contact.ts",
+    "test": "vitest run",
+    "test:unit": "vitest run tests/unit",
+    "seed:agent": "tsx src/scripts/seed-agent.ts"
   },
   "dependencies": {
+    "@anthropic-ai/sdk": "^0.133.0",
     "@hookform/resolvers": "^3.10.0",
     "@payloadcms/db-postgres": "^3.86.0",
     "@payloadcms/db-sqlite": "^3.86.0",
@@ -59,6 +63,7 @@
     "eslint-config-next": "16.2.10",
     "tailwindcss": "^4",
     "tsx": "^4.23.1",
-    "typescript": "^5"
+    "typescript": "^5",
+    "vitest": "^3.2.7"
   }
 }

@@ -1,8 +1,19 @@
 import type { CollectionConfig } from "payload";
+import { revalidatePath } from "next/cache";
 import { anyone } from "../access/authenticated";
 import { canDelete, canWrite } from "../access/roles";
 import { auditFields, auditStamp } from "../lib/payload/audit";
 import { formatSlug } from "../lib/payload/format-slug";
+
+const revalidateProductPages = <T>({ doc }: { doc: T }): T => {
+  try {
+    revalidatePath("/ar", "layout");
+    revalidatePath("/en", "layout");
+  } catch {
+    // Not running inside a Next.js request (CLI / seed) — nothing to revalidate.
+  }
+  return doc;
+};
 
 /**
  * Products — the flagship collection. A tabbed editor (not one giant form)
@@ -37,7 +48,13 @@ export const Products: CollectionConfig = {
     drafts: { autosave: false },
     maxPerDoc: 20,
   },
-  hooks: { beforeChange: [auditStamp] },
+  hooks: {
+    beforeChange: [auditStamp],
+    // Push admin edits to the public site right away (ISR would otherwise wait
+    // up to 5 minutes). No-op outside a Next request (e.g. seed scripts).
+    afterChange: [revalidateProductPages],
+    afterDelete: [revalidateProductPages],
+  },
   fields: [
     // ── Sidebar quick controls ────────────────────────────────
     {
@@ -125,6 +142,45 @@ export const Products: CollectionConfig = {
                     description: "Optional — a child of the category.",
                   },
                   filterOptions: () => ({ parent: { exists: true } }),
+                },
+              ],
+            },
+            {
+              name: "pricing",
+              type: "group",
+              label: "Price (public website)",
+              admin: {
+                description:
+                  "Shown on the product page. Leave the amount empty to hide the price (the page then shows the consultation / quote call to action).",
+              },
+              fields: [
+                {
+                  type: "row",
+                  fields: [
+                    {
+                      name: "amount",
+                      type: "number",
+                      min: 0,
+                      admin: { width: "40%", step: 1 },
+                    },
+                    {
+                      name: "currency",
+                      type: "select",
+                      defaultValue: "JOD",
+                      options: [
+                        { label: "JOD — Jordanian Dinar", value: "JOD" },
+                        { label: "USD — US Dollar", value: "USD" },
+                      ],
+                      admin: { width: "30%" },
+                    },
+                    {
+                      name: "startingFrom",
+                      type: "checkbox",
+                      defaultValue: false,
+                      label: "Show as “Starting from”",
+                      admin: { width: "30%" },
+                    },
+                  ],
                 },
               ],
             },

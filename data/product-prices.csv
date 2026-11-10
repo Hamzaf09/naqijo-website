@@ -1,0 +1,13 @@
+﻿row,slug,name_ar,name_en,price,currency,starting_from
+1,jumbo-filter,فلتر مركزي جامبو,Jumbo Central Filter,400,JOD,yes
+2,softener,سوفتنر منزلي,Home Water Softener,1100,JOD,no
+3,digital-filter-8s,فلتر رقمي ذكي – 8 مراحل,Smart Digital Filter – 8 Stages,450,JOD,no
+4,ro-system-7stage,نظام تناضح عكسي – 7 مراحل,7-Stage Reverse Osmosis System,250,JOD,no
+5,water-dispenser-hot-cold,برّاد وموزّع مياه ساخن وبارد,Hot & Cold Water Dispenser,180,JOD,no
+6,tankless-ro-purifier,منقّي مياه بالتناضح العكسي بدون خزّان,Tankless RO Water Purifier,450,JOD,no
+7,whole-home-treatment-station,محطة معالجة مياه متكاملة للمنزل,Whole-Home Water Treatment Station,2500,JOD,no
+8,replacement-cartridge-set,طقم حشوات فلاتر بديلة,Replacement Filter Cartridge Set,25,JOD,yes
+9,water-booster-pump,مضخة دفع وتقوية ضغط المياه,Water Booster Pump,220,JOD,no
+10,air-purifier,جهاز تنقية الهواء,Air Purifier,600,JOD,no
+11,ro-bn01,منقّي تناضح عكسي مع تعقيم UV — RO-BN01,RO-BN01 Reverse Osmosis Purifier with UV,800,JOD,no
+12,naqi-m445-softening-resin,رزن تليين المياه نقي M445 – 25 كغ,NAQI M445 Softening Resin – 25 kg,125,JOD,no

@@ -58,6 +58,16 @@ const nextConfig: NextConfig = {
   // Emit a standalone server for Docker / self-hosted Node (opt-in via env so
   // Vercel builds are unaffected).
   output: process.env.NEXT_OUTPUT === "standalone" ? "standalone" : undefined,
+  // Vercel's file tracing drops sharp's native libvips shared library (it is
+  // loaded dynamically via rpath), which crashes every Payload route with
+  // "libvips-cpp.so.* cannot open shared object file". Force-include it.
+  outputFileTracingIncludes: {
+    "/*": [
+      "./node_modules/sharp/**/*",
+      "./node_modules/@img/sharp-linux-x64/**/*",
+      "./node_modules/@img/sharp-libvips-linux-x64/**/*",
+    ],
+  },
   images: {
     // WebP only: source images are pre-optimized WebP, so on-demand
     // transcoding is trivial and fast. AVIF encoding is the slowest/most

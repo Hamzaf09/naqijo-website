@@ -1,0 +1,55 @@
+import type { CollectionConfig } from "payload";
+import { GROUP, inboxAccess, tenantField } from "./shared";
+
+export const Messages: CollectionConfig = {
+  slug: "messages",
+  admin: {
+    useAsTitle: "text",
+    defaultColumns: ["conversation", "direction", "senderType", "status", "createdAt"],
+    group: GROUP,
+  },
+  access: inboxAccess,
+  fields: [
+    tenantField,
+    { name: "conversation", type: "relationship", relationTo: "conversations", required: true, index: true },
+    { name: "channel", type: "select", options: ["whatsapp", "messenger", "instagram", "test"], required: true },
+    { name: "direction", type: "select", required: true, options: ["inbound", "outbound"], index: true },
+    { name: "senderType", type: "select", required: true, options: ["customer", "ai", "agent", "system"] },
+    { name: "sentBy", type: "relationship", relationTo: "users" },
+    { name: "kind", type: "select", defaultValue: "text", options: ["text", "media", "unsupported", "template"] },
+    { name: "text", type: "textarea" },
+    {
+      name: "externalId",
+      type: "text",
+      index: true,
+      admin: { description: "Provider message id (wamid / mid)." },
+    },
+    {
+      name: "dedupeKey",
+      type: "text",
+      unique: true,
+      index: true,
+      admin: { readOnly: true, description: "channel:externalId — database-level duplicate-event guard." },
+    },
+    {
+      name: "status",
+      type: "select",
+      defaultValue: "received",
+      index: true,
+      options: ["received", "queued", "sent", "delivered", "read", "failed", "blocked"],
+    },
+    { name: "error", type: "textarea" },
+    { name: "errorCode", type: "text" },
+    { name: "attempts", type: "number", defaultValue: 0 },
+    { name: "nextRetryAt", type: "date", index: true },
+    { name: "processedAt", type: "date", index: true },
+    { name: "processAttempts", type: "number", defaultValue: 0 },
+    { name: "sentAt", type: "date" },
+    { name: "deliveredAt", type: "date" },
+    { name: "readAt", type: "date" },
+    { name: "simulated", type: "checkbox", defaultValue: false },
+    { name: "template", type: "json" },
+    { name: "aiMeta", type: "json" },
+    { name: "raw", type: "json", admin: { description: "Provider payload — kept only for non-text messages." } },
+  ],
+};

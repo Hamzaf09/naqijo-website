@@ -1,0 +1,68 @@
+import type { CollectionConfig } from "payload";
+import { GROUP, inboxAccess, tenantField } from "./shared";
+
+export const Conversations: CollectionConfig = {
+  slug: "conversations",
+  admin: {
+    useAsTitle: "customerName",
+    defaultColumns: ["customerName", "channel", "status", "aiMode", "lastMessageAt"],
+    group: GROUP,
+  },
+  access: inboxAccess,
+  fields: [
+    tenantField,
+    {
+      name: "threadKey",
+      type: "text",
+      required: true,
+      unique: true,
+      index: true,
+      admin: { readOnly: true, description: "tenant:channel:account:customer — one conversation per customer per channel." },
+    },
+    {
+      name: "channel",
+      type: "select",
+      required: true,
+      index: true,
+      options: ["whatsapp", "messenger", "instagram", "test"],
+    },
+    { name: "customerExternalId", type: "text", required: true, index: true },
+    { name: "channelAccountId", type: "text" },
+    { name: "customerName", type: "text" },
+    { name: "customer", type: "relationship", relationTo: "customers" },
+    {
+      name: "status",
+      type: "select",
+      defaultValue: "open",
+      index: true,
+      options: ["open", "pending", "resolved"],
+    },
+    {
+      name: "aiMode",
+      type: "select",
+      defaultValue: "ai",
+      index: true,
+      options: [
+        { label: "AI replies", value: "ai" },
+        { label: "Human handling (AI off)", value: "human" },
+        { label: "Paused (AI off, awaiting a person)", value: "paused" },
+      ],
+    },
+    { name: "assignedTo", type: "relationship", relationTo: "users" },
+    { name: "assignedTeam", type: "select", options: ["sales", "support"] },
+    { name: "unreadCount", type: "number", defaultValue: 0 },
+    { name: "needsHuman", type: "checkbox", defaultValue: false, index: true },
+    { name: "lastMessageAt", type: "date", index: true },
+    { name: "lastInboundAt", type: "date" },
+    { name: "lastMessagePreview", type: "text" },
+    { name: "lastIntent", type: "text" },
+    { name: "firstInboundAt", type: "date" },
+    { name: "firstReplyAt", type: "date", admin: { description: "First reply by AI or a person (response-time analytics)." } },
+    { name: "firstHumanReplyAt", type: "date" },
+    { name: "aiReplyCount", type: "number", defaultValue: 0 },
+    { name: "humanReplyCount", type: "number", defaultValue: 0 },
+    { name: "mediaStrikes", type: "number", defaultValue: 0 },
+    { name: "consentAskedAt", type: "date" },
+    { name: "processingLockUntil", type: "date", admin: { readOnly: true } },
+  ],
+};
